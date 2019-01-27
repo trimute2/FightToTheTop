@@ -22,7 +22,7 @@ public class MoveData : ScriptableObject {
 	[EnumFlags]
 	public CommonFlags commonFlagsEffected;
 
-	public List<AnimationCurve> commonFlagsCurves = new List<AnimationCurve>(Enum.GetValues(typeof(CommonFlags)).Length-1);
+	public AnimationCurve[] commonFlagsCurves = new AnimationCurve[Enum.GetValues(typeof(CommonFlags)).Length-1];
 
 	/*TODO: its possible that instead of saving a list of curve I save one that is parsed into several. but figuring out how to do that could be a head ache*/
 
@@ -30,4 +30,17 @@ public class MoveData : ScriptableObject {
 	void Update () {
 		
 	}
+
+	//for functions only called in the editor
+#if UNITY_EDITOR
+	public void ResizeCurves()
+	{
+		AnimationCurve[] temp = commonFlagsCurves;
+		commonFlagsCurves = new AnimationCurve[Enum.GetValues(typeof(CommonFlags)).Length - 1];
+		for (int i = 0; i < temp.Length; i++)
+		{
+			commonFlagsCurves[i] = temp[i];
+		}
+}
+#endif
 }

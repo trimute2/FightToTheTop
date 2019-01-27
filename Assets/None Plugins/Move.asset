@@ -11,19 +11,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff1f7831641c584b8c543bbab9ada6b, type: 3}
   m_Name: Move
   m_EditorClassIdentifier: 
-  controller: {fileID: 9100000, guid: eb4e8d6f248662e4f8ffcdab3ed5c2ed, type: 2}
-  animationStateName: Idle
-  length: 0.5
+  controller: {fileID: 0}
+  animationStateName: 
+  length: 0
   frameRate: 0
   playBackSpeed: 0
-  test:
-    serializedVersion: 2
+  commonFlagsEffected: 2
+  commonFlagsCurves:
+  - serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  - serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -31,8 +37,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
