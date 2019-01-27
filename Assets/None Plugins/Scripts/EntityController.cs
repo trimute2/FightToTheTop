@@ -12,7 +12,7 @@ public class EntityController : MonoBehaviour {
 	private Rigidbody2D rb2d;
 	/**<summary>The animator for the entity</summary>*/
 	private Animator animator;
-	private ControllerFlags controllerFlags;
+	private CommonFlags controllerFlags;
 
 	// physics variables
 	private ContactFilter2D contactFilter;
@@ -28,7 +28,9 @@ public class EntityController : MonoBehaviour {
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
-		controllerFlags = ControllerFlags.MoveWithInput;
+		controllerFlags = CommonFlags.MoveWithInput;
+		contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+		contactFilter.useLayerMask = true;
 	}
 
 	private void FixedUpdate()
@@ -81,7 +83,7 @@ public class EntityController : MonoBehaviour {
 		movementInput.x = Input.GetAxisRaw("Horizontal");
 		movementInput.y = Input.GetAxisRaw("Vertical");
 		//TODO: method for checking moves
-		if ((controllerFlags & ControllerFlags.MoveWithInput) != ControllerFlags.None)
+		if ((controllerFlags & CommonFlags.MoveWithInput) != CommonFlags.None)
 		{
 			
 			if (movementInput.x != 0)
