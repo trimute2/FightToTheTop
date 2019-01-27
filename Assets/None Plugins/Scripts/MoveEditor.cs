@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -8,18 +9,29 @@ using UnityEditor.Animations;
 public class MoveEditor : Editor {
 	SerializedProperty animationName;
 	SerializedProperty length;
+	SerializedProperty frameRateProp;
 	SerializedProperty speed;
 	SerializedProperty controllerProp;
+	SerializedProperty commonFlagsProp;
+	SerializedProperty cFCurvesProp;
 	List<AnimatorState> stateList;
+
+	/** <summary>Does the name of the current animation state match
+	 * one in the controller</summary>*/
 	bool validName = true;
+
+	bool foldOutCommonFlags = true;
 
 	private void OnEnable()
 	{
 		stateList = new List<AnimatorState>();
 		animationName = serializedObject.FindProperty("animationStateName");
 		length = serializedObject.FindProperty("length");
+		frameRateProp = serializedObject.FindProperty("frameRate");
 		speed = serializedObject.FindProperty("playBackSpeed");
 		controllerProp = serializedObject.FindProperty("controller");
+		commonFlagsProp = serializedObject.FindProperty("commonFlagsEffected");
+		cFCurvesProp = serializedObject.FindProperty("commonFlagsCurves");
 		UpdateStateList();
 	}
 
@@ -51,9 +63,16 @@ public class MoveEditor : Editor {
 				if(clip != null)
 				{
 					length.floatValue = clip.length;
+					frameRateProp.floatValue = clip.frameRate;
 					validName = true;
 				}
 			}
+		}
+		EditorGUILayout.PropertyField(speed, new GUIContent("playback speed"));
+		foldOutCommonFlags = EditorGUILayout.Foldout(foldOutCommonFlags, "Flags effected");
+		if (foldOutCommonFlags)
+		{
+			EditorGUILayout.PropertyField(commonFlagsProp, new GUIContent("Effected Flags"));
 		}
 		serializedObject.ApplyModifiedProperties();
 		//base.OnInspectorGUI();
