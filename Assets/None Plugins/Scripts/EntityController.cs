@@ -103,7 +103,7 @@ public class EntityController : MonoBehaviour {
 			}
 			targetVelocity.x = movementInput.x * movementSpeed;
 		}
-
 		animator.SetFloat("VelocityX", Mathf.Abs(targetVelocity.x));
+		animator.SetFloat("VelocityY", velocity.y);
 	}
 }
