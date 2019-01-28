@@ -75,7 +75,6 @@ public class EnumFlagsPropertyDrawer : PropertyDrawer
 		EditorGUI.EndDisabledGroup();
 	}
 
-
 	private ReorderableList GenerateReorderableList()
 	{
 		return new ReorderableList(activeEnumNames, typeof(string), false, true, true, true)

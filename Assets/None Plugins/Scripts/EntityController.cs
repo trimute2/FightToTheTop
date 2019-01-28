@@ -24,6 +24,10 @@ public class EntityController : MonoBehaviour {
 
 	private bool grounded;
 
+	private float moveTime;
+
+	private MoveData currentMove;
+
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D>();
@@ -31,6 +35,7 @@ public class EntityController : MonoBehaviour {
 		controllerFlags = CommonFlags.MoveWithInput;
 		contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
 		contactFilter.useLayerMask = true;
+		currentMove = null;
 	}
 
 	private void FixedUpdate()
@@ -105,5 +110,31 @@ public class EntityController : MonoBehaviour {
 		}
 		animator.SetFloat("VelocityX", Mathf.Abs(targetVelocity.x));
 		animator.SetFloat("VelocityY", velocity.y);
+		//Debug.Log(1 / Time.deltaTime);
+	}
+
+	//late update is called once per frame after the internal animation update
+	private void LateUpdate()
+	{
+		if(currentMove != null)
+		{
+			if (moveTime == -1)
+			{
+				moveTime = 0;
+			}
+			else
+			{
+				moveTime += Time.deltaTime;
+			}
+			//get the state of the flags tracked by the move
+			CommonFlags moveFlags = (CommonFlags)currentMove.GetActiveFlags(moveTime);
+			//activate the flags that are active according to the move
+			controllerFlags |= moveFlags;
+			//in the moveflags variable activate all flags not tracked by the move
+			moveFlags |= ~currentMove.GetTrackedFlags();
+			//turn off all flags not active acording to the move while leaving those not tracked by the move in their original state
+			controllerFlags &= moveFlags;
+			
+		}
 	}
 }

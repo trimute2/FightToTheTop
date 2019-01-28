@@ -28,14 +28,35 @@ public class MoveData : ScriptableObject {
 	private AnimationCurve combinedCurve;
 
 	/*TODO: its possible that instead of saving a list of curves I save one that is parsed into several. but figuring out how to do that could be a head ache*/
+	// turns out not as much of a pain as i thought, though it still needs some work to intigrate it better
 
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
+	/// <summary>
+	/// What flags are active according to the move
+	/// </summary>
+	/// <param name="time">the point in the move to evaluate</param>
+	/// <returns>the integer value of the bit flag</returns>
+	public int GetActiveFlags(float time)
+	{
+		if(commonFlagsEffected == CommonFlags.None)
+		{
+			return 0;
+		}
+		return (int)combinedCurve.Evaluate(time);
+	}
+
+	public CommonFlags GetTrackedFlags()
+	{
+		return commonFlagsEffected;
+	}
+
 	//for functions only called in the editor
 #if UNITY_EDITOR
+	#region EditorFunctions
 	/// <summary> Resizes the array of animation curves <para /> used by move editor when a new flag is added</summary>
 	public void ResizeCurves()
 	{
@@ -59,6 +80,10 @@ public class MoveData : ScriptableObject {
 		{
 			for(int j = 0; j<commonFlagsCurves[i].keys.Length; j++)
 			{
+				//while recording set the curve values to whole numbers and the tangent mode to constant
+				commonFlagsCurves[i].keys[j].value = (int)commonFlagsCurves[i].keys[j].value;
+				AnimationUtility.SetKeyLeftTangentMode(commonFlagsCurves[i], j, AnimationUtility.TangentMode.Constant);
+				AnimationUtility.SetKeyRightTangentMode(commonFlagsCurves[i], j, AnimationUtility.TangentMode.Constant);
 				float time = commonFlagsCurves[i].keys[j].time;
 				bool contains = false;
 				for(int k = 0; k < keyFrames.Count; k++)
@@ -96,7 +121,8 @@ public class MoveData : ScriptableObject {
 			AnimationUtility.SetKeyRightTangentMode(combinedCurve, i, AnimationUtility.TangentMode.Constant);
 		}
 		#endregion curveStuff
-
+		valid = true;
 	}
+	#endregion EditorFunctions
 #endif
 }

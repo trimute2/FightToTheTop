@@ -41,6 +41,7 @@ public class MoveEditor : Editor {
 			MoveData data = (MoveData)target;
 			data.ResizeCurves();
 		}
+		Debug.Log("enable");
 		UpdateStateList();
 	}
 
@@ -83,10 +84,10 @@ public class MoveEditor : Editor {
 		{
 			EditorGUILayout.PropertyField(commonFlagsProp, new GUIContent("Effected Flags"));
 		}
-		foldOutCFCurves = EditorGUILayout.Foldout(foldOutCFCurves, "Flags effected");
+		foldOutCFCurves = EditorGUILayout.Foldout(foldOutCFCurves, "Flags Curves");
 		if (foldOutCFCurves)
 		{
-			int flags = commonFlagsProp.enumValueIndex;
+			int flags = commonFlagsProp.intValue;
 			int test = 1;
 			//based off of link https://answers.unity.com/questions/682932/using-generic-list-with-serializedproperty-inspect.html
 			SerializedProperty sp = cFCurvesProp.Copy();
@@ -96,7 +97,6 @@ public class MoveEditor : Editor {
 				sp.Next(true);
 
 				length = sp.intValue;
-				AnimationCurve[] commonFlagsCurves = new AnimationCurve[length];
 
 				sp.Next(true);
 				int lastIndex = length - 1;
@@ -104,7 +104,6 @@ public class MoveEditor : Editor {
 				{
 					if ((flags & test) == test)
 					{
-						//EditorGUILayout.PropertyField(sp, new GUIContent(Enum.GetNames(typeof(CommonFlags))[i+1]));
 						EditorGUILayout.PropertyField(cFCurvesProp.GetArrayElementAtIndex(i), new GUIContent(Enum.GetNames(typeof(CommonFlags))[i + 1]));
 					}
 					test = test << 1;
@@ -117,6 +116,11 @@ public class MoveEditor : Editor {
 			}
 		}
 		serializedObject.ApplyModifiedProperties();
+		if (GUILayout.Button("Validate"))
+		{
+			MoveData data = (MoveData)target;
+			data.Validate();
+		}
 		//base.OnInspectorGUI();
 	}
 
