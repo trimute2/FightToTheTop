@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class EnumFlagsAttribute : PropertyAttribute
+{
+}
+
 [System.Flags]
 public enum CommonFlags
 {

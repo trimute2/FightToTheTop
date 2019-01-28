@@ -41,7 +41,6 @@ public class MoveEditor : Editor {
 			MoveData data = (MoveData)target;
 			data.ResizeCurves();
 		}
-		Debug.Log("enable");
 		UpdateStateList();
 	}
 
@@ -87,33 +86,7 @@ public class MoveEditor : Editor {
 		foldOutCFCurves = EditorGUILayout.Foldout(foldOutCFCurves, "Flags Curves");
 		if (foldOutCFCurves)
 		{
-			int flags = commonFlagsProp.intValue;
-			int test = 1;
-			//based off of link https://answers.unity.com/questions/682932/using-generic-list-with-serializedproperty-inspect.html
-			SerializedProperty sp = cFCurvesProp.Copy();
-			if (sp.isArray) {
-				int length = 0;
-				sp.Next(true);
-				sp.Next(true);
-
-				length = sp.intValue;
-
-				sp.Next(true);
-				int lastIndex = length - 1;
-				for (int i = 0; i < length; i++)
-				{
-					if ((flags & test) == test)
-					{
-						EditorGUILayout.PropertyField(cFCurvesProp.GetArrayElementAtIndex(i), new GUIContent(Enum.GetNames(typeof(CommonFlags))[i + 1]));
-					}
-					test = test << 1;
-					if(i < lastIndex)
-					{
-						sp.Next(false);
-					}
-				}
-				sp.Reset();
-			}
+			DrawFlagCurves(commonFlagsProp.intValue, cFCurvesProp, typeof(CommonFlags));
 		}
 		serializedObject.ApplyModifiedProperties();
 		if (GUILayout.Button("Validate"))
@@ -122,6 +95,35 @@ public class MoveEditor : Editor {
 			data.Validate();
 		}
 		//base.OnInspectorGUI();
+		//test(typeof(CommonFlags))
+	}
+
+	private void DrawFlagCurves(int flags, SerializedProperty curves, Type flagType)
+	{
+		if(flags == 0 || !curves.isArray || !flagType.IsEnum)
+		{
+			return;
+		}
+		// partially based off of link https://answers.unity.com/questions/682932/using-generic-list-with-serializedproperty-inspect.html
+		SerializedProperty sp = curves.Copy();
+		int arrayLength = 0;
+		int test = 1;
+		sp.Next(true);
+		sp.Next(true);
+		string[] names = Enum.GetNames(flagType);
+
+		arrayLength = sp.intValue;
+
+		sp.Next(true);
+		Rect range = new Rect(0, 0, length.floatValue * speed.floatValue, 1);
+		for (int i = 0; i < arrayLength; i++)
+		{
+			if ((flags & test) == test)
+			{
+				EditorGUILayout.CurveField(curves.GetArrayElementAtIndex(i), Color.green, range, new GUIContent(names[i + 1]));
+			}
+			test = test << 1;
+		}
 	}
 
 	/**<summary>updates the list of states</summary>*/

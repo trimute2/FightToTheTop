@@ -6,6 +6,7 @@ public class EntityController : MonoBehaviour {
 
 	public float movementSpeed = 4.5f;
 
+
 	/**<summary>The direction the player is facing</summary>*/
 	private int Facing = 1;
 	/**<summary>The rigid body for the entity</summary>*/

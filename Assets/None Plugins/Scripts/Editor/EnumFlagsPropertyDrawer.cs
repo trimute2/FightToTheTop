@@ -5,10 +5,8 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
 
-public class EnumFlagsAttribute : PropertyAttribute
-{
 
-}
+
 [CustomPropertyDrawer(typeof(EnumFlagsAttribute))]
 public class EnumFlagsPropertyDrawer : PropertyDrawer
 {
