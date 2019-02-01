@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class EntityController : MonoBehaviour {
 	/**<summary>The animator for the entity</summary>*/
 	private Animator animator;
 	private CommonFlags controllerFlags;
+	private ValueFlags entityValueFlags;
 
 	// physics variables
 	private ContactFilter2D contactFilter;
@@ -29,11 +31,14 @@ public class EntityController : MonoBehaviour {
 
 	private MoveData currentMove;
 
+	public MoveData test;
+
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
 		controllerFlags = CommonFlags.MoveWithInput;
+		entityValueFlags = ValueFlags.None;
 		contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
 		contactFilter.useLayerMask = true;
 		currentMove = null;
@@ -109,6 +114,13 @@ public class EntityController : MonoBehaviour {
 			}
 			targetVelocity.x = movementInput.x * movementSpeed;
 		}
+		if (Input.GetButtonDown("Fire1") && currentMove == null)
+		{
+			currentMove = test;
+			animator.Play(currentMove.animationStateName);
+			//Debug.Log(currentMove.test().GetType());
+			//Debug.Log(currentMove.test());
+		}
 		animator.SetFloat("VelocityX", Mathf.Abs(targetVelocity.x));
 		animator.SetFloat("VelocityY", velocity.y);
 		//Debug.Log(1 / Time.deltaTime);
@@ -119,14 +131,7 @@ public class EntityController : MonoBehaviour {
 	{
 		if(currentMove != null)
 		{
-			if (moveTime == -1)
-			{
-				moveTime = 0;
-			}
-			else
-			{
-				moveTime += Time.deltaTime;
-			}
+			moveTime = moveTime == -1 ? 0 : moveTime + Time.deltaTime;
 			//get the state of the flags tracked by the move
 			CommonFlags moveFlags = (CommonFlags)currentMove.GetActiveFlags(moveTime);
 			//activate the flags that are active according to the move
@@ -135,7 +140,45 @@ public class EntityController : MonoBehaviour {
 			moveFlags |= ~currentMove.GetTrackedFlags();
 			//turn off all flags not active acording to the move while leaving those not tracked by the move in their original state
 			controllerFlags &= moveFlags;
+
+			entityValueFlags = (ValueFlags)currentMove.GetActiveFlags(moveTime,FlagTypes.ValueFlags);
 			
+
+			if (entityValueFlags != ValueFlags.None)
+			{
+				float val = 0;
+				if (getValue(ValueFlags.xVelocity, out val))
+				{
+					targetVelocity.x = val * Facing;
+				}
+				if(getValue(ValueFlags.yVelocity, out val))
+				{
+					targetVelocity.y = val;
+				}
+			}
+			if (currentMove.endMove(moveTime))
+			{
+				animator.Play("Idle");
+				moveTime = -1;
+				currentMove = null;
+			}
 		}
 	}
+
+	private bool getValue(ValueFlags flag, out float value)
+	{
+		if((entityValueFlags & flag) != ValueFlags.None)
+		{
+			value = currentMove.GetAnimatedValue(moveTime, flag);
+			return true;
+		}
+		value = 0;
+		return false;
+	}
+
+	/*
+	private int UpdateFlags<T>(T flags)
+	{
+
+	}*/
 }

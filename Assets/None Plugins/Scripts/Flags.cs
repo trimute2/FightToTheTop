@@ -22,4 +22,15 @@ public enum CommonFlags
 public enum ValueFlags
 {
 	None = 0,
+	/**<summary>When the move effects the velocity along the x axis</summary>*/
+	xVelocity = 1 << 0,
+	/**<summary>When the move effects the velocity along the y axis</summary>*/
+	yVelocity = 1 << 1,
 }
+
+public enum FlagTypes
+{
+	CommonFlags = 0,
+	ValueFlags = 1
+}
+

@@ -14,14 +14,22 @@ public class MoveEditor : Editor {
 	SerializedProperty controllerProp;
 	SerializedProperty commonFlagsProp;
 	SerializedProperty cFCurvesProp;
+	SerializedProperty valueFlagsProp;
+	SerializedProperty vFCurvesProp;
+	SerializedProperty vCurvesProp;
+	SerializedProperty flagsProp;
 	List<AnimatorState> stateList;
 
 	/** <summary>Does the name of the current animation state match
 	 * one in the controller</summary>*/
 	bool validName = true;
 
-	bool foldOutCommonFlags = true;
-	bool foldOutCFCurves = true;
+	bool foldOutCommonFlags = false;
+	bool foldOutCFCurves = false;
+	bool foldOutValueFlags = false;
+	bool foldOutVFCurves = false;
+	bool foldOutValueCurves = false;
+
 
 	private void OnEnable()
 	{
@@ -33,6 +41,10 @@ public class MoveEditor : Editor {
 		controllerProp = serializedObject.FindProperty("controller");
 		commonFlagsProp = serializedObject.FindProperty("commonFlagsEffected");
 		cFCurvesProp = serializedObject.FindProperty("commonFlagsCurves");
+		valueFlagsProp = serializedObject.FindProperty("valueFlagsEffected");
+		vFCurvesProp = serializedObject.FindProperty("valueFlagCurves");
+		vCurvesProp = serializedObject.FindProperty("valueCurves");
+		//TODO: better way of chacking that the curve sizes are correct
 		SerializedProperty sp = cFCurvesProp.Copy();
 		sp.Next(true);
 		sp.Next(true);
@@ -88,17 +100,37 @@ public class MoveEditor : Editor {
 		{
 			DrawFlagCurves(commonFlagsProp.intValue, cFCurvesProp, typeof(CommonFlags));
 		}
+		foldOutValueFlags = EditorGUILayout.Foldout(foldOutValueFlags, "Value flags effected");
+		if (foldOutValueFlags)
+		{
+			EditorGUILayout.PropertyField(valueFlagsProp, new GUIContent("Effected Value flags"));
+		}
+		foldOutVFCurves = EditorGUILayout.Foldout(foldOutVFCurves, "Value Flag Curves");
+		if (foldOutVFCurves)
+		{
+			DrawFlagCurves(valueFlagsProp.intValue, vFCurvesProp, typeof(ValueFlags));
+		}
+		foldOutValueCurves = EditorGUILayout.Foldout(foldOutValueCurves, "Value Curves");
+		if (foldOutValueCurves)
+		{
+			DrawFlagCurves(valueFlagsProp.intValue, vCurvesProp, typeof(ValueFlags), -10,20);
+		}
 		serializedObject.ApplyModifiedProperties();
 		if (GUILayout.Button("Validate"))
 		{
 			MoveData data = (MoveData)target;
 			data.Validate();
 		}
+		if (GUILayout.Button("Resize"))
+		{
+			MoveData data = (MoveData)target;
+			data.ResizeCurves();
+		}
 		//base.OnInspectorGUI();
 		//test(typeof(CommonFlags))
 	}
 
-	private void DrawFlagCurves(int flags, SerializedProperty curves, Type flagType)
+	private void DrawFlagCurves(int flags, SerializedProperty curves, Type flagType, float minCurve = 0, float maxCurve = 1)
 	{
 		if(flags == 0 || !curves.isArray || !flagType.IsEnum)
 		{
@@ -115,7 +147,7 @@ public class MoveEditor : Editor {
 		arrayLength = sp.intValue;
 
 		sp.Next(true);
-		Rect range = new Rect(0, 0, length.floatValue * speed.floatValue, 1);
+		Rect range = new Rect(0, minCurve, length.floatValue * speed.floatValue, maxCurve);
 		for (int i = 0; i < arrayLength; i++)
 		{
 			if ((flags & test) == test)
