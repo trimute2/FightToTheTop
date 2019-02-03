@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EnumFlagsAttribute : PropertyAttribute
 {
@@ -34,3 +35,46 @@ public enum FlagTypes
 	ValueFlags = 1
 }
 
+[Serializable]
+public struct FlagData
+{
+	
+	[EnumFlags]
+	public CommonFlags commonFlags;
+	[EnumFlags]
+	public ValueFlags valueFlags;
+	public FlagData(CommonFlags cf, ValueFlags vf)
+	{
+		commonFlags = cf;
+		valueFlags = vf;
+	}
+
+	public int this[FlagTypes flag]
+	{
+		//I tried doing this with an array of generic enums but it caused problems so its a switch statement for now
+		get
+		{
+			switch (flag)
+			{
+				case FlagTypes.CommonFlags:
+					return (int)commonFlags;
+				case FlagTypes.ValueFlags:
+					return (int)valueFlags;
+				default:
+					return 0;
+			}
+		}
+		set
+		{
+			switch (flag)
+			{
+				case FlagTypes.CommonFlags:
+					commonFlags = (CommonFlags)value;
+					break;
+				case FlagTypes.ValueFlags:
+					valueFlags = (ValueFlags)value;
+					break;
+			}
+		}
+	}
+}

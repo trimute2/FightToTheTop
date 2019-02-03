@@ -12,22 +12,18 @@ public class MoveEditor : Editor {
 	SerializedProperty frameRateProp;
 	SerializedProperty speed;
 	SerializedProperty controllerProp;
-	SerializedProperty commonFlagsProp;
 	SerializedProperty cFCurvesProp;
-	SerializedProperty valueFlagsProp;
 	SerializedProperty vFCurvesProp;
 	SerializedProperty vCurvesProp;
 	SerializedProperty flagsProp;
+	SerializedProperty flagData;
 	List<AnimatorState> stateList;
 
 	/** <summary>Does the name of the current animation state match
 	 * one in the controller</summary>*/
 	bool validName = true;
 
-	bool foldOutCommonFlags = false;
-	bool foldOutCFCurves = false;
-	bool foldOutValueFlags = false;
-	bool foldOutVFCurves = false;
+	bool[][] foldOuts = new bool[2][];
 	bool foldOutValueCurves = false;
 
 
@@ -39,15 +35,20 @@ public class MoveEditor : Editor {
 		frameRateProp = serializedObject.FindProperty("frameRate");
 		speed = serializedObject.FindProperty("playBackSpeed");
 		controllerProp = serializedObject.FindProperty("controller");
-		commonFlagsProp = serializedObject.FindProperty("commonFlagsEffected");
 		cFCurvesProp = serializedObject.FindProperty("commonFlagsCurves");
-		valueFlagsProp = serializedObject.FindProperty("valueFlagsEffected");
 		vFCurvesProp = serializedObject.FindProperty("valueFlagCurves");
 		vCurvesProp = serializedObject.FindProperty("valueCurves");
+		flagData = serializedObject.FindProperty("data");
 		//TODO: better way of chacking that the curve sizes are correct
 		SerializedProperty sp = cFCurvesProp.Copy();
 		sp.Next(true);
 		sp.Next(true);
+		for(int i = 0; i < foldOuts.Length; i++)
+		{
+			foldOuts[i] = new bool[2];
+			foldOuts[i][0] = false;
+			foldOuts[i][1] = false;
+		}
 		if(sp.intValue != Enum.GetValues(typeof(CommonFlags)).Length - 1)
 		{
 			MoveData data = (MoveData)target;
@@ -90,30 +91,12 @@ public class MoveEditor : Editor {
 			}
 		}
 		EditorGUILayout.PropertyField(speed, new GUIContent("playback speed"));
-		foldOutCommonFlags = EditorGUILayout.Foldout(foldOutCommonFlags, "Flags effected");
-		if (foldOutCommonFlags)
-		{
-			EditorGUILayout.PropertyField(commonFlagsProp, new GUIContent("Effected Flags"));
-		}
-		foldOutCFCurves = EditorGUILayout.Foldout(foldOutCFCurves, "Flags Curves");
-		if (foldOutCFCurves)
-		{
-			DrawFlagCurves(commonFlagsProp.intValue, cFCurvesProp, typeof(CommonFlags));
-		}
-		foldOutValueFlags = EditorGUILayout.Foldout(foldOutValueFlags, "Value flags effected");
-		if (foldOutValueFlags)
-		{
-			EditorGUILayout.PropertyField(valueFlagsProp, new GUIContent("Effected Value flags"));
-		}
-		foldOutVFCurves = EditorGUILayout.Foldout(foldOutVFCurves, "Value Flag Curves");
-		if (foldOutVFCurves)
-		{
-			DrawFlagCurves(valueFlagsProp.intValue, vFCurvesProp, typeof(ValueFlags));
-		}
+		DisplayFlags("commonFlags", cFCurvesProp, 0, typeof(CommonFlags), "Common Flags");
+		DisplayFlags("valueFlags", vFCurvesProp, 1, typeof(ValueFlags), "Value");
 		foldOutValueCurves = EditorGUILayout.Foldout(foldOutValueCurves, "Value Curves");
 		if (foldOutValueCurves)
 		{
-			DrawFlagCurves(valueFlagsProp.intValue, vCurvesProp, typeof(ValueFlags), -10,20);
+			DrawFlagCurves(flagData.FindPropertyRelative("valueFlags").intValue, vCurvesProp, typeof(ValueFlags), -10, 20);
 		}
 		serializedObject.ApplyModifiedProperties();
 		if (GUILayout.Button("Validate"))
@@ -197,5 +180,20 @@ public class MoveEditor : Editor {
 			}
 		}
 		return -1;
+	}
+
+	private void DisplayFlags(string RelativePath, SerializedProperty curveProp, int fold, Type flagType, string name)
+	{
+		SerializedProperty property = flagData.FindPropertyRelative(RelativePath);
+		int flag = property.intValue;
+		foldOuts[fold][0] = EditorGUILayout.Foldout(foldOuts[fold][0], new GUIContent(name + " effected"));
+		if (foldOuts[fold][0]) {
+			EditorGUILayout.PropertyField(property, new GUIContent(name + " effected"));
+		}
+		foldOuts[fold][1] = EditorGUILayout.Foldout(foldOuts[fold][1], new GUIContent(name + " curves"));
+		if (foldOuts[fold][1])
+		{
+			DrawFlagCurves(flag, curveProp, flagType);
+		}
 	}
 }

@@ -14,6 +14,7 @@ public class EntityController : MonoBehaviour {
 	private Rigidbody2D rb2d;
 	/**<summary>The animator for the entity</summary>*/
 	private Animator animator;
+	private FlagData flagData;
 	private CommonFlags controllerFlags;
 	private ValueFlags entityValueFlags;
 
@@ -37,6 +38,7 @@ public class EntityController : MonoBehaviour {
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
+		flagData = new FlagData(CommonFlags.MoveWithInput, ValueFlags.None);
 		controllerFlags = CommonFlags.MoveWithInput;
 		entityValueFlags = ValueFlags.None;
 		contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
@@ -94,7 +96,7 @@ public class EntityController : MonoBehaviour {
 		movementInput.x = Input.GetAxisRaw("Horizontal");
 		movementInput.y = Input.GetAxisRaw("Vertical");
 		//TODO: method for checking moves
-		if ((controllerFlags & CommonFlags.MoveWithInput) != CommonFlags.None)
+		if ((flagData.commonFlags & CommonFlags.MoveWithInput) != CommonFlags.None)
 		{
 			
 			if (movementInput.x != 0)
@@ -133,13 +135,15 @@ public class EntityController : MonoBehaviour {
 		{
 			moveTime = moveTime == -1 ? 0 : moveTime + Time.deltaTime;
 			//get the state of the flags tracked by the move
-			CommonFlags moveFlags = (CommonFlags)currentMove.GetActiveFlags(moveTime);
+			CommonFlags moveFlags = (CommonFlags)currentMove.GetActiveFlags(moveTime,FlagTypes.CommonFlags);
 			//activate the flags that are active according to the move
-			controllerFlags |= moveFlags;
+			//controllerFlags |= moveFlags;
+			flagData.commonFlags |= moveFlags;
 			//in the moveflags variable activate all flags not tracked by the move
-			moveFlags |= ~currentMove.GetTrackedFlags();
+			moveFlags |= (CommonFlags)~currentMove.GetTrackedFlags(FlagTypes.CommonFlags);
 			//turn off all flags not active acording to the move while leaving those not tracked by the move in their original state
-			controllerFlags &= moveFlags;
+			//controllerFlags &= moveFlags;
+			flagData.commonFlags &= moveFlags;
 
 			entityValueFlags = (ValueFlags)currentMove.GetActiveFlags(moveTime,FlagTypes.ValueFlags);
 			
@@ -156,7 +160,7 @@ public class EntityController : MonoBehaviour {
 					targetVelocity.y = val;
 				}
 			}
-			if (currentMove.endMove(moveTime))
+			if (currentMove.EndMove(moveTime))
 			{
 				animator.Play("Idle");
 				moveTime = -1;

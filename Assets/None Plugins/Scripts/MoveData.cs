@@ -21,17 +21,16 @@ public class MoveData : ScriptableObject {
 	public float length;
 	public float frameRate;
 	public float playBackSpeed = 1;
+	public int priority = 0;
 
+	[SerializeField]
+	public FlagData data = new FlagData(CommonFlags.None,ValueFlags.None);
 	/// <summary>the flags effected by the move</summary>
 	[EnumFlags]
 	public CommonFlags commonFlagsEffected;
-	[EnumFlags]
-	public ValueFlags valueFlagsEffected;
 	// I spent several hours trying to find a way to save all of these enums in one data type, it really doesnt work
 
 	public AnimationCurve[] valueCurves = new AnimationCurve[Enum.GetValues(typeof(ValueFlags)).Length - 1];
-	[SerializeField]
-	private AnimationCurve combinedCommonCurve;
 
 	[SerializeField]
 	private AnimationCurve[] combinedFlagCurves = new AnimationCurve[Enum.GetValues(typeof(FlagTypes)).Length];
@@ -43,24 +42,9 @@ public class MoveData : ScriptableObject {
 		
 	}
 
-	/// <summary>
-	/// What flags are active according to the move
-	/// </summary>
-	/// <param name="time">the point in the move to evaluate</param>
-	/// <returns>the integer value of the bit flag</returns>
-	public int GetActiveFlags(float time)
+	public int GetTrackedFlags(FlagTypes flag)
 	{
-		if(commonFlagsEffected == CommonFlags.None)
-		{
-			return 0;
-		}
-		return (int)combinedCommonCurve.Evaluate(time);
-	}
-
-
-	public CommonFlags GetTrackedFlags()
-	{
-		return commonFlagsEffected;
+		return data[flag];
 	}
 
 	public int GetActiveFlags(float time, FlagTypes flagType)
@@ -80,7 +64,7 @@ public class MoveData : ScriptableObject {
 		return valueCurves[i].Evaluate(time);
 	}
 
-	public bool endMove(float time)
+	public bool EndMove(float time)
 	{
 		return time >= length * playBackSpeed;
 	}
@@ -178,62 +162,10 @@ public class MoveData : ScriptableObject {
 	/// <summary> Used to verrify that the move will work</summary>
 	public void Validate()
 	{
-
 		//TODO: write function;
 		#region curveStuff
-		combinedFlagCurves[(int)FlagTypes.CommonFlags] = CombineFlagCurves(commonFlagsCurves, (int)commonFlagsEffected);
-		combinedFlagCurves[(int)FlagTypes.ValueFlags] = CombineFlagCurves(valueFlagCurves, (int)valueFlagsEffected);
-		combinedCommonCurve = CombineFlagCurves(commonFlagsCurves, (int)commonFlagsEffected);
-		#region oldCurveCode
-		/*combinedCommonCurve = new AnimationCurve();
-		//get what keyframes exist at what times
-		List<float> keyFrames = new List<float>();
-		for(int i = 0; i < commonFlagsCurves.Length; i++)
-		{
-			for(int j = 0; j<commonFlagsCurves[i].keys.Length; j++)
-			{
-				//while recording set the curve values to whole numbers and the tangent mode to constant
-				Keyframe ke = commonFlagsCurves[i].keys[j];
-				ke.value = (int)Math.Round(ke.value);
-				commonFlagsCurves[i].MoveKey(j, ke);
-				//commonFlagsCurves[i].keys[j].value = (int)commonFlagsCurves[i].keys[j].value;
-				AnimationUtility.SetKeyLeftTangentMode(commonFlagsCurves[i], j, AnimationUtility.TangentMode.Constant);
-				AnimationUtility.SetKeyRightTangentMode(commonFlagsCurves[i], j, AnimationUtility.TangentMode.Constant);
-				float time = commonFlagsCurves[i].keys[j].time;
-				bool contains = false;
-				for(int k = 0; k < keyFrames.Count; k++)
-				{
-					if(keyFrames[k] == time)
-					{
-						contains = true;
-						break;
-					}
-				}
-				if (!contains)
-				{
-					keyFrames.Add(time);
-				}
-			}
-		}
-		//evaluate all the key frames across all the curves and add to the combined curve
-		for(int i = 0; i < keyFrames.Count; i++)
-		{
-			Keyframe key = new Keyframe(keyFrames[i], 0);
-			for(int k = 0; k < commonFlagsCurves.Length; k++)
-			{
-				int flag = (1 << k);
-				key.value += flag * (int)(commonFlagsCurves[k].Evaluate(key.time));
-				
-			}
-			combinedCommonCurve.AddKey(key);
-		}
-		//set all the key frames so that the tangent mode is clamped
-		for(int i = 0; i < combinedCommonCurve.keys.Length; i++)
-		{
-			AnimationUtility.SetKeyLeftTangentMode(combinedCommonCurve, i, AnimationUtility.TangentMode.Constant);
-			AnimationUtility.SetKeyRightTangentMode(combinedCommonCurve, i, AnimationUtility.TangentMode.Constant);
-		}*/
-		#endregion oldCurveCode
+		combinedFlagCurves[(int)FlagTypes.CommonFlags] = CombineFlagCurves(commonFlagsCurves, (int)data.commonFlags);
+		combinedFlagCurves[(int)FlagTypes.ValueFlags] = CombineFlagCurves(valueFlagCurves, (int)data.valueFlags);
 		#endregion curveStuff
 		valid = true;
 	}
