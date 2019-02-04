@@ -15,7 +15,7 @@ public class EntityController : MonoBehaviour {
 	/**<summary>The animator for the entity</summary>*/
 	private Animator animator;
 	private FlagData flagData;
-	private CommonFlags controllerFlags;
+	//private CommonFlags controllerFlags;
 	private ValueFlags entityValueFlags;
 
 	// physics variables
@@ -39,7 +39,7 @@ public class EntityController : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
 		flagData = new FlagData(CommonFlags.MoveWithInput, ValueFlags.None);
-		controllerFlags = CommonFlags.MoveWithInput;
+		//controllerFlags = CommonFlags.MoveWithInput;
 		entityValueFlags = ValueFlags.None;
 		contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
 		contactFilter.useLayerMask = true;

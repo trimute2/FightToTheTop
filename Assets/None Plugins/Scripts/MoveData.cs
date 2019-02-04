@@ -66,7 +66,7 @@ public class MoveData : ScriptableObject {
 
 	public bool EndMove(float time)
 	{
-		return time >= length * playBackSpeed;
+		return time >= length / playBackSpeed;
 	}
 	//for functions only called in the editor
 #if UNITY_EDITOR

@@ -11,6 +11,7 @@ public class MoveEditor : Editor {
 	SerializedProperty length;
 	SerializedProperty frameRateProp;
 	SerializedProperty speed;
+	SerializedProperty priority;
 	SerializedProperty controllerProp;
 	SerializedProperty cFCurvesProp;
 	SerializedProperty vFCurvesProp;
@@ -34,6 +35,7 @@ public class MoveEditor : Editor {
 		length = serializedObject.FindProperty("length");
 		frameRateProp = serializedObject.FindProperty("frameRate");
 		speed = serializedObject.FindProperty("playBackSpeed");
+		priority = serializedObject.FindProperty("priority");
 		controllerProp = serializedObject.FindProperty("controller");
 		cFCurvesProp = serializedObject.FindProperty("commonFlagsCurves");
 		vFCurvesProp = serializedObject.FindProperty("valueFlagCurves");
@@ -91,6 +93,7 @@ public class MoveEditor : Editor {
 			}
 		}
 		EditorGUILayout.PropertyField(speed, new GUIContent("playback speed"));
+		EditorGUILayout.PropertyField(priority, new GUIContent("priority"));
 		DisplayFlags("commonFlags", cFCurvesProp, 0, typeof(CommonFlags), "Common Flags");
 		DisplayFlags("valueFlags", vFCurvesProp, 1, typeof(ValueFlags), "Value");
 		foldOutValueCurves = EditorGUILayout.Foldout(foldOutValueCurves, "Value Curves");
@@ -130,7 +133,7 @@ public class MoveEditor : Editor {
 		arrayLength = sp.intValue;
 
 		sp.Next(true);
-		Rect range = new Rect(0, minCurve, length.floatValue * speed.floatValue, maxCurve);
+		Rect range = new Rect(0, minCurve, length.floatValue / speed.floatValue, maxCurve);
 		for (int i = 0; i < arrayLength; i++)
 		{
 			if ((flags & test) == test)
