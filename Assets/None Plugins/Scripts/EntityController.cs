@@ -18,6 +18,13 @@ public class EntityController : MonoBehaviour {
 	//private CommonFlags controllerFlags;
 	private ValueFlags entityValueFlags;
 
+
+	#region inputBufferVariables
+	private InputBuffer[] inputBuffers;
+
+	private string[] inputNames = { "Weapon1", "Weapon2", "Jump", "Dodge" };
+
+	#endregion inputBufferVariables
 	// physics variables
 	private ContactFilter2D contactFilter;
 	private RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
@@ -44,6 +51,11 @@ public class EntityController : MonoBehaviour {
 		contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
 		contactFilter.useLayerMask = true;
 		currentMove = null;
+		inputBuffers = new InputBuffer[inputNames.Length];
+		for(int i = 0; i < inputBuffers.Length; i++)
+		{
+			inputBuffers[i] = new InputBuffer(inputNames[i]);
+		}
 	}
 
 	private void FixedUpdate()
@@ -95,6 +107,10 @@ public class EntityController : MonoBehaviour {
 		Vector2 movementInput = Vector2.zero;
 		movementInput.x = Input.GetAxisRaw("Horizontal");
 		movementInput.y = Input.GetAxisRaw("Vertical");
+		foreach(InputBuffer b in inputBuffers)
+		{
+			b.Update();
+		}
 		//TODO: method for checking moves
 		if ((flagData.commonFlags & CommonFlags.MoveWithInput) != CommonFlags.None)
 		{

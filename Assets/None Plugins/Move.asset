@@ -168,7 +168,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   animationStateName: Test
   length: 0.6666667
-  frameRate: 60
+  frameRate: 0.016666668
   playBackSpeed: 1
   priority: 0
   data:
@@ -181,14 +181,14 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 39.69486
-      outSlope: 39.69486
+      inSlope: 39.69543
+      outSlope: 39.69543
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.13333526
+      time: 0.13333334
       value: 5.2927246
       inSlope: 0
       outSlope: 0
@@ -197,7 +197,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.44829917
+      time: 0.45000002
       value: 10
       inSlope: 0
       outSlope: 0
@@ -208,8 +208,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.6666667
       value: 0
-      inSlope: -45.794357
-      outSlope: -45.794357
+      inSlope: -47.92332
+      outSlope: -47.92332
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -276,7 +276,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.011570126
+      time: 0.016666668
       value: 1
       inSlope: Infinity
       outSlope: Infinity

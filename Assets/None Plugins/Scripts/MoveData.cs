@@ -159,6 +159,19 @@ public class MoveData : ScriptableObject {
 		}
 		return combinedCurve;
 	}
+
+	public AnimationCurve RoundToKeyFrames(AnimationCurve ac)
+	{
+		AnimationCurve animation = new AnimationCurve();
+		for(int i = 0; i<ac.keys.Length; i++)
+		{
+			Keyframe k = ac.keys[i];
+			float ti = (float)Math.Round(k.time / frameRate) * frameRate;
+			k.time = ti;
+			animation.AddKey(k);
+		}
+		return animation;
+	}
 	/// <summary> Used to verrify that the move will work</summary>
 	public void Validate()
 	{
@@ -167,6 +180,14 @@ public class MoveData : ScriptableObject {
 		combinedFlagCurves[(int)FlagTypes.CommonFlags] = CombineFlagCurves(commonFlagsCurves, (int)data.commonFlags);
 		combinedFlagCurves[(int)FlagTypes.ValueFlags] = CombineFlagCurves(valueFlagCurves, (int)data.valueFlags);
 		#endregion curveStuff
+		for(int i = 0; i<combinedFlagCurves.Length; i++)
+		{
+			combinedFlagCurves[i] = RoundToKeyFrames(combinedFlagCurves[i]);
+		}
+		for(int i = 0; i < valueCurves.Length; i++)
+		{
+			valueCurves[i] = RoundToKeyFrames(valueCurves[i]);
+		}
 		valid = true;
 	}
 	#endregion EditorFunctions

@@ -87,7 +87,7 @@ public class MoveEditor : Editor {
 				if(clip != null)
 				{
 					length.floatValue = clip.length;
-					frameRateProp.floatValue = clip.frameRate;
+					frameRateProp.floatValue = 1.0f/clip.frameRate;
 					validName = true;
 				}
 			}
