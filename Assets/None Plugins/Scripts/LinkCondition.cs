@@ -53,7 +53,7 @@ public class LinkCondition : ScriptableObject {
 	{
 		for (int i = 0; i < inputBuffers.Length; i++)
 		{
-			if (inputBuffers[i].Button == button)
+			if (inputBuffers[i].Button == buttonInput)
 			{
 				return inputBuffers[i].Hold() == holdNumber;
 			}
@@ -85,5 +85,32 @@ public class LinkCondition : ScriptableObject {
 			return InputHoldConditon(inputBuffers, "Weapon2");
 		}
 		return false;
+	}
+
+	public void ExecuteInput(InputBuffer[] inputBuffers, string buttonInput)
+	{
+		for (int i = 0; i < inputBuffers.Length; i++)
+		{
+			if (inputBuffers[i].Button == buttonInput)
+			{
+				inputBuffers[i].Execute();
+			}
+		}
+	}
+
+	public void ExecuteInput (InputBuffer[] inputBuffers)
+	{
+		ExecuteInput(inputBuffers, button);
+	}
+
+	public void ExecuteInput(InputBuffer[] inputBuffers, string weapon1, string weapon2)
+	{
+		if (weapon1 == weapon)
+		{
+			ExecuteInput(inputBuffers, "Weapon1");
+		}else if (weapon2 == weapon)
+		{
+			ExecuteInput(inputBuffers, "Weapon2");
+		}
 	}
 }

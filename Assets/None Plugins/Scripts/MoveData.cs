@@ -10,7 +10,7 @@ using UnityEditor.Animations;
 [Serializable]
 public struct MoveLink
 {
-	public List<LinkCondition> condition;
+	public List<LinkCondition> conditions;
 	public MoveData move;
 	public int priority;
 	public float minTime;
@@ -31,7 +31,7 @@ public class MoveData : ScriptableObject {
 	public float length;
 	public float frameRate;
 	public float playBackSpeed = 1;
-	public int priority = 0;
+	public int damage = 0;
 
 	[SerializeField]
 	public FlagData data = new FlagData(CommonFlags.None,ValueFlags.None);
@@ -49,7 +49,7 @@ public class MoveData : ScriptableObject {
 	public List<MoveLink> links = new List<MoveLink>();
 	[SerializeField]
 	private AnimationCurve[] combinedFlagCurves = new AnimationCurve[Enum.GetValues(typeof(FlagTypes)).Length];
-	/*TODO: its possible that instead of saving a list of curves I save one that is parsed into several. but figuring out how to do that could be a head ache*/
+	/*completed todo: its possible that instead of saving a list of curves I save one that is parsed into several. but figuring out how to do that could be a head ache*/
 	// turns out not as much of a pain as i thought, though it still needs some work to intigrate it better
 	
 	// Update is called once per frame
@@ -190,7 +190,6 @@ public class MoveData : ScriptableObject {
 	/// <summary> Used to verrify that the move will work</summary>
 	public void Validate()
 	{
-		//TODO: write function;
 		#region curveStuff
 		combinedFlagCurves[(int)FlagTypes.CommonFlags] = CombineFlagCurves(commonFlagsCurves, (int)data.commonFlags);
 		combinedFlagCurves[(int)FlagTypes.ValueFlags] = CombineFlagCurves(valueFlagCurves, (int)data.valueFlags);

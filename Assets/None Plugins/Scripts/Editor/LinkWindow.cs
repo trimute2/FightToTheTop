@@ -35,10 +35,10 @@ public class LinkWindow : EditorWindow {
 	public void SetLink(SerializedProperty nl)
 	{
 		link = nl;
-		conditions = new ReorderableList(link.serializedObject, link.FindPropertyRelative("condition"), true, true, true, true);
+		conditions = new ReorderableList(link.serializedObject, link.FindPropertyRelative("conditions"), true, true, true, true);
 		conditions.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
 		{
-			SerializedProperty element = link.FindPropertyRelative("condition").GetArrayElementAtIndex(index);
+			SerializedProperty element = link.FindPropertyRelative("conditions").GetArrayElementAtIndex(index);
 			EditorGUI.PropertyField(rect, element, GUIContent.none);
 		};
 		conditions.drawHeaderCallback = (Rect rect) =>

@@ -59,6 +59,7 @@ public class EntityController : MonoBehaviour {
 		}
 	}
 
+	#region fixedUpdateFunctions
 	private void FixedUpdate()
 	{
 		velocity += Physics2D.gravity * Time.deltaTime;
@@ -102,6 +103,9 @@ public class EntityController : MonoBehaviour {
 		rb2d.position = rb2d.position + move.normalized * distance;
 	}
 
+	#endregion fixedUpdateFunctions
+
+	#region updateFunctions
 	// Update is called once per frame
 	void Update () {
 		targetVelocity = Vector2.zero;
@@ -112,7 +116,6 @@ public class EntityController : MonoBehaviour {
 		{
 			b.Update();
 		}
-		//TODO: method for checking moves
 		if ((flagData.commonFlags & CommonFlags.MoveWithInput) != CommonFlags.None)
 		{
 			
@@ -133,6 +136,7 @@ public class EntityController : MonoBehaviour {
 			}
 			targetVelocity.x = movementInput.x * movementSpeed;
 		}
+		
 		if (Input.GetButtonDown("Fire1") && currentMove == null)
 		{
 			currentMove = test;
@@ -145,6 +149,53 @@ public class EntityController : MonoBehaviour {
 		//Debug.Log(1 / Time.deltaTime);
 	}
 
+
+	private void CheckMoves()
+	{
+		List<MoveLink> links = new List<MoveLink>();
+		//TODO: fill out list of links
+		//right now the higher priority is the larger number
+		int nextMoveIndex = -1;
+		int priority = 0;
+		for(int i = 0; i< links.Count; i++)
+		{
+			MoveLink currentLink = links[i];
+			if(currentLink.priority > priority)
+			{
+				bool meetsConditions = true;
+				for(int j = 0; j < currentLink.conditions.Count; j++)
+				{
+					LinkCondition condition = currentLink.conditions[j];
+					//TODO: possible system to make sure the same condition is not tested twice
+					//have another class keep a list of conditions, and if they were checked this frame
+					//as well as there result
+					switch (condition.conditionType)
+					{
+						case ConditionType.groundCondition:
+							meetsConditions = condition.BoolCondition(grounded);
+							break;
+						case ConditionType.inputCondition:
+							meetsConditions = condition.InputCondition(inputBuffers);
+							break;
+					}
+					if (!meetsConditions)
+					{
+						break;
+					}
+				}
+				if (meetsConditions)
+				{
+					priority = currentLink.priority;
+					nextMoveIndex = i;
+				}
+			}
+		}
+		if(nextMoveIndex != -1)
+		{
+			//TODO: start next move
+		}
+	}
+	#endregion updateFunctions
 	//late update is called once per frame after the internal animation update
 	private void LateUpdate()
 	{
