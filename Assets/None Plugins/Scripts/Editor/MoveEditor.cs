@@ -46,9 +46,20 @@ public class MoveEditor : Editor {
 		links = new ReorderableList(serializedObject, serializedObject.FindProperty("links"), true, true, true, true);
 		links.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
 		{
-			var element = links.serializedProperty.GetArrayElementAtIndex(index);
+			SerializedProperty element = links.serializedProperty.GetArrayElementAtIndex(index);
+			//rect.y += 2;
 			//EditorGUI.LabelField(rect, new GUIContent("Move"));
-			EditorGUI.PropertyField(rect,element.FindPropertyRelative("move"), new GUIContent("Move"));
+			EditorGUI.PropertyField(new Rect(rect.x,rect.y,rect.width*0.50f,rect.height),element.FindPropertyRelative("move"), GUIContent.none);
+			EditorGUI.PropertyField(new Rect(rect.x+rect.width * 0.5f, rect.y, rect.width * 0.3f, rect.height), element.FindPropertyRelative("priority"), GUIContent.none);
+			if (GUI.Button(new Rect(rect.width * 0.9f, rect.y,rect.width*0.15f,rect.height),new GUIContent("detail"))){
+				LinkWindow window = (LinkWindow)EditorWindow.GetWindow(typeof(LinkWindow));
+				window.SetLink(element);
+				window.Show();
+			}
+		};
+		links.drawHeaderCallback = (Rect rect) =>
+		{
+			EditorGUI.LabelField(rect, "Links");
 		};
 		//TODO: better way of chacking that the curve sizes are correct
 		SerializedProperty sp = cFCurvesProp.Copy();
