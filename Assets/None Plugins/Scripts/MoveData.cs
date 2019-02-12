@@ -7,6 +7,16 @@ using UnityEditor;
 using UnityEditor.Animations;
 #endif
 
+[Serializable]
+public struct MoveLink
+{
+	public List<LinkCondition> condition;
+	public MoveData move;
+	public int priority;
+	public float minTime;
+	public float maxTime;
+}
+
 [CreateAssetMenu(fileName = "Move", menuName = "Data/Move Data", order = 1)]
 public class MoveData : ScriptableObject {
 	/*WARNING: if you change he names of any of these variables also change the
@@ -32,11 +42,16 @@ public class MoveData : ScriptableObject {
 
 	public AnimationCurve[] valueCurves = new AnimationCurve[Enum.GetValues(typeof(ValueFlags)).Length - 1];
 
+
+	//I would make this private but then i would have to handle a bunch of shit so its public
+	//I hate this but right now i would rather have it working
+	[SerializeField]
+	public List<MoveLink> links = new List<MoveLink>();
 	[SerializeField]
 	private AnimationCurve[] combinedFlagCurves = new AnimationCurve[Enum.GetValues(typeof(FlagTypes)).Length];
 	/*TODO: its possible that instead of saving a list of curves I save one that is parsed into several. but figuring out how to do that could be a head ache*/
 	// turns out not as much of a pain as i thought, though it still needs some work to intigrate it better
-
+	
 	// Update is called once per frame
 	void Update () {
 		

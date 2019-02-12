@@ -20,6 +20,7 @@ public class EntityController : MonoBehaviour {
 
 
 	#region inputBufferVariables
+	//TODO: change to dictionary 
 	private InputBuffer[] inputBuffers;
 
 	private string[] inputNames = { "Weapon1", "Weapon2", "Jump", "Dodge" };

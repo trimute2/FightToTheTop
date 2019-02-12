@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Animations;
+using UnityEditorInternal;
 
 [CustomEditor(typeof(MoveData))]
 public class MoveEditor : Editor {
@@ -19,6 +20,7 @@ public class MoveEditor : Editor {
 	SerializedProperty flagsProp;
 	SerializedProperty flagData;
 	List<AnimatorState> stateList;
+	ReorderableList links;
 
 	/** <summary>Does the name of the current animation state match
 	 * one in the controller</summary>*/
@@ -41,6 +43,13 @@ public class MoveEditor : Editor {
 		vFCurvesProp = serializedObject.FindProperty("valueFlagCurves");
 		vCurvesProp = serializedObject.FindProperty("valueCurves");
 		flagData = serializedObject.FindProperty("data");
+		links = new ReorderableList(serializedObject, serializedObject.FindProperty("links"), true, true, true, true);
+		links.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
+		{
+			var element = links.serializedProperty.GetArrayElementAtIndex(index);
+			//EditorGUI.LabelField(rect, new GUIContent("Move"));
+			EditorGUI.PropertyField(rect,element.FindPropertyRelative("move"), new GUIContent("Move"));
+		};
 		//TODO: better way of chacking that the curve sizes are correct
 		SerializedProperty sp = cFCurvesProp.Copy();
 		sp.Next(true);
@@ -101,6 +110,7 @@ public class MoveEditor : Editor {
 		{
 			DrawFlagCurves(flagData.FindPropertyRelative("valueFlags").intValue, vCurvesProp, typeof(ValueFlags), -10, 20);
 		}
+		links.DoLayoutList();
 		serializedObject.ApplyModifiedProperties();
 		if (GUILayout.Button("Validate"))
 		{
@@ -148,10 +158,10 @@ public class MoveEditor : Editor {
 	private void UpdateStateList()
 	{
 		stateList.Clear();
-		AnimatorController controller = (AnimatorController)controllerProp.objectReferenceValue;
+		UnityEditor.Animations.AnimatorController controller = (UnityEditor.Animations.AnimatorController)controllerProp.objectReferenceValue;
 		if (controller != null)
 		{
-			AnimatorControllerLayer[] layers = controller.layers;
+			UnityEditor.Animations.AnimatorControllerLayer[] layers = controller.layers;
 			for(int i = 0; i < layers.Length; i++)
 			{
 				StatesFromMachine(layers[i].stateMachine);
