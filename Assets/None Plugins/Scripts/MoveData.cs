@@ -51,11 +51,6 @@ public class MoveData : ScriptableObject {
 	private AnimationCurve[] combinedFlagCurves = new AnimationCurve[Enum.GetValues(typeof(FlagTypes)).Length];
 	/*completed todo: its possible that instead of saving a list of curves I save one that is parsed into several. but figuring out how to do that could be a head ache*/
 	// turns out not as much of a pain as i thought, though it still needs some work to intigrate it better
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	public int GetTrackedFlags(FlagTypes flag)
 	{

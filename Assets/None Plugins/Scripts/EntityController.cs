@@ -25,6 +25,9 @@ public class EntityController : MonoBehaviour {
 
 	private string[] inputNames = { "Weapon1", "Weapon2", "Jump", "Dodge" };
 
+	private const int WEAPON1INDEX = 0;
+	private const int WEAPON2INDEX = 1;
+
 	#endregion inputBufferVariables
 	// physics variables
 	private ContactFilter2D contactFilter;
@@ -41,6 +44,10 @@ public class EntityController : MonoBehaviour {
 	private MoveData currentMove;
 
 	public MoveData test;
+
+	public string Weapon1;
+
+	public string Weapon2;
 
 	// Use this for initialization
 	void Start () {
@@ -153,6 +160,93 @@ public class EntityController : MonoBehaviour {
 	private void CheckMoves()
 	{
 		List<MoveLink> links = new List<MoveLink>();
+
+		int nextMoveIndex = -1;
+		int priority = 0;
+		for(int i = 0; i< links.Count; i++)
+		{
+			MoveLink currentLink = links[i];
+			if (currentLink.priority > priority)
+			{
+				bool meetsConditions = false;
+				for (int j = 0; j < currentLink.conditions.Count; j++)
+				{
+					LinkCondition condition = currentLink.conditions[j];
+					switch (condition.conditionType)
+					{
+						case ConditionType.inputCondition:
+							meetsConditions = inputBuffers[condition.buttonIndex].CanUse();
+							break;
+						case ConditionType.groundCondition:
+							meetsConditions = grounded == condition.boolSetting;
+							break;
+						case ConditionType.weaponCondition:
+							if(Weapon1 == condition.weapon)
+							{
+								meetsConditions = inputBuffers[WEAPON1INDEX].CanUse();
+							}else if(Weapon2 == condition.weapon)
+							{
+								meetsConditions = inputBuffers[WEAPON2INDEX].CanUse();
+							}
+							else
+							{
+								meetsConditions = false;
+							}
+							break;
+						case ConditionType.holdCondition:
+							meetsConditions = inputBuffers[condition.buttonIndex].Hold() >= condition.holdNumber;
+							break;
+						case ConditionType.weaponHoldCondition:
+							if (Weapon1 == condition.weapon)
+							{
+								meetsConditions = inputBuffers[WEAPON1INDEX].Hold() >= condition.holdNumber;
+							}
+							else if (Weapon2 == condition.weapon)
+							{
+								meetsConditions = inputBuffers[WEAPON2INDEX].Hold() >= condition.holdNumber;
+							}
+							else
+							{
+								meetsConditions = false;
+							}
+							break;
+					}
+					if (!meetsConditions)
+					{
+						break;
+					}
+				}
+				if (meetsConditions)
+				{
+					nextMoveIndex = i;
+					priority = currentLink.priority;
+				}
+			}
+		}
+		if(nextMoveIndex != -1)
+		{
+			foreach(LinkCondition l in links[nextMoveIndex].conditions)
+			{
+				if(l.conditionType == ConditionType.inputCondition)
+				{
+					inputBuffers[l.buttonIndex].Execute();
+				}else if(l.conditionType == ConditionType.weaponCondition)
+				{
+					int ind = WEAPON1INDEX;
+					if(Weapon2 == l.weapon)
+					{
+						ind = WEAPON2INDEX;
+					}
+					inputBuffers[ind].Execute();
+				}
+			}
+		}
+	}
+
+	/* old version
+	private void CheckMoves()
+	{
+		List<MoveLink> links = new List<MoveLink>();
 		//TODO: fill out list of links
 		//right now the higher priority is the larger number
 		int nextMoveIndex = -1;
@@ -193,8 +287,15 @@ public class EntityController : MonoBehaviour {
 		if(nextMoveIndex != -1)
 		{
 			//TODO: start next move
+			foreach(LinkCondition l in links[nextMoveIndex].conditions)
+			{
+				
+			}
 		}
-	}
+	}*/
+
+
+
 	#endregion updateFunctions
 	//late update is called once per frame after the internal animation update
 	private void LateUpdate()
