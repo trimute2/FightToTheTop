@@ -38,7 +38,7 @@ public class InputBuffer {
 	{
 		for(int i = 1; i < bufferLength; i++)
 		{
-			if (bufferList[i].Hold == 0)
+			if (bufferList[i].Hold == 1)
 			{
 				return !bufferList[i].Used;
 			}
@@ -50,7 +50,7 @@ public class InputBuffer {
 	{
 		for (int i = 1; i < bufferLength; i++)
 		{
-			if (bufferList[i].Hold == 0)
+			if (bufferList[i].Hold == 1)
 			{
 				bufferList[i].Used = true;
 			}

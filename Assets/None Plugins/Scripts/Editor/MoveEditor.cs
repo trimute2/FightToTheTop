@@ -12,13 +12,14 @@ public class MoveEditor : Editor {
 	SerializedProperty length;
 	SerializedProperty frameRateProp;
 	SerializedProperty speed;
-	SerializedProperty priority;
 	SerializedProperty controllerProp;
 	SerializedProperty cFCurvesProp;
 	SerializedProperty vFCurvesProp;
 	SerializedProperty vCurvesProp;
 	SerializedProperty flagsProp;
 	SerializedProperty flagData;
+	SerializedProperty endTime;
+	SerializedProperty holdTime;
 	List<AnimatorState> stateList;
 	ReorderableList links;
 
@@ -37,12 +38,13 @@ public class MoveEditor : Editor {
 		length = serializedObject.FindProperty("length");
 		frameRateProp = serializedObject.FindProperty("frameRate");
 		speed = serializedObject.FindProperty("playBackSpeed");
-		priority = serializedObject.FindProperty("priority");
 		controllerProp = serializedObject.FindProperty("controller");
 		cFCurvesProp = serializedObject.FindProperty("commonFlagsCurves");
 		vFCurvesProp = serializedObject.FindProperty("valueFlagCurves");
 		vCurvesProp = serializedObject.FindProperty("valueCurves");
 		flagData = serializedObject.FindProperty("data");
+		holdTime = serializedObject.FindProperty("holdTime");
+		endTime = serializedObject.FindProperty("endTime");
 		links = new ReorderableList(serializedObject, serializedObject.FindProperty("links"), true, true, true, true);
 		links.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
 		{
@@ -88,6 +90,7 @@ public class MoveEditor : Editor {
 			UpdateStateList();
 		}
 		EditorGUI.BeginChangeCheck();
+		EditorGUILayout.PropertyField(holdTime, new GUIContent("Hold Time"));
 		if (!validName)
 		{
 			GUI.backgroundColor = Color.red;
@@ -107,19 +110,19 @@ public class MoveEditor : Editor {
 				if(clip != null)
 				{
 					length.floatValue = clip.length;
+					endTime.floatValue = length.floatValue + holdTime.floatValue;
 					frameRateProp.floatValue = 1.0f/clip.frameRate;
 					validName = true;
 				}
 			}
 		}
 		EditorGUILayout.PropertyField(speed, new GUIContent("playback speed"));
-		EditorGUILayout.PropertyField(priority, new GUIContent("priority"));
 		DisplayFlags("commonFlags", cFCurvesProp, 0, typeof(CommonFlags), "Common Flags");
-		DisplayFlags("valueFlags", vFCurvesProp, 1, typeof(ValueFlags), "Value");
+		DisplayFlags("valueFlags", vFCurvesProp, 1, typeof(ValueFlags), "Value Flags");
 		foldOutValueCurves = EditorGUILayout.Foldout(foldOutValueCurves, "Value Curves");
 		if (foldOutValueCurves)
 		{
-			DrawFlagCurves(flagData.FindPropertyRelative("valueFlags").intValue, vCurvesProp, typeof(ValueFlags), -10, 20);
+			DrawFlagCurves(flagData.FindPropertyRelative("valueFlags").intValue, vCurvesProp, typeof(ValueFlags), false);
 		}
 		links.DoLayoutList();
 		serializedObject.ApplyModifiedProperties();
@@ -137,7 +140,7 @@ public class MoveEditor : Editor {
 		//test(typeof(CommonFlags))
 	}
 
-	private void DrawFlagCurves(int flags, SerializedProperty curves, Type flagType, float minCurve = 0, float maxCurve = 1)
+	private void DrawFlagCurves(int flags, SerializedProperty curves, Type flagType, bool restraint = true, float minCurve = 0, float maxCurve = 1)
 	{
 		if(flags == 0 || !curves.isArray || !flagType.IsEnum)
 		{
@@ -154,12 +157,19 @@ public class MoveEditor : Editor {
 		arrayLength = sp.intValue;
 
 		sp.Next(true);
-		Rect range = new Rect(0, minCurve, length.floatValue / speed.floatValue, maxCurve);
+		Rect range = new Rect(0, minCurve, (length.floatValue / speed.floatValue) + holdTime.floatValue, maxCurve);
 		for (int i = 0; i < arrayLength; i++)
 		{
 			if ((flags & test) == test)
 			{
-				EditorGUILayout.CurveField(curves.GetArrayElementAtIndex(i), Color.green, range, new GUIContent(names[i + 1]));
+				if (restraint)
+				{
+					EditorGUILayout.CurveField(curves.GetArrayElementAtIndex(i), Color.green, range, new GUIContent(names[i + 1]));
+				}
+				else
+				{
+					EditorGUILayout.PropertyField(curves.GetArrayElementAtIndex(i), new GUIContent(names[i + 1]));
+				}
 			}
 			test = test << 1;
 		}

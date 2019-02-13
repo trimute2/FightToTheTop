@@ -49,6 +49,8 @@ public class EntityController : MonoBehaviour {
 
 	public string Weapon2;
 
+	public List<MoveLink> defaultMoves;
+
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D>();
@@ -143,7 +145,7 @@ public class EntityController : MonoBehaviour {
 			}
 			targetVelocity.x = movementInput.x * movementSpeed;
 		}
-		
+		CheckMoves();
 		if (Input.GetButtonDown("Fire1") && currentMove == null)
 		{
 			currentMove = test;
@@ -160,9 +162,19 @@ public class EntityController : MonoBehaviour {
 	private void CheckMoves()
 	{
 		List<MoveLink> links = new List<MoveLink>();
-
+		links.AddRange(defaultMoves);
+		if (currentMove != null)
+		{
+			foreach (MoveLink l in currentMove.links)
+			{
+				if ((l.minTime <= moveTime) && (l.maxTime >= moveTime))
+				{
+					links.Add(l);
+				}
+			}
+		}
 		int nextMoveIndex = -1;
-		int priority = 0;
+		int priority = -100;
 		for(int i = 0; i< links.Count; i++)
 		{
 			MoveLink currentLink = links[i];
@@ -240,6 +252,10 @@ public class EntityController : MonoBehaviour {
 					inputBuffers[ind].Execute();
 				}
 			}
+			currentMove = links[nextMoveIndex].move;
+			moveTime = -1;
+			animator.Play(currentMove.animationStateName);
+			animator.speed = currentMove.playBackSpeed;
 		}
 	}
 
@@ -331,7 +347,15 @@ public class EntityController : MonoBehaviour {
 			}
 			if (currentMove.EndMove(moveTime))
 			{
-				animator.Play("Idle");
+				if (grounded)
+				{
+					animator.Play("Idle");
+				}
+				else
+				{
+					animator.Play("Falling");
+				}
+				animator.speed = 1;
 				moveTime = -1;
 				currentMove = null;
 			}

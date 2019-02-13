@@ -170,7 +170,7 @@ MonoBehaviour:
   length: 0.6666667
   frameRate: 0.016666668
   playBackSpeed: 1
-  priority: 0
+  damage: 0
   data:
     commonFlags: 1
     valueFlags: 1
@@ -241,7 +241,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   links:
-  - condition: []
+  - conditions: []
     move: {fileID: 0}
     priority: 0
     minTime: 0

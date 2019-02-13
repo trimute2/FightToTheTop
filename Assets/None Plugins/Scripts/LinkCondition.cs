@@ -13,6 +13,7 @@ public enum ConditionType
 }
 
 [System.Serializable]
+[CreateAssetMenu(fileName = "Move", menuName = "Data/Link Condition", order = 1)]
 public class LinkCondition : ScriptableObject {
 	//TODO: later it might be better for this to just hold data and have the player do the checks, this is good for now
 	public ConditionType conditionType;

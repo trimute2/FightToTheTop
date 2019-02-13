@@ -32,6 +32,8 @@ public class MoveData : ScriptableObject {
 	public float frameRate;
 	public float playBackSpeed = 1;
 	public int damage = 0;
+	public float holdTime;
+	public float endTime;
 
 	[SerializeField]
 	public FlagData data = new FlagData(CommonFlags.None,ValueFlags.None);
@@ -76,7 +78,7 @@ public class MoveData : ScriptableObject {
 
 	public bool EndMove(float time)
 	{
-		return time >= length / playBackSpeed;
+		return time >= (length / playBackSpeed)+holdTime;
 	}
 	//for functions only called in the editor
 #if UNITY_EDITOR
@@ -117,7 +119,7 @@ public class MoveData : ScriptableObject {
 				for (int j = 0; j < flagCurves[i].keys.Length; j++)
 				{
 					Keyframe ke = flagCurves[i].keys[j];
-					if (ke.time <= length * playBackSpeed)
+					if (ke.time <= (length/ playBackSpeed)+holdTime+0.000001)
 					{
 						ke.value = (int)Math.Round(ke.value);
 						flagCurves[i].MoveKey(j, ke);
