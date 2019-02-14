@@ -9,24 +9,24 @@ public class EntityController : MonoBehaviour {
 
 
 	/**<summary>The direction the player is facing</summary>*/
-	private int Facing = 1;
+	protected int Facing = 1;
 	/**<summary>The rigid body for the entity</summary>*/
 	private Rigidbody2D rb2d;
 	/**<summary>The animator for the entity</summary>*/
 	private Animator animator;
-	private FlagData flagData;
+	protected FlagData flagData;
 	//private CommonFlags controllerFlags;
 	private ValueFlags entityValueFlags;
 
 
 	#region inputBufferVariables
 	//TODO: change to dictionary 
-	private InputBuffer[] inputBuffers;
+	//private InputBuffer[] inputBuffers;
 
-	private string[] inputNames = { "Weapon1", "Weapon2", "Jump", "Dodge" };
+	//private string[] inputNames = { "Weapon1", "Weapon2", "Jump", "Dodge" };
 
-	private const int WEAPON1INDEX = 0;
-	private const int WEAPON2INDEX = 1;
+	//private const int WEAPON1INDEX = 0;
+	//private const int WEAPON2INDEX = 1;
 
 	#endregion inputBufferVariables
 	// physics variables
@@ -35,7 +35,7 @@ public class EntityController : MonoBehaviour {
 	private List<RaycastHit2D> hitBufferList = new List<RaycastHit2D>(16);
 
 	private Vector2 velocity;
-	private Vector2 targetVelocity;
+	protected Vector2 targetVelocity;
 
 	private bool grounded;
 
@@ -45,27 +45,29 @@ public class EntityController : MonoBehaviour {
 
 	public MoveData test;
 
-	public string Weapon1;
+	//public string Weapon1;
 
-	public string Weapon2;
+	//public string Weapon2;
 
 	public List<MoveLink> defaultMoves;
 
 	// Use this for initialization
-	void Start () {
+	public virtual void Start () {
+		Facing = (int)gameObject.transform.localScale.x;
 		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
-		flagData = new FlagData(CommonFlags.MoveWithInput, ValueFlags.None);
+		flagData = new FlagData((CommonFlags.MoveWithInput | CommonFlags.CanTurn), ValueFlags.None);
 		//controllerFlags = CommonFlags.MoveWithInput;
 		entityValueFlags = ValueFlags.None;
 		contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
 		contactFilter.useLayerMask = true;
 		currentMove = null;
+		/*
 		inputBuffers = new InputBuffer[inputNames.Length];
 		for(int i = 0; i < inputBuffers.Length; i++)
 		{
 			inputBuffers[i] = new InputBuffer(inputNames[i]);
-		}
+		}*/
 	}
 
 	#region fixedUpdateFunctions
@@ -118,6 +120,7 @@ public class EntityController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		targetVelocity = Vector2.zero;
+		EntityUpdate();/*
 		Vector2 movementInput = Vector2.zero;
 		movementInput.x = Input.GetAxisRaw("Horizontal");
 		movementInput.y = Input.GetAxisRaw("Vertical");
@@ -144,7 +147,7 @@ public class EntityController : MonoBehaviour {
 				transform.localScale = sca;
 			}
 			targetVelocity.x = movementInput.x * movementSpeed;
-		}
+		}*/
 		CheckMoves();
 		if (Input.GetButtonDown("Fire1") && currentMove == null)
 		{
@@ -158,6 +161,11 @@ public class EntityController : MonoBehaviour {
 		//Debug.Log(1 / Time.deltaTime);
 	}
 
+	//maybe I will make entity abstract as well as this by extension
+	protected virtual void EntityUpdate()
+	{
+
+	}
 
 	private void CheckMoves()
 	{
@@ -184,7 +192,7 @@ public class EntityController : MonoBehaviour {
 				for (int j = 0; j < currentLink.conditions.Count; j++)
 				{
 					LinkCondition condition = currentLink.conditions[j];
-					switch (condition.conditionType)
+					/*switch (condition.conditionType)
 					{
 						case ConditionType.inputCondition:
 							meetsConditions = inputBuffers[condition.buttonIndex].CanUse();
@@ -222,7 +230,8 @@ public class EntityController : MonoBehaviour {
 								meetsConditions = false;
 							}
 							break;
-					}
+					}*/
+					meetsConditions = TestCondition(condition);
 					if (!meetsConditions)
 					{
 						break;
@@ -239,6 +248,8 @@ public class EntityController : MonoBehaviour {
 		{
 			foreach(LinkCondition l in links[nextMoveIndex].conditions)
 			{
+				ExecuteCondition(l);
+				/*
 				if(l.conditionType == ConditionType.inputCondition)
 				{
 					inputBuffers[l.buttonIndex].Execute();
@@ -250,7 +261,7 @@ public class EntityController : MonoBehaviour {
 						ind = WEAPON2INDEX;
 					}
 					inputBuffers[ind].Execute();
-				}
+				}*/
 			}
 			currentMove = links[nextMoveIndex].move;
 			moveTime = -1;
@@ -259,58 +270,23 @@ public class EntityController : MonoBehaviour {
 		}
 	}
 
-	/* old version
-	private void CheckMoves()
+	protected virtual bool TestCondition(LinkCondition condition)
 	{
-		List<MoveLink> links = new List<MoveLink>();
-		//TODO: fill out list of links
-		//right now the higher priority is the larger number
-		int nextMoveIndex = -1;
-		int priority = 0;
-		for(int i = 0; i< links.Count; i++)
+		//in process of generalizing to all entities and this is the only condition type i could think of that applied to all
+		return (condition.conditionType == ConditionType.groundCondition) && (grounded == condition.boolSetting);
+		/*
+		switch(condition.conditionType)
 		{
-			MoveLink currentLink = links[i];
-			if(currentLink.priority > priority)
-			{
-				bool meetsConditions = true;
-				for(int j = 0; j < currentLink.conditions.Count; j++)
-				{
-					LinkCondition condition = currentLink.conditions[j];
-					//TODO: possible system to make sure the same condition is not tested twice
-					//have another class keep a list of conditions, and if they were checked this frame
-					//as well as there result
-					switch (condition.conditionType)
-					{
-						case ConditionType.groundCondition:
-							meetsConditions = condition.BoolCondition(grounded);
-							break;
-						case ConditionType.inputCondition:
-							meetsConditions = condition.InputCondition(inputBuffers);
-							break;
-					}
-					if (!meetsConditions)
-					{
-						break;
-					}
-				}
-				if (meetsConditions)
-				{
-					priority = currentLink.priority;
-					nextMoveIndex = i;
-				}
-			}
+			case ConditionType.groundCondition:
+				return grounded == condition.boolSetting;
 		}
-		if(nextMoveIndex != -1)
-		{
-			//TODO: start next move
-			foreach(LinkCondition l in links[nextMoveIndex].conditions)
-			{
-				
-			}
-		}
-	}*/
+		return false*/
+	}
 
+	protected virtual void ExecuteCondition(LinkCondition condition)
+	{
 
+	}
 
 	#endregion updateFunctions
 	//late update is called once per frame after the internal animation update
@@ -336,33 +312,38 @@ public class EntityController : MonoBehaviour {
 			if (entityValueFlags != ValueFlags.None)
 			{
 				float val = 0;
-				if (getValue(ValueFlags.xVelocity, out val))
+				if (GetValue(ValueFlags.xVelocity, out val))
 				{
 					targetVelocity.x = val * Facing;
 				}
-				if(getValue(ValueFlags.yVelocity, out val))
+				if(GetValue(ValueFlags.yVelocity, out val))
 				{
 					targetVelocity.y = val;
 				}
 			}
 			if (currentMove.EndMove(moveTime))
 			{
-				if (grounded)
-				{
-					animator.Play("Idle");
-				}
-				else
-				{
-					animator.Play("Falling");
-				}
-				animator.speed = 1;
-				moveTime = -1;
-				currentMove = null;
+				EnterGenericState();
 			}
 		}
 	}
 
-	private bool getValue(ValueFlags flag, out float value)
+	protected virtual void EnterGenericState()
+	{
+		if (grounded)
+		{
+			animator.Play("Idle");
+		}
+		else
+		{
+			animator.Play("Falling");
+		}
+		animator.speed = 1;
+		moveTime = -1;
+		currentMove = null;
+	}
+
+	private bool GetValue(ValueFlags flag, out float value)
 	{
 		if((entityValueFlags & flag) != ValueFlags.None)
 		{
@@ -373,9 +354,4 @@ public class EntityController : MonoBehaviour {
 		return false;
 	}
 
-	/*
-	private int UpdateFlags<T>(T flags)
-	{
-
-	}*/
 }

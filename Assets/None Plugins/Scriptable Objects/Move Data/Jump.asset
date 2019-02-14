@@ -29,6 +29,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  - serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   valueFlagCurves:
   - serializedVersion: 2
     m_Curve: []
@@ -46,20 +51,15 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  - serializedVersion: 2
-    m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
+      time: 0.6666667
+      value: 0
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -68,8 +68,8 @@ MonoBehaviour:
   frameRate: 0.016666668
   playBackSpeed: 1
   damage: 0
-  holdTime: 1.5
-  endTime: 1.6666666
+  holdTime: 0.5
+  endTime: 0.6666667
   data:
     commonFlags: 0
     valueFlags: 2
@@ -85,20 +85,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 15
-      inSlope: 5.929286
-      outSlope: 5.929286
+      inSlope: -1.2031871
+      outSlope: -1.2031871
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.05332168
+      outWeight: 0.04379561
     - serializedVersion: 3
-      time: 0.45000002
+      time: 0.6666667
       value: 0
-      inSlope: -40.533783
-      outSlope: -40.533783
+      inSlope: -76.84647
+      outSlope: -76.84647
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.050699316
+      inWeight: 0.02262792
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -115,6 +115,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 2
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.6666667
+      value: 0
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103

@@ -10,13 +10,15 @@ public class EnumFlagsAttribute : PropertyAttribute
 [System.Flags]
 public enum CommonFlags
 {
-	None = 0,					//000
+	None = 0,					//0000
 	/**<summary>when active the controller changes velocity based off of input</summary>*/
-	MoveWithInput = 1 << 0,     //001
+	MoveWithInput = 1 << 0,     //0001
 	/**<summary>Player can cancel the current move with directional input</summary>*/
-	MovementCancel = 1 << 1,    //010
+	MovementCancel = 1 << 1,    //0010
 
-	HitboxActive = 1 << 2,		//100
+	HitboxActive = 1 << 2,		//0100
+
+	CanTurn = 1 << 3,			//1000
 }
 
 [System.Flags]

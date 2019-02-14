@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 4024242348666644}
   - component: {fileID: 114518562792178504}
   - component: {fileID: 95052419931555876}
-  - component: {fileID: 114323522022194546}
+  - component: {fileID: 114072984469425428}
   - component: {fileID: 50726700752270286}
   - component: {fileID: 70794835864208974}
   m_Layer: 0
@@ -1325,6 +1325,28 @@ MonoBehaviour:
   m_Length: 1.0000012
   m_ChildTransform: {fileID: 4700741862633828}
   m_AttachedIK: {fileID: 114486596939676936}
+--- !u!114 &114072984469425428
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1247809689074940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9783af715947fcc419b671d3b2439f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 4.5
+  test: {fileID: 11400000, guid: 4508c417f0232c84c9f5e0397c584e1b, type: 2}
+  defaultMoves:
+  - conditions:
+    - {fileID: 11400000, guid: e7e2bb20a2cdddc40ad9eec550f4e096, type: 2}
+    move: {fileID: 11400000, guid: 74112352e3c911845baf4bbe58a77bec, type: 2}
+    priority: 0
+    minTime: 0
+    maxTime: 0
+  Weapon1: 
+  Weapon2: 
 --- !u!114 &114133517554442790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1480,28 +1502,6 @@ MonoBehaviour:
   m_Length: 0.72000027
   m_ChildTransform: {fileID: 4420157809752844}
   m_AttachedIK: {fileID: 114442369786146772}
---- !u!114 &114323522022194546
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1247809689074940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 173f7f5327453a94f935a1a03775add9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 4.5
-  test: {fileID: 11400000, guid: 4508c417f0232c84c9f5e0397c584e1b, type: 2}
-  Weapon1: 
-  Weapon2: 
-  defaultMoves:
-  - conditions:
-    - {fileID: 11400000, guid: e7e2bb20a2cdddc40ad9eec550f4e096, type: 2}
-    move: {fileID: 11400000, guid: 74112352e3c911845baf4bbe58a77bec, type: 2}
-    priority: 0
-    minTime: 0
-    maxTime: 0
 --- !u!114 &114335957811978652
 MonoBehaviour:
   m_ObjectHideFlags: 1
