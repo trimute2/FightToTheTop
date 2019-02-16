@@ -3,9 +3,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class EntityController : MonoBehaviour {
 
 	public float movementSpeed = 4.5f;
+	public int maxHealth = 100;
+
+	private int health;
 
 
 	/**<summary>The direction the player is facing</summary>*/
@@ -17,7 +22,16 @@ public class EntityController : MonoBehaviour {
 	protected FlagData flagData;
 	//private CommonFlags controllerFlags;
 	private ValueFlags entityValueFlags;
+	//will set this up later
+	private int entityID;
 
+	public int EntityID
+	{
+		get
+		{
+			return entityID;
+		}
+	}
 
 	#region inputBufferVariables
 	//TODO: change to dictionary 
@@ -62,12 +76,8 @@ public class EntityController : MonoBehaviour {
 		contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
 		contactFilter.useLayerMask = true;
 		currentMove = null;
-		/*
-		inputBuffers = new InputBuffer[inputNames.Length];
-		for(int i = 0; i < inputBuffers.Length; i++)
-		{
-			inputBuffers[i] = new InputBuffer(inputNames[i]);
-		}*/
+		health = maxHealth;
+		entityID = GameManager.Instance.GetNewId();
 	}
 
 	#region fixedUpdateFunctions
@@ -114,47 +124,23 @@ public class EntityController : MonoBehaviour {
 		rb2d.position = rb2d.position + move.normalized * distance;
 	}
 
+	//will flesh this out later, maybe add stun and knock back
+	public virtual void Damage(int damage)
+	{
+		health -= damage;
+	}
 	#endregion fixedUpdateFunctions
 
 	#region updateFunctions
 	// Update is called once per frame
 	void Update () {
 		targetVelocity = Vector2.zero;
-		EntityUpdate();/*
-		Vector2 movementInput = Vector2.zero;
-		movementInput.x = Input.GetAxisRaw("Horizontal");
-		movementInput.y = Input.GetAxisRaw("Vertical");
-		foreach(InputBuffer b in inputBuffers)
-		{
-			b.Update();
-		}
-		if ((flagData.commonFlags & CommonFlags.MoveWithInput) != CommonFlags.None)
-		{
-			
-			if (movementInput.x != 0)
-			{
-				Vector3 sca = transform.localScale;
-				if (movementInput.x > 0)
-				{
-					sca.x = 1;
-					Facing = 1;
-				}
-				else
-				{
-					sca.x = -1;
-					Facing = -1;
-				}
-				transform.localScale = sca;
-			}
-			targetVelocity.x = movementInput.x * movementSpeed;
-		}*/
+		EntityUpdate();
 		CheckMoves();
 		if (Input.GetButtonDown("Fire1") && currentMove == null)
 		{
 			currentMove = test;
 			animator.Play(currentMove.animationStateName);
-			//Debug.Log(currentMove.test().GetType());
-			//Debug.Log(currentMove.test());
 		}
 		animator.SetFloat("VelocityX", Mathf.Abs(targetVelocity.x));
 		animator.SetFloat("VelocityY", velocity.y);
@@ -192,45 +178,6 @@ public class EntityController : MonoBehaviour {
 				for (int j = 0; j < currentLink.conditions.Count; j++)
 				{
 					LinkCondition condition = currentLink.conditions[j];
-					/*switch (condition.conditionType)
-					{
-						case ConditionType.inputCondition:
-							meetsConditions = inputBuffers[condition.buttonIndex].CanUse();
-							break;
-						case ConditionType.groundCondition:
-							meetsConditions = grounded == condition.boolSetting;
-							break;
-						case ConditionType.weaponCondition:
-							if(Weapon1 == condition.weapon)
-							{
-								meetsConditions = inputBuffers[WEAPON1INDEX].CanUse();
-							}else if(Weapon2 == condition.weapon)
-							{
-								meetsConditions = inputBuffers[WEAPON2INDEX].CanUse();
-							}
-							else
-							{
-								meetsConditions = false;
-							}
-							break;
-						case ConditionType.holdCondition:
-							meetsConditions = inputBuffers[condition.buttonIndex].Hold() >= condition.holdNumber;
-							break;
-						case ConditionType.weaponHoldCondition:
-							if (Weapon1 == condition.weapon)
-							{
-								meetsConditions = inputBuffers[WEAPON1INDEX].Hold() >= condition.holdNumber;
-							}
-							else if (Weapon2 == condition.weapon)
-							{
-								meetsConditions = inputBuffers[WEAPON2INDEX].Hold() >= condition.holdNumber;
-							}
-							else
-							{
-								meetsConditions = false;
-							}
-							break;
-					}*/
 					meetsConditions = TestCondition(condition);
 					if (!meetsConditions)
 					{
@@ -249,25 +196,20 @@ public class EntityController : MonoBehaviour {
 			foreach(LinkCondition l in links[nextMoveIndex].conditions)
 			{
 				ExecuteCondition(l);
-				/*
-				if(l.conditionType == ConditionType.inputCondition)
-				{
-					inputBuffers[l.buttonIndex].Execute();
-				}else if(l.conditionType == ConditionType.weaponCondition)
-				{
-					int ind = WEAPON1INDEX;
-					if(Weapon2 == l.weapon)
-					{
-						ind = WEAPON2INDEX;
-					}
-					inputBuffers[ind].Execute();
-				}*/
 			}
 			currentMove = links[nextMoveIndex].move;
 			moveTime = -1;
 			animator.Play(currentMove.animationStateName);
 			animator.speed = currentMove.playBackSpeed;
 		}
+	}
+
+	public virtual void StartMove(MoveData move)
+	{
+		currentMove = move;
+		moveTime = -1;
+		animator.Play(currentMove.animationStateName);
+		animator.speed = currentMove.playBackSpeed;
 	}
 
 	protected virtual bool TestCondition(LinkCondition condition)

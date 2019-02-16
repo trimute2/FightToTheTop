@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PlayerHurtBoxes
+  - PlayerHitBoxes
+  - EnemyHurtBoxes
+  - EnemyHitBoxes
+  - UnalignedHitBoxes
   - 
   - 
   - 
