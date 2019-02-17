@@ -19,6 +19,8 @@ public enum CommonFlags
 	HitboxActive = 1 << 2,		//0100
 
 	CanTurn = 1 << 3,			//1000
+
+	CanAttack = 1 << 4,			//10000 
 }
 
 [System.Flags]

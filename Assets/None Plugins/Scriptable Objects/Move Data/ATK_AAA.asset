@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dff1f7831641c584b8c543bbab9ada6b, type: 3}
-  m_Name: ATK_A
+  m_Name: ATK_AAA
   m_EditorClassIdentifier: 
   controller: {fileID: 9100000, guid: eb4e8d6f248662e4f8ffcdab3ed5c2ed, type: 2}
   valid: 1
@@ -20,7 +20,25 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   - serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6833334
+      value: 0
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -41,7 +59,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.06666667
+      time: 0.3
       value: 0
       inSlope: Infinity
       outSlope: Infinity
@@ -50,7 +68,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.55
+      time: 0.6833334
       value: 0
       inSlope: Infinity
       outSlope: Infinity
@@ -66,29 +84,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.20000002
-      value: 1
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
+      time: 0.68333334
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.55
-      value: 1
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -98,7 +107,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
@@ -106,7 +115,16 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.16666667
+      time: 0.3
+      value: 1
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.43333337
       value: 0
       inSlope: Infinity
       outSlope: Infinity
@@ -114,43 +132,12 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  - serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  animationStateName: ATK_A
-  length: 0.55
-  frameRate: 0.016666668
-  playBackSpeed: 1
-  damage: 0
-  holdTime: 0
-  endTime: 0.55
-  data:
-    commonFlags: 24
-    valueFlags: 1
-  commonFlagsEffected: 0
-  valueCurves:
-  - serializedVersion: 2
-    m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 10
-      inSlope: -9
-      outSlope: -9
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: -9
-      outSlope: -9
-      tangentMode: 34
+      time: 0.6833334
+      value: 0
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0
@@ -162,13 +149,29 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  links:
-  - conditions:
-    - {fileID: 11400000, guid: e9713185cc46f974b8efce7e64b4bc5d, type: 2}
-    move: {fileID: 11400000, guid: ec9b522635f17b048b7d298a005c6169, type: 2}
-    priority: 2
-    minTime: 0.20000003
-    maxTime: 0.3833334
+  animationStateName: ATK_AAA
+  length: 0.68333334
+  frameRate: 0.016666668
+  playBackSpeed: 1
+  damage: 0
+  holdTime: 0
+  endTime: 0.68333334
+  data:
+    commonFlags: 26
+    valueFlags: 1
+  commonFlagsEffected: 0
+  valueCurves:
+  - serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  - serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  links: []
   combinedFlagCurves:
   - serializedVersion: 2
     m_Curve:
@@ -182,7 +185,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.06666667
+      time: 0.3
       value: 0
       inSlope: Infinity
       outSlope: Infinity
@@ -191,17 +194,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.20000002
-      value: 16
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.55
-      value: 16
+      time: 0.6833334
+      value: 0
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
@@ -215,6 +209,15 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
+      value: 0
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.3
       value: 1
       inSlope: Infinity
       outSlope: Infinity
@@ -223,7 +226,16 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.16666667
+      time: 0.43333337
+      value: 0
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.6833334
       value: 0
       inSlope: Infinity
       outSlope: Infinity

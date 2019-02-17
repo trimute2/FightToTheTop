@@ -35,6 +35,7 @@ public class HitBoxScript : MonoBehaviour {
 	public void EnableHitBox()
 	{
 		damageCollider.enabled = true;
+		ResetHitBox();
 	}
 
 	public void DisableHitBox()

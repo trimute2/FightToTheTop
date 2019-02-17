@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InputBuffer {
-	public static int bufferLength = 10;
+	public static int bufferLength = 23;
 	private InputItem[] bufferList;
 	private string button;
 

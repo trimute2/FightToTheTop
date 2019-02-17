@@ -692,7 +692,7 @@ GameObject:
   - component: {fileID: 114759419824116068}
   - component: {fileID: 96497789706681606}
   m_Layer: 8
-  m_Name: HandWrapHitBoxes
+  m_Name: B_HandWrapHitBoxes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -954,7 +954,7 @@ Transform:
   - {fileID: 4883498518111642}
   m_Father: {fileID: 4507349967474676}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 169.83601}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 16729.836}
 --- !u!4 &4435654696520774
 Transform:
   m_ObjectHideFlags: 1
@@ -981,7 +981,7 @@ Transform:
   - {fileID: 4420157809752844}
   m_Father: {fileID: 4884982911932346}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 114.21001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3125.79}
 --- !u!4 &4524894757072834
 Transform:
   m_ObjectHideFlags: 1
@@ -1078,7 +1078,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4368688081807140}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 76.12601}
 --- !u!4 &4665760550835080
 Transform:
   m_ObjectHideFlags: 1
@@ -1253,7 +1253,7 @@ Transform:
   - {fileID: 4507349967474676}
   m_Father: {fileID: 4880642020362976}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 161.48701}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -11358.513}
 --- !u!4 &4895482376743150
 Transform:
   m_ObjectHideFlags: 1
@@ -1358,7 +1358,7 @@ CircleCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1951064384947978}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -1373,7 +1373,7 @@ CircleCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1426286800004794}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -1811,6 +1811,9 @@ MonoBehaviour:
   movementSpeed: 4.5
   maxHealth: 100
   test: {fileID: 11400000, guid: 4508c417f0232c84c9f5e0397c584e1b, type: 2}
+  HitBoxes:
+  - {fileID: 114306252896422724}
+  - {fileID: 114759419824116068}
   defaultMoves:
   - conditions:
     - {fileID: 11400000, guid: e7e2bb20a2cdddc40ad9eec550f4e096, type: 2}
@@ -1819,7 +1822,9 @@ MonoBehaviour:
     minTime: 0
     maxTime: 0
   - conditions:
-    - {fileID: 11400000, guid: e7e2bb20a2cdddc40ad9eec550f4e096, type: 2}
+    - {fileID: 11400000, guid: e9713185cc46f974b8efce7e64b4bc5d, type: 2}
+    - {fileID: 11400000, guid: 79d6d085e16760a459f80198f885f5df, type: 2}
+    - {fileID: 11400000, guid: e2660fc441da8af4fb0a45f7513a05f8, type: 2}
     move: {fileID: 11400000, guid: 83c1afb22ba7e4346b4f8d70b3e5d370, type: 2}
     priority: 0
     minTime: 0
@@ -1914,15 +1919,15 @@ MonoBehaviour:
     m_SolverPoses:
     - m_BoneTransform: {fileID: 4063656850902478}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: -0.9992063, w: 0.03983357}
+      solverRotation: {x: 0, y: 0, z: -0.74962795, w: 0.6618595}
       defaultLocalRotation: {x: -0, y: -0, z: 0.7341259, w: -0.6790135}
     - m_BoneTransform: {fileID: 4243975677509934}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0.7951314, w: 0.6064372}
+      solverRotation: {x: 0, y: 0, z: 0, w: 1}
       defaultLocalRotation: {x: -0, y: -0, z: -0, w: 1}
     m_Weight: 1
     m_RestoreDefaultPose: 1
-    targetPosition: {x: 1.0320002, y: 0.3810002, z: 0}
+    targetPosition: {x: 1.75, y: 0.43, z: 0}
     flip: 0
 --- !u!114 &114269203178852038
 MonoBehaviour:
@@ -2161,15 +2166,15 @@ MonoBehaviour:
     m_SolverPoses:
     - m_BoneTransform: {fileID: 4134592247242632}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0.98181504, w: -0.18984002}
+      solverRotation: {x: 0, y: 0, z: 0.9988294, w: -0.04837167}
       defaultLocalRotation: {x: 0, y: 0, z: 1, w: 0}
     - m_BoneTransform: {fileID: 4280578843930336}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: -0.46025452, w: 0.88778704}
+      solverRotation: {x: 0, y: 0, z: -0.55370563, w: 0.8327125}
       defaultLocalRotation: {x: 0, y: 0, z: 0, w: 1}
     m_Weight: 1
     m_RestoreDefaultPose: 1
-    targetPosition: {x: -0.36999995, y: -1.9730384, z: 0}
+    targetPosition: {x: -0.95, y: -1.9730384, z: 0}
     flip: 1
 --- !u!114 &114488092843109304
 MonoBehaviour:
@@ -2426,15 +2431,15 @@ MonoBehaviour:
     m_SolverPoses:
     - m_BoneTransform: {fileID: 4342960892384874}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: -0.94725835, w: 0.3204709}
+      solverRotation: {x: 0, y: 0, z: -0.8409484, w: 0.5411153}
       defaultLocalRotation: {x: -0, y: -0, z: 1, w: 0}
     - m_BoneTransform: {fileID: 4785574201055292}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: -0.46084267, w: 0.88748187}
+      solverRotation: {x: 0, y: 0, z: -0.617828, w: 0.78631324}
       defaultLocalRotation: {x: 0, y: 0, z: 0, w: 1}
     m_Weight: 1
     m_RestoreDefaultPose: 1
-    targetPosition: {x: 0.38000005, y: -1.9699999, z: 0}
+    targetPosition: {x: 0.76, y: -1.9699999, z: 0}
     flip: 1
 --- !u!114 &114826227738883868
 MonoBehaviour:

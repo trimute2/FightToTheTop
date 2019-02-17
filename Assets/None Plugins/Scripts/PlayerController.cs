@@ -60,6 +60,15 @@ public class PlayerController : EntityController {
 		{
 			targetVelocity.x = movementInput.x * movementSpeed;
 		}
+		if ((flagData.commonFlags & CommonFlags.MovementCancel) != CommonFlags.None)
+		{
+			if(targetVelocity.x != 0)
+			{
+				EnterGenericState();
+			}
+		}
+
+
 	}
 
 	protected override bool TestCondition(LinkCondition condition)
@@ -90,6 +99,8 @@ public class PlayerController : EntityController {
 					return inputBuffers[WEAPON2INDEX].Hold() >= condition.holdNumber;
 				}
 				return false;
+			case ConditionType.AttackFlagCondition:
+				return ((flagData.commonFlags & CommonFlags.CanAttack) != CommonFlags.None) == condition.boolSetting;
 			default:
 				return base.TestCondition(condition);
 		}

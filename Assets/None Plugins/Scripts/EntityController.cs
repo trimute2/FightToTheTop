@@ -61,6 +61,8 @@ public class EntityController : MonoBehaviour {
 
 	public MoveData test;
 
+	public List<HitBoxScript> HitBoxes;
+
 	//public string Weapon1;
 
 	//public string Weapon2;
@@ -72,7 +74,7 @@ public class EntityController : MonoBehaviour {
 		Facing = (int)gameObject.transform.localScale.x;
 		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
-		flagData = new FlagData((CommonFlags.MoveWithInput | CommonFlags.CanTurn), ValueFlags.None);
+		flagData = new FlagData((CommonFlags.MoveWithInput | CommonFlags.CanTurn | CommonFlags.CanAttack), ValueFlags.None);
 		//controllerFlags = CommonFlags.MoveWithInput;
 		entityValueFlags = ValueFlags.None;
 		contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
@@ -130,6 +132,8 @@ public class EntityController : MonoBehaviour {
 	public virtual void Damage(int damage)
 	{
 		health -= damage;
+		EnterGenericState();
+		animator.CrossFade("Damage", 0.001111111f);
 	}
 	#endregion fixedUpdateFunctions
 
@@ -277,9 +281,15 @@ public class EntityController : MonoBehaviour {
 		{
 			animator.Play("Falling");
 		}
+		flagData.valueFlags = ValueFlags.None;
+		flagData.commonFlags = CommonFlags.CanTurn | CommonFlags.MoveWithInput | CommonFlags.CanAttack; 
 		animator.speed = 1;
 		moveTime = -1;
 		currentMove = null;
+		for(int i = 0; i < HitBoxes.Count; i++)
+		{
+			HitBoxes[i].DisableHitBox();
+		}
 	}
 
 	private bool GetValue(ValueFlags flag, out float value)
@@ -300,11 +310,11 @@ public class EntityController : MonoBehaviour {
 
 	public void ActivateHitBox(int HitboxIndex)
 	{
-
+		HitBoxes[HitboxIndex].EnableHitBox();
 	}
 
 	public void DeactivateHitBox(int HitboxIndex)
 	{
-
+		HitBoxes[HitboxIndex].DisableHitBox();
 	}
 }

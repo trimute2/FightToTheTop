@@ -10,6 +10,7 @@ public enum ConditionType
 	groundCondition,
 	weaponCondition,
 	weaponHoldCondition,
+	AttackFlagCondition,
 }
 
 [System.Serializable]
