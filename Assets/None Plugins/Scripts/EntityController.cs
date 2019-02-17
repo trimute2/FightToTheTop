@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
@@ -137,11 +139,6 @@ public class EntityController : MonoBehaviour {
 		targetVelocity = Vector2.zero;
 		EntityUpdate();
 		CheckMoves();
-		if (Input.GetButtonDown("Fire1") && currentMove == null)
-		{
-			currentMove = test;
-			animator.Play(currentMove.animationStateName);
-		}
 		animator.SetFloat("VelocityX", Mathf.Abs(targetVelocity.x));
 		animator.SetFloat("VelocityY", velocity.y);
 		//Debug.Log(1 / Time.deltaTime);
@@ -296,4 +293,8 @@ public class EntityController : MonoBehaviour {
 		return false;
 	}
 
+	public void AddForce(Vector2 force)
+	{
+		velocity += force;
+	}
 }

@@ -187,6 +187,14 @@ public class MoveData : ScriptableObject {
 	/// <summary> Used to verrify that the move will work</summary>
 	public void Validate()
 	{
+		for(int i = 0; i< commonFlagsCurves.Length; i++)
+		{
+			commonFlagsCurves[i] = RoundToKeyFrames(commonFlagsCurves[i]);
+		}
+		for (int i = 0; i < valueFlagCurves.Length; i++)
+		{
+			valueFlagCurves[i] = RoundToKeyFrames(valueFlagCurves[i]);
+		}
 		#region curveStuff
 		combinedFlagCurves[(int)FlagTypes.CommonFlags] = CombineFlagCurves(commonFlagsCurves, (int)data.commonFlags);
 		combinedFlagCurves[(int)FlagTypes.ValueFlags] = CombineFlagCurves(valueFlagCurves, (int)data.valueFlags);
