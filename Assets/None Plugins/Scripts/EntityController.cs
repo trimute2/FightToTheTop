@@ -297,4 +297,14 @@ public class EntityController : MonoBehaviour {
 	{
 		velocity += force;
 	}
+
+	public void ActivateHitBox(int HitboxIndex)
+	{
+
+	}
+
+	public void DeactivateHitBox(int HitboxIndex)
+	{
+
+	}
 }
