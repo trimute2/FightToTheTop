@@ -78,6 +78,8 @@ public class EntityController : MonoBehaviour {
 		//controllerFlags = CommonFlags.MoveWithInput;
 		entityValueFlags = ValueFlags.None;
 		contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+		//LayerMask mask1 = LayerMask.NameToLayer("PlayerHurtBoxes");
+		//contactFilter.SetLayerMask(mask1);
 		contactFilter.useLayerMask = true;
 		currentMove = null;
 		health = maxHealth;

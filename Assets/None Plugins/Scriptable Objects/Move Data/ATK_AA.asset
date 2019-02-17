@@ -196,7 +196,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 79d6d085e16760a459f80198f885f5df, type: 2}
     move: {fileID: 11400000, guid: 66c6d7bb009f3de4ba189c8c2f94132d, type: 2}
     priority: 3
-    minTime: 0.3833334
+    minTime: 0.25000006
     maxTime: 0.5833334
   combinedFlagCurves:
   - serializedVersion: 2

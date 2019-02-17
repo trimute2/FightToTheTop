@@ -167,8 +167,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: e9713185cc46f974b8efce7e64b4bc5d, type: 2}
     move: {fileID: 11400000, guid: ec9b522635f17b048b7d298a005c6169, type: 2}
     priority: 2
-    minTime: 0.20000003
-    maxTime: 0.3833334
+    minTime: 0.18333337
+    maxTime: 0.55000013
   combinedFlagCurves:
   - serializedVersion: 2
     m_Curve:
