@@ -36,7 +36,7 @@ public class InputBuffer {
 
 	public bool CanUse()
 	{
-		for(int i = 1; i < bufferLength; i++)
+		for(int i = 0; i < bufferLength; i++)
 		{
 			if (bufferList[i].Hold == 1)
 			{
@@ -48,7 +48,7 @@ public class InputBuffer {
 
 	public void Execute()
 	{
-		for (int i = 1; i < bufferLength; i++)
+		for (int i = 0; i < bufferLength; i++)
 		{
 			if (bufferList[i].Hold == 1)
 			{

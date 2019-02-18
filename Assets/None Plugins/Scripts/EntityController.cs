@@ -19,6 +19,8 @@ public class EntityController : MonoBehaviour {
 	protected int Facing = 1;
 	/**<summary>The rigid body for the entity</summary>*/
 	private Rigidbody2D rb2d;
+	// im including this due to an issue with one of unitys features
+	private Collider2D collider;
 	/**<summary>The animator for the entity</summary>*/
 	private Animator animator;
 	protected FlagData flagData;
@@ -73,6 +75,7 @@ public class EntityController : MonoBehaviour {
 	public virtual void Start () {
 		Facing = (int)gameObject.transform.localScale.x;
 		rb2d = GetComponent<Rigidbody2D>();
+		collider = GetComponent<Collider2D>();
 		animator = GetComponent<Animator>();
 		flagData = new FlagData((CommonFlags.MoveWithInput | CommonFlags.CanTurn | CommonFlags.CanAttack), ValueFlags.None);
 		//controllerFlags = CommonFlags.MoveWithInput;
@@ -104,7 +107,8 @@ public class EntityController : MonoBehaviour {
 		 tutorial for a platformer so I will mostlikely need to change parts of
 		 it later*/
 		float distance = move.magnitude;
-		int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + 0.01f);
+		//int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + 0.01f);
+		int count = collider.Cast(move, contactFilter, hitBuffer, distance + 0.01f);
 		hitBufferList.Clear();
 		for(int i = 0; i < count; i++)
 		{
