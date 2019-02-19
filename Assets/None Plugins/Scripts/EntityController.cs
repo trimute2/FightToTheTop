@@ -20,7 +20,7 @@ public class EntityController : MonoBehaviour {
 	/**<summary>The rigid body for the entity</summary>*/
 	private Rigidbody2D rb2d;
 	// im including this due to an issue with one of unitys features
-	private Collider2D collider;
+	private Collider2D entityCollider;
 	/**<summary>The animator for the entity</summary>*/
 	private Animator animator;
 	protected FlagData flagData;
@@ -34,6 +34,14 @@ public class EntityController : MonoBehaviour {
 		get
 		{
 			return entityID;
+		}
+	}
+
+	public bool Dodgeing
+	{
+		get
+		{
+			return (flagData.commonFlags & CommonFlags.Dodgeing) != CommonFlags.None;
 		}
 	}
 
@@ -57,6 +65,8 @@ public class EntityController : MonoBehaviour {
 
 	private bool grounded;
 
+	private bool listenToMoveMotion;
+
 	private float moveTime;
 
 	private MoveData currentMove;
@@ -75,7 +85,7 @@ public class EntityController : MonoBehaviour {
 	public virtual void Start () {
 		Facing = (int)gameObject.transform.localScale.x;
 		rb2d = GetComponent<Rigidbody2D>();
-		collider = GetComponent<Collider2D>();
+		entityCollider = GetComponent<Collider2D>();
 		animator = GetComponent<Animator>();
 		flagData = new FlagData((CommonFlags.MoveWithInput | CommonFlags.CanTurn | CommonFlags.CanAttack), ValueFlags.None);
 		//controllerFlags = CommonFlags.MoveWithInput;
@@ -86,13 +96,17 @@ public class EntityController : MonoBehaviour {
 		contactFilter.useLayerMask = true;
 		currentMove = null;
 		health = maxHealth;
+		listenToMoveMotion = true;
 		entityID = GameManager.Instance.GetNewId();
 	}
 
 	#region fixedUpdateFunctions
 	private void FixedUpdate()
 	{
-		velocity += Physics2D.gravity * Time.deltaTime;
+		if ((flagData.commonFlags & CommonFlags.YMovement) == CommonFlags.None)
+		{
+			velocity += Physics2D.gravity * Time.deltaTime;
+		}
 		Vector2 deltaPosition = velocity;
 		deltaPosition += targetVelocity;
 		deltaPosition *= Time.deltaTime;
@@ -108,11 +122,23 @@ public class EntityController : MonoBehaviour {
 		 it later*/
 		float distance = move.magnitude;
 		//int count = rb2d.Cast(move, contactFilter, hitBuffer, distance + 0.01f);
-		int count = collider.Cast(move, contactFilter, hitBuffer, distance + 0.01f);
+		int count = entityCollider.Cast(move, contactFilter, hitBuffer, distance + 0.01f);
 		hitBufferList.Clear();
+		bool dodgeing = (flagData.commonFlags & CommonFlags.Dodgeing) != CommonFlags.None;
 		for(int i = 0; i < count; i++)
 		{
-			hitBufferList.Add(hitBuffer[i]);
+			bool add = true;
+			if (hitBuffer[i].collider.tag == "Entity")
+			{
+				if (dodgeing|| hitBuffer[i].collider.GetComponent<EntityController>().Dodgeing)
+				{
+					add = false;
+				}
+			}
+			if (add)
+			{
+				hitBufferList.Add(hitBuffer[i]);
+			}
 		}
 
 		for(int i = 0; i < hitBufferList.Count; i++)
@@ -146,18 +172,19 @@ public class EntityController : MonoBehaviour {
 	#region updateFunctions
 	// Update is called once per frame
 	void Update () {
+		Vector2 previousTarget = targetVelocity;
 		targetVelocity = Vector2.zero;
-		EntityUpdate();
+		Vector2 animVel = EntityUpdate(previousTarget);
 		CheckMoves();
-		animator.SetFloat("VelocityX", Mathf.Abs(targetVelocity.x));
-		animator.SetFloat("VelocityY", velocity.y);
+		animator.SetFloat("VelocityX", animVel.x);
+		animator.SetFloat("VelocityY", animVel.y);
 		//Debug.Log(1 / Time.deltaTime);
 	}
 
 	//maybe I will make entity abstract as well as this by extension
-	protected virtual void EntityUpdate()
+	protected virtual Vector2 EntityUpdate(Vector2 previousTarget)
 	{
-
+		return new Vector2(Mathf.Abs(targetVelocity.x), velocity.y);
 	}
 
 	private void CheckMoves()
@@ -204,10 +231,12 @@ public class EntityController : MonoBehaviour {
 			{
 				ExecuteCondition(l);
 			}
+			StartMove(links[nextMoveIndex].move);
+			/*
 			currentMove = links[nextMoveIndex].move;
 			moveTime = -1;
 			animator.Play(currentMove.animationStateName);
-			animator.speed = currentMove.playBackSpeed;
+			animator.speed = currentMove.playBackSpeed;*/
 		}
 	}
 
@@ -215,6 +244,7 @@ public class EntityController : MonoBehaviour {
 	{
 		currentMove = move;
 		moveTime = -1;
+		listenToMoveMotion = true;
 		animator.Play(currentMove.animationStateName);
 		animator.speed = currentMove.playBackSpeed;
 	}
@@ -258,7 +288,7 @@ public class EntityController : MonoBehaviour {
 			entityValueFlags = (ValueFlags)currentMove.GetActiveFlags(moveTime,FlagTypes.ValueFlags);
 			
 
-			if (entityValueFlags != ValueFlags.None)
+			if (listenToMoveMotion && entityValueFlags != ValueFlags.None)
 			{
 				float val = 0;
 				if (GetValue(ValueFlags.xVelocity, out val))
@@ -322,5 +352,33 @@ public class EntityController : MonoBehaviour {
 	public void DeactivateHitBox(int HitboxIndex)
 	{
 		HitBoxes[HitboxIndex].DisableHitBox();
+	}
+
+	public virtual void SetVelocity(Vector2 vector)
+	{
+		listenToMoveMotion = false;
+		targetVelocity = vector;
+	}
+
+
+	//TODO: should make interface to handle damage and such may do later
+	public virtual void HitEnemy(EntityController target)
+	{
+		foreach(EntityEffects effect in currentMove.HitTargetEffects)
+		{
+			effect.Effect(target);
+		}
+		foreach (EntityEffects effect in currentMove.HitUserEffects)
+		{
+			effect.Effect(this);
+		}
+	}
+
+	public void SpawnVisualEffect(Vector2 vector)
+	{
+		if (currentMove.HitVisualEffect != null)
+		{
+			Instantiate(currentMove.HitVisualEffect, new Vector3(vector.x, vector.y, 0), Quaternion.identity);
+		}
 	}
 }

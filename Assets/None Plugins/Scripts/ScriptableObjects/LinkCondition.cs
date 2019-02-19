@@ -11,6 +11,7 @@ public enum ConditionType
 	weaponCondition,
 	weaponHoldCondition,
 	AttackFlagCondition,
+	CanDodge,
 }
 
 [System.Serializable]

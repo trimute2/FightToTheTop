@@ -20,8 +20,11 @@ public class MoveEditor : Editor {
 	SerializedProperty flagData;
 	SerializedProperty endTime;
 	SerializedProperty holdTime;
+	SerializedProperty hitVisualEffect;
 	List<AnimatorState> stateList;
 	ReorderableList links;
+	SerializedProperty HitTargetEffects;
+	SerializedProperty HitUserEffects;
 
 	/** <summary>Does the name of the current animation state match
 	 * one in the controller</summary>*/
@@ -45,6 +48,7 @@ public class MoveEditor : Editor {
 		flagData = serializedObject.FindProperty("data");
 		holdTime = serializedObject.FindProperty("holdTime");
 		endTime = serializedObject.FindProperty("endTime");
+		hitVisualEffect = serializedObject.FindProperty("HitVisualEffect");
 		links = new ReorderableList(serializedObject, serializedObject.FindProperty("links"), true, true, true, true);
 		links.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
 		{
@@ -63,6 +67,9 @@ public class MoveEditor : Editor {
 		{
 			EditorGUI.LabelField(rect, "Links");
 		};
+		HitTargetEffects = serializedObject.FindProperty("HitTargetEffects");
+		
+		HitUserEffects = serializedObject.FindProperty("HitUserEffects");
 		//TODO: better way of chacking that the curve sizes are correct
 		SerializedProperty sp = cFCurvesProp.Copy();
 		sp.Next(true);
@@ -106,7 +113,15 @@ public class MoveEditor : Editor {
 			int index = GetStateIndex(animationName.stringValue);
 			if(index != -1)
 			{
-				AnimationClip clip = stateList[index].motion as AnimationClip;
+				AnimationClip clip;
+				if (stateList[index].motion is UnityEditor.Animations.BlendTree)
+				{
+					clip = (stateList[index].motion as UnityEditor.Animations.BlendTree).children[0].motion as AnimationClip;
+				}
+				else
+				{
+					clip = stateList[index].motion as AnimationClip;
+				}
 				if(clip != null)
 				{
 					length.floatValue = clip.length;
@@ -125,6 +140,9 @@ public class MoveEditor : Editor {
 			DrawFlagCurves(flagData.FindPropertyRelative("valueFlags").intValue, vCurvesProp, typeof(ValueFlags), false);
 		}
 		links.DoLayoutList();
+		EditorGUILayout.PropertyField(HitTargetEffects, true);
+		EditorGUILayout.PropertyField(HitUserEffects, true);
+		EditorGUILayout.PropertyField(hitVisualEffect, new GUIContent("Visual Effect"));
 		serializedObject.ApplyModifiedProperties();
 		if (GUILayout.Button("Validate"))
 		{

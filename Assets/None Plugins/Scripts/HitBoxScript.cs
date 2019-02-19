@@ -5,10 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class HitBoxScript : MonoBehaviour {
 
+	private EntityController entityController;
 	private Collider2D damageCollider;
 	private List<int> entitiesHit;
 	// Use this for initialization
 	void Start () {
+		entityController = transform.root.GetComponent<EntityController>();
 		damageCollider = this.GetComponent<Collider2D>();
 		entitiesHit = new List<int>();
 	}
@@ -20,6 +22,7 @@ public class HitBoxScript : MonoBehaviour {
 		{
 			if (!entitiesHit.Contains(target.EntityID))
 			{
+				entityController.HitEnemy(target);
 				target.Damage(1);
 				entitiesHit.Add(target.EntityID);
 			}

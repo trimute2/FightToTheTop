@@ -49,6 +49,12 @@ public class MoveData : ScriptableObject {
 	//I hate this but right now i would rather have it working
 	[SerializeField]
 	public List<MoveLink> links = new List<MoveLink>();
+
+	public List<EntityEffects> HitTargetEffects = new List<EntityEffects>();
+	public List<EntityEffects> HitUserEffects = new List<EntityEffects>();
+
+	public GameObject HitVisualEffect;
+
 	[SerializeField]
 	private AnimationCurve[] combinedFlagCurves = new AnimationCurve[Enum.GetValues(typeof(FlagTypes)).Length];
 	/*completed todo: its possible that instead of saving a list of curves I save one that is parsed into several. but figuring out how to do that could be a head ache*/

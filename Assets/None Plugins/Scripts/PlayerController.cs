@@ -17,6 +17,9 @@ public class PlayerController : EntityController {
 
 	public string Weapon2;
 
+	private int dodgeCount;
+
+
 	#endregion inputBufferVariables
 
 	// Use this for initialization
@@ -27,10 +30,12 @@ public class PlayerController : EntityController {
 		{
 			inputBuffers[i] = new InputBuffer(inputNames[i]);
 		}
+		dodgeCount = 0;
 	}
 
-	protected override void EntityUpdate()
+	protected override Vector2 EntityUpdate(Vector2 previousTarget)
 	{
+		Vector2 animatorVec = Vector2.zero;
 		Vector2 movementInput = Vector2.zero;
 		movementInput.x = Input.GetAxisRaw("Horizontal");
 		movementInput.y = Input.GetAxisRaw("Vertical");
@@ -58,7 +63,12 @@ public class PlayerController : EntityController {
 		}
 		if ((flagData.commonFlags & CommonFlags.MoveWithInput) != CommonFlags.None)
 		{
-			targetVelocity.x = movementInput.x * movementSpeed;
+			targetVelocity.x = movementInput.x;
+			if ((flagData.commonFlags & CommonFlags.YMovement) != CommonFlags.None)
+			{
+				targetVelocity.y = movementInput.y;
+			}
+			targetVelocity *= movementSpeed;
 		}
 		if ((flagData.commonFlags & CommonFlags.MovementCancel) != CommonFlags.None)
 		{
@@ -67,7 +77,32 @@ public class PlayerController : EntityController {
 				EnterGenericState();
 			}
 		}
+		if((flagData.commonFlags & CommonFlags.Dodgeing) != CommonFlags.None)
+		{
+			if (targetVelocity == Vector2.zero)
+			{
+				if (previousTarget == Vector2.zero)
+				{
+					targetVelocity.x = Facing * movementSpeed;
+					targetVelocity *= 3f;
+				}
+				else
+				{
+					targetVelocity = previousTarget;
+				}
+			}
+			else {
+				
+				targetVelocity.y /= 2f;
+				
+				targetVelocity *=3f;
+			}
+			animatorVec = targetVelocity;
+			animatorVec.x *= Facing;
+			return animatorVec;
+		}
 
+		return base.EntityUpdate(previousTarget);
 
 	}
 
@@ -101,13 +136,42 @@ public class PlayerController : EntityController {
 				return false;
 			case ConditionType.AttackFlagCondition:
 				return ((flagData.commonFlags & CommonFlags.CanAttack) != CommonFlags.None) == condition.boolSetting;
+			case ConditionType.CanDodge:
+				return dodgeCount < 2;
 			default:
 				return base.TestCondition(condition);
 		}
 	}
 
+	protected override void EnterGenericState()
+	{
+		base.EnterGenericState();
+		dodgeCount = 0;
+	}
+
 	protected override void ExecuteCondition(LinkCondition condition)
 	{
+		switch (condition.conditionType)
+		{
+			case ConditionType.inputCondition:
+				inputBuffers[condition.buttonIndex].Execute();
+				break;
+			case ConditionType.weaponCondition:
+				int ind = WEAPON1INDEX;
+				if (Weapon2 == condition.weapon)
+				{
+					ind = WEAPON2INDEX;
+				}
+				inputBuffers[ind].Execute();
+				break;
+			case ConditionType.CanDodge:
+				dodgeCount++;
+				break;
+			default:
+				base.ExecuteCondition(condition);
+				break;
+		}
+		/*
 		if (condition.conditionType == ConditionType.inputCondition)
 		{
 			inputBuffers[condition.buttonIndex].Execute();
@@ -120,6 +184,6 @@ public class PlayerController : EntityController {
 				ind = WEAPON2INDEX;
 			}
 			inputBuffers[ind].Execute();
-		}
+		}*/
 	}
 }

@@ -21,6 +21,10 @@ public enum CommonFlags
 	CanTurn = 1 << 3,			//1000
 
 	CanAttack = 1 << 4,			//10000 
+
+	YMovement = 1 << 5,
+
+	Dodgeing = 1 << 6,
 }
 
 [System.Flags]
