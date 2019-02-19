@@ -247,6 +247,10 @@ public class EntityController : MonoBehaviour {
 		currentMove = move;
 		moveTime = -1;
 		listenToMoveMotion = true;
+		foreach(EntityEffects e in move.EffectsOnEnter)
+		{
+			e.Effect(this);
+		}
 		animator.Play(currentMove.animationStateName);
 		animator.speed = currentMove.playBackSpeed;
 	}
@@ -317,7 +321,14 @@ public class EntityController : MonoBehaviour {
 		}
 		else
 		{
-			animator.Play("Falling");
+			if (velocity.y < 0)
+			{
+				animator.Play("Falling");
+			}
+			else
+			{
+				animator.Play("GoingUp");
+			}
 		}
 		flagData.valueFlags = ValueFlags.None;
 		flagData.commonFlags = CommonFlags.CanTurn | CommonFlags.MoveWithInput | CommonFlags.CanAttack; 

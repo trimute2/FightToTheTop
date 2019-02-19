@@ -21,6 +21,7 @@ public class MoveEditor : Editor {
 	SerializedProperty endTime;
 	SerializedProperty holdTime;
 	SerializedProperty hitVisualEffect;
+	SerializedProperty EffectsOnEnter;
 	List<AnimatorState> stateList;
 	ReorderableList links;
 	SerializedProperty HitTargetEffects;
@@ -49,6 +50,7 @@ public class MoveEditor : Editor {
 		holdTime = serializedObject.FindProperty("holdTime");
 		endTime = serializedObject.FindProperty("endTime");
 		hitVisualEffect = serializedObject.FindProperty("HitVisualEffect");
+		EffectsOnEnter = serializedObject.FindProperty("EffectsOnEnter");
 		links = new ReorderableList(serializedObject, serializedObject.FindProperty("links"), true, true, true, true);
 		links.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
 		{
@@ -142,6 +144,7 @@ public class MoveEditor : Editor {
 		links.DoLayoutList();
 		EditorGUILayout.PropertyField(HitTargetEffects, true);
 		EditorGUILayout.PropertyField(HitUserEffects, true);
+		EditorGUILayout.PropertyField(EffectsOnEnter, true);
 		EditorGUILayout.PropertyField(hitVisualEffect, new GUIContent("Visual Effect"));
 		serializedObject.ApplyModifiedProperties();
 		if (GUILayout.Button("Validate"))

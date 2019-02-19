@@ -53,6 +53,8 @@ public class MoveData : ScriptableObject {
 	public List<EntityEffects> HitTargetEffects = new List<EntityEffects>();
 	public List<EntityEffects> HitUserEffects = new List<EntityEffects>();
 
+	public List<EntityEffects> EffectsOnEnter = new List<EntityEffects>();
+
 	public GameObject HitVisualEffect;
 
 	[SerializeField]
