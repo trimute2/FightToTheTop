@@ -19,6 +19,8 @@ public class PlayerController : EntityController {
 
 	private int dodgeCount;
 
+	private bool doubleJump;
+
 
 	#endregion inputBufferVariables
 
@@ -35,6 +37,8 @@ public class PlayerController : EntityController {
 
 	protected override Vector2 EntityUpdate(Vector2 previousTarget)
 	{
+		if (Input.GetKey("escape"))
+			Application.Quit();
 		Vector2 animatorVec = Vector2.zero;
 		Vector2 movementInput = Vector2.zero;
 		movementInput.x = Input.GetAxisRaw("Horizontal");

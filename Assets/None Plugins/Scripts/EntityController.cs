@@ -103,6 +103,8 @@ public class EntityController : MonoBehaviour {
 	#region fixedUpdateFunctions
 	private void FixedUpdate()
 	{
+		//so far there are no situation where i would want to keep an xvelocity but that may change later
+		velocity.x = 0;
 		if ((flagData.commonFlags & CommonFlags.YMovement) == CommonFlags.None)
 		{
 			velocity += Physics2D.gravity * Time.deltaTime;
