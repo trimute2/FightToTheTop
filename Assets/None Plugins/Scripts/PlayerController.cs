@@ -76,9 +76,9 @@ public class PlayerController : EntityController {
 		}
 		if ((flagData.commonFlags & CommonFlags.MovementCancel) != CommonFlags.None)
 		{
-			if(targetVelocity.x != 0)
+			if(movementInput.x != 0)
 			{
-				EnterGenericState();
+				EnterGenericState(0.3f);
 			}
 		}
 		if((flagData.commonFlags & CommonFlags.Dodgeing) != CommonFlags.None)
@@ -147,9 +147,9 @@ public class PlayerController : EntityController {
 		}
 	}
 
-	protected override void EnterGenericState()
+	protected override void EnterGenericState(float transitionTime = 0)
 	{
-		base.EnterGenericState();
+		base.EnterGenericState(transitionTime);
 		dodgeCount = 0;
 	}
 

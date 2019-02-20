@@ -82,7 +82,7 @@ MonoBehaviour:
       value: 0
       inSlope: Infinity
       outSlope: Infinity
-      tangentMode: 0
+      tangentMode: 103
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
@@ -157,6 +157,8 @@ MonoBehaviour:
   links: []
   HitTargetEffects: []
   HitUserEffects: []
+  EffectsOnEnter: []
+  EffectsOnExit: []
   HitVisualEffect: {fileID: 0}
   combinedFlagCurves:
   - serializedVersion: 2
@@ -172,7 +174,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 0.3
-      value: 104
+      value: 72
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103

@@ -122,6 +122,7 @@ MonoBehaviour:
   HitTargetEffects: []
   HitUserEffects: []
   EffectsOnEnter: []
+  EffectsOnExit: []
   HitVisualEffect: {fileID: 0}
   combinedFlagCurves:
   - serializedVersion: 2

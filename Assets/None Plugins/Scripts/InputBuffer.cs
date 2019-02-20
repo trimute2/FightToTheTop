@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InputBuffer {
-	public static int bufferLength = 23;
+	//public static int bufferLength = 23;
+	public static int bufferLength = 15;
 	private InputItem[] bufferList;
 	private string button;
 
@@ -38,9 +39,10 @@ public class InputBuffer {
 	{
 		for(int i = 0; i < bufferLength; i++)
 		{
-			if (bufferList[i].Hold == 1)
+			if (bufferList[i].Hold == 1 && !bufferList[i].Used)
 			{
-				return !bufferList[i].Used;
+				//return !bufferList[i].Used;
+				return true;
 			}
 		}
 		return false;

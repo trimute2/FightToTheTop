@@ -954,7 +954,7 @@ Transform:
   - {fileID: 4883498518111642}
   m_Father: {fileID: 4507349967474676}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 51839.93}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 52199.93}
 --- !u!4 &4435654696520774
 Transform:
   m_ObjectHideFlags: 1
@@ -1817,6 +1817,7 @@ MonoBehaviour:
   defaultMoves:
   - conditions:
     - {fileID: 11400000, guid: e7e2bb20a2cdddc40ad9eec550f4e096, type: 2}
+    - {fileID: 11400000, guid: 79d6d085e16760a459f80198f885f5df, type: 2}
     move: {fileID: 11400000, guid: 74112352e3c911845baf4bbe58a77bec, type: 2}
     priority: 1
     minTime: 0

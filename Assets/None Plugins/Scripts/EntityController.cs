@@ -14,6 +14,7 @@ public class EntityController : MonoBehaviour {
 
 	private int health;
 
+	protected float vulnrabilityTimer;
 
 	/**<summary>The direction the player is facing</summary>*/
 	protected int Facing = 1;
@@ -98,13 +99,17 @@ public class EntityController : MonoBehaviour {
 		health = maxHealth;
 		listenToMoveMotion = true;
 		entityID = GameManager.Instance.GetNewId();
+		vulnrabilityTimer = 0;
 	}
 
 	#region fixedUpdateFunctions
 	private void FixedUpdate()
 	{
 		//so far there are no situation where i would want to keep an xvelocity but that may change later
-		velocity.x = 0;
+		if (vulnrabilityTimer == 0)
+		{
+			velocity.x = 0;
+		}
 		if ((flagData.commonFlags & CommonFlags.YMovement) == CommonFlags.None)
 		{
 			velocity += Physics2D.gravity * Time.deltaTime;
@@ -163,11 +168,19 @@ public class EntityController : MonoBehaviour {
 	}
 
 	//will flesh this out later, maybe add stun and knock back
-	public virtual void Damage(int damage)
+	public virtual void Damage(int damage, Vector2 knockBack)
 	{
 		health -= damage;
 		EnterGenericState();
-		animator.CrossFade("Damage", 0.001111111f);
+		vulnrabilityTimer = 0.3f;
+		string toPlay = "Damage";
+		if(knockBack != Vector2.zero)
+		{
+			vulnrabilityTimer = 0.7f;
+			toPlay = "Knock Back";
+			velocity = knockBack;
+		}
+		animator.CrossFade(toPlay, 0.001111111f);
 	}
 	#endregion fixedUpdateFunctions
 
@@ -177,7 +190,20 @@ public class EntityController : MonoBehaviour {
 		Vector2 previousTarget = targetVelocity;
 		targetVelocity = Vector2.zero;
 		Vector2 animVel = EntityUpdate(previousTarget);
-		CheckMoves();
+		if (vulnrabilityTimer != 0)
+		{
+			vulnrabilityTimer -= Time.deltaTime;
+			if (vulnrabilityTimer <= 0)
+			{
+				vulnrabilityTimer = 0;
+				velocity.x = 0;
+				EnterGenericState();
+			}
+		}
+		else
+		{
+			CheckMoves();
+		}
 		animator.SetFloat("VelocityX", animVel.x);
 		animator.SetFloat("VelocityY", animVel.y);
 		//Debug.Log(1 / Time.deltaTime);
@@ -313,23 +339,36 @@ public class EntityController : MonoBehaviour {
 		}
 	}
 
-	protected virtual void EnterGenericState()
+	protected virtual void EnterGenericState(float transitionTime = 0)
 	{
+		if (currentMove != null)
+		{
+			foreach (EntityEffects e in currentMove.EffectsOnExit)
+			{
+				e.Effect(this);
+			}
+		}
+		string toPlay;
 		if (grounded)
 		{
-			animator.Play("Idle");
+			//animator.Play("Idle");
+			toPlay = "Idle";
 		}
 		else
 		{
 			if (velocity.y < 0)
 			{
-				animator.Play("Falling");
+				toPlay = "Falling";
+				//animator.Play("Falling");
 			}
 			else
 			{
-				animator.Play("GoingUp");
+				toPlay = "GoingUp";
+				//animator.Play("GoingUp");
 			}
 		}
+		//animator.Play(toPlay);
+		animator.CrossFade(toPlay, transitionTime);
 		flagData.valueFlags = ValueFlags.None;
 		flagData.commonFlags = CommonFlags.CanTurn | CommonFlags.MoveWithInput | CommonFlags.CanAttack; 
 		animator.speed = 1;
@@ -359,7 +398,7 @@ public class EntityController : MonoBehaviour {
 
 	public void ActivateHitBox(int HitboxIndex)
 	{
-		HitBoxes[HitboxIndex].EnableHitBox();
+		HitBoxes[HitboxIndex].EnableHitBox(currentMove.damage,currentMove.knockBack);
 	}
 
 	public void DeactivateHitBox(int HitboxIndex)

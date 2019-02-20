@@ -12,6 +12,8 @@ public class MoveEditor : Editor {
 	SerializedProperty length;
 	SerializedProperty frameRateProp;
 	SerializedProperty speed;
+	SerializedProperty damage;
+	SerializedProperty knockBack;
 	SerializedProperty controllerProp;
 	SerializedProperty cFCurvesProp;
 	SerializedProperty vFCurvesProp;
@@ -22,6 +24,7 @@ public class MoveEditor : Editor {
 	SerializedProperty holdTime;
 	SerializedProperty hitVisualEffect;
 	SerializedProperty EffectsOnEnter;
+	SerializedProperty EffectsOnExit;
 	List<AnimatorState> stateList;
 	ReorderableList links;
 	SerializedProperty HitTargetEffects;
@@ -42,6 +45,8 @@ public class MoveEditor : Editor {
 		length = serializedObject.FindProperty("length");
 		frameRateProp = serializedObject.FindProperty("frameRate");
 		speed = serializedObject.FindProperty("playBackSpeed");
+		damage = serializedObject.FindProperty("damage");
+		knockBack = serializedObject.FindProperty("knockBack");
 		controllerProp = serializedObject.FindProperty("controller");
 		cFCurvesProp = serializedObject.FindProperty("commonFlagsCurves");
 		vFCurvesProp = serializedObject.FindProperty("valueFlagCurves");
@@ -51,6 +56,7 @@ public class MoveEditor : Editor {
 		endTime = serializedObject.FindProperty("endTime");
 		hitVisualEffect = serializedObject.FindProperty("HitVisualEffect");
 		EffectsOnEnter = serializedObject.FindProperty("EffectsOnEnter");
+		EffectsOnExit = serializedObject.FindProperty("EffectsOnExit");
 		links = new ReorderableList(serializedObject, serializedObject.FindProperty("links"), true, true, true, true);
 		links.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
 		{
@@ -134,6 +140,8 @@ public class MoveEditor : Editor {
 			}
 		}
 		EditorGUILayout.PropertyField(speed, new GUIContent("playback speed"));
+		EditorGUILayout.PropertyField(damage, new GUIContent("damage"));
+		EditorGUILayout.PropertyField(knockBack, new GUIContent("knockBack"));
 		DisplayFlags("commonFlags", cFCurvesProp, 0, typeof(CommonFlags), "Common Flags");
 		DisplayFlags("valueFlags", vFCurvesProp, 1, typeof(ValueFlags), "Value Flags");
 		foldOutValueCurves = EditorGUILayout.Foldout(foldOutValueCurves, "Value Curves");
@@ -145,6 +153,7 @@ public class MoveEditor : Editor {
 		EditorGUILayout.PropertyField(HitTargetEffects, true);
 		EditorGUILayout.PropertyField(HitUserEffects, true);
 		EditorGUILayout.PropertyField(EffectsOnEnter, true);
+		EditorGUILayout.PropertyField(EffectsOnExit, true);
 		EditorGUILayout.PropertyField(hitVisualEffect, new GUIContent("Visual Effect"));
 		serializedObject.ApplyModifiedProperties();
 		if (GUILayout.Button("Validate"))
