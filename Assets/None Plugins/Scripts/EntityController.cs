@@ -158,7 +158,14 @@ public class EntityController : MonoBehaviour {
 			float projection = Vector2.Dot(velocity, currentNormal);
 			if(projection< 0)
 			{
-				velocity -= projection * currentNormal;
+				if (vulnrabilityTimer != 0 && currentNormal.x != 0)
+				{
+					velocity.x *= -0.75f;
+				}
+				else
+				{
+					velocity -= projection * currentNormal;
+				}
 			}
 
 			float modifiedDistance = hitBufferList[i].distance - 0.01f;
