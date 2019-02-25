@@ -7,6 +7,7 @@ public enum ConditionType
 	none,
 	inputCondition,
 	holdCondition,
+	releaseCondition,
 	groundCondition,
 	weaponCondition,
 	weaponHoldCondition,

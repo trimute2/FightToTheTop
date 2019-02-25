@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff483b18578dbe408c1bbabe100bb69, type: 3}
   m_Name: PunchButton
   m_EditorClassIdentifier: 
-  conditionType: 4
+  conditionType: 5
   button: 
   weapon: HandWrap
   boolSetting: 0

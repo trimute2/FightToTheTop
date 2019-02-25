@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff483b18578dbe408c1bbabe100bb69, type: 3}
   m_Name: InAir
   m_EditorClassIdentifier: 
-  conditionType: 3
+  conditionType: 4
   button: 
   weapon: 
   boolSetting: 0

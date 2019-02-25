@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dff483b18578dbe408c1bbabe100bb69, type: 3}
-  m_Name: CanDodge
+  m_Name: JumpRelease
   m_EditorClassIdentifier: 
-  conditionType: 8
+  conditionType: 3
   button: 
   weapon: 
   boolSetting: 0
   holdNumber: 0
-  buttonIndex: 0
+  buttonIndex: 2

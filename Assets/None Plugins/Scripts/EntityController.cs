@@ -277,15 +277,22 @@ public class EntityController : MonoBehaviour {
 
 	public virtual void StartMove(MoveData move)
 	{
-		currentMove = move;
-		moveTime = -1;
-		listenToMoveMotion = true;
-		foreach(EntityEffects e in move.EffectsOnEnter)
+		if (move == null)
 		{
-			e.Effect(this);
+			EnterGenericState();
 		}
-		animator.Play(currentMove.animationStateName);
-		animator.speed = currentMove.playBackSpeed;
+		else
+		{
+			currentMove = move;
+			moveTime = -1;
+			listenToMoveMotion = true;
+			foreach (EntityEffects e in move.EffectsOnEnter)
+			{
+				e.Effect(this);
+			}
+			animator.Play(currentMove.animationStateName);
+			animator.speed = currentMove.playBackSpeed;
+		}
 	}
 
 	protected virtual bool TestCondition(LinkCondition condition)

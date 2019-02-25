@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff483b18578dbe408c1bbabe100bb69, type: 3}
   m_Name: AttackFlagActive
   m_EditorClassIdentifier: 
-  conditionType: 6
+  conditionType: 7
   button: 
   weapon: 
   boolSetting: 1

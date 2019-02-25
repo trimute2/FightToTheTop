@@ -116,6 +116,8 @@ public class PlayerController : EntityController {
 		{
 			case ConditionType.inputCondition:
 				return inputBuffers[condition.buttonIndex].CanUse();
+			case ConditionType.releaseCondition:
+				return inputBuffers[condition.buttonIndex].Hold() <= 0;
 			case ConditionType.weaponCondition:
 				if (Weapon1 == condition.weapon)
 				{
