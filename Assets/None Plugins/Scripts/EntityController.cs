@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public class EntityController : MonoBehaviour {
+public abstract class EntityController : MonoBehaviour {
 
 	public float movementSpeed = 4.5f;
 	public int maxHealth = 100;
@@ -61,7 +61,7 @@ public class EntityController : MonoBehaviour {
 	private RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
 	private List<RaycastHit2D> hitBufferList = new List<RaycastHit2D>(16);
 
-	private Vector2 velocity;
+	protected Vector2 velocity;
 	protected Vector2 targetVelocity;
 
 	private bool grounded;
@@ -70,7 +70,15 @@ public class EntityController : MonoBehaviour {
 
 	private float moveTime;
 
-	private MoveData currentMove;
+	protected float MoveTime
+	{
+		get
+		{
+			return moveTime;
+		}
+	}
+
+	protected MoveData currentMove;
 
 	public MoveData test;
 
@@ -79,8 +87,6 @@ public class EntityController : MonoBehaviour {
 	//public string Weapon1;
 
 	//public string Weapon2;
-
-	public List<MoveLink> defaultMoves;
 
 	// Use this for initialization
 	public virtual void Start () {
@@ -217,63 +223,9 @@ public class EntityController : MonoBehaviour {
 	}
 
 	//maybe I will make entity abstract as well as this by extension
-	protected virtual Vector2 EntityUpdate(Vector2 previousTarget)
-	{
-		return new Vector2(Mathf.Abs(targetVelocity.x), velocity.y);
-	}
+	protected abstract Vector2 EntityUpdate(Vector2 previousTarget);
 
-	private void CheckMoves()
-	{
-		List<MoveLink> links = new List<MoveLink>();
-		links.AddRange(defaultMoves);
-		if (currentMove != null)
-		{
-			foreach (MoveLink l in currentMove.links)
-			{
-				if ((l.minTime <= moveTime) && (l.maxTime >= moveTime))
-				{
-					links.Add(l);
-				}
-			}
-		}
-		int nextMoveIndex = -1;
-		int priority = -100;
-		for(int i = 0; i< links.Count; i++)
-		{
-			MoveLink currentLink = links[i];
-			if (currentLink.priority > priority)
-			{
-				bool meetsConditions = false;
-				for (int j = 0; j < currentLink.conditions.Count; j++)
-				{
-					LinkCondition condition = currentLink.conditions[j];
-					meetsConditions = TestCondition(condition);
-					if (!meetsConditions)
-					{
-						break;
-					}
-				}
-				if (meetsConditions)
-				{
-					nextMoveIndex = i;
-					priority = currentLink.priority;
-				}
-			}
-		}
-		if(nextMoveIndex != -1)
-		{
-			foreach(LinkCondition l in links[nextMoveIndex].conditions)
-			{
-				ExecuteCondition(l);
-			}
-			StartMove(links[nextMoveIndex].move);
-			/*
-			currentMove = links[nextMoveIndex].move;
-			moveTime = -1;
-			animator.Play(currentMove.animationStateName);
-			animator.speed = currentMove.playBackSpeed;*/
-		}
-	}
+	protected abstract void CheckMoves();
 
 	public virtual void StartMove(MoveData move)
 	{
@@ -308,10 +260,7 @@ public class EntityController : MonoBehaviour {
 		return false*/
 	}
 
-	protected virtual void ExecuteCondition(LinkCondition condition)
-	{
-
-	}
+	protected abstract void ExecuteCondition(LinkCondition condition);
 
 	#endregion updateFunctions
 	//late update is called once per frame after the internal animation update

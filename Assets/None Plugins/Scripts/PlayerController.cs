@@ -17,6 +17,8 @@ public class PlayerController : EntityController {
 
 	public string Weapon2;
 
+	public List<MoveLink> playerMoves;
+
 	private int dodgeCount;
 
 	private bool doubleJump;
@@ -106,8 +108,57 @@ public class PlayerController : EntityController {
 			return animatorVec;
 		}
 
-		return base.EntityUpdate(previousTarget);
+		return new Vector2(Mathf.Abs(targetVelocity.x), velocity.y);
 
+	}
+
+	protected override void CheckMoves()
+	{
+		List<MoveLink> links = new List<MoveLink>();
+		links.AddRange(playerMoves);
+		if (currentMove != null)
+		{
+			float moveTime = MoveTime;
+			foreach (MoveLink l in currentMove.links)
+			{
+				if ((l.minTime <= moveTime) && (l.maxTime >= moveTime))
+				{
+					links.Add(l);
+				}
+			}
+		}
+		int nextMoveIndex = -1;
+		int priority = -100;
+		for (int i = 0; i < links.Count; i++)
+		{
+			MoveLink currentLink = links[i];
+			if (currentLink.priority > priority)
+			{
+				bool meetsConditions = false;
+				for (int j = 0; j < currentLink.conditions.Count; j++)
+				{
+					LinkCondition condition = currentLink.conditions[j];
+					meetsConditions = TestCondition(condition);
+					if (!meetsConditions)
+					{
+						break;
+					}
+				}
+				if (meetsConditions)
+				{
+					nextMoveIndex = i;
+					priority = currentLink.priority;
+				}
+			}
+		}
+		if (nextMoveIndex != -1)
+		{
+			foreach (LinkCondition l in links[nextMoveIndex].conditions)
+			{
+				ExecuteCondition(l);
+			}
+			StartMove(links[nextMoveIndex].move);
+		}
 	}
 
 	protected override bool TestCondition(LinkCondition condition)
@@ -174,22 +225,7 @@ public class PlayerController : EntityController {
 				dodgeCount++;
 				break;
 			default:
-				base.ExecuteCondition(condition);
 				break;
 		}
-		/*
-		if (condition.conditionType == ConditionType.inputCondition)
-		{
-			inputBuffers[condition.buttonIndex].Execute();
-		}
-		else if (condition.conditionType == ConditionType.weaponCondition)
-		{
-			int ind = WEAPON1INDEX;
-			if (Weapon2 == condition.weapon)
-			{
-				ind = WEAPON2INDEX;
-			}
-			inputBuffers[ind].Execute();
-		}*/
 	}
 }
