@@ -14,6 +14,7 @@ public class HitBoxScript : MonoBehaviour {
 	void Start () {
 		entityController = transform.root.GetComponent<EntityController>();
 		damageCollider = this.GetComponent<Collider2D>();
+		damageCollider.enabled = false;
 		entitiesHit = new List<int>();
 		damage = 0;
 		knockBack = Vector2.zero;

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class PlayerController : EntityController {
 	
+
 	#region inputBufferVariables
-	//TODO: change to dictionary 
+	//TODO: change to dictionary
+
+	
 	private InputBuffer[] inputBuffers;
 
 	private string[] inputNames = { "Weapon1", "Weapon2", "Jump", "Dodge" };
@@ -37,6 +40,7 @@ public class PlayerController : EntityController {
 		dodgeCount = 0;
 	}
 
+
 	protected override Vector2 EntityUpdate(Vector2 previousTarget)
 	{
 		if (Input.GetKey("escape"))
@@ -57,12 +61,12 @@ public class PlayerController : EntityController {
 				if (movementInput.x > 0)
 				{
 					sca.x = 1;
-					Facing = 1;
+					facing = 1;
 				}
 				else
 				{
 					sca.x = -1;
-					Facing = -1;
+					facing = -1;
 				}
 				transform.localScale = sca;
 			}
@@ -89,7 +93,7 @@ public class PlayerController : EntityController {
 			{
 				if (previousTarget == Vector2.zero)
 				{
-					targetVelocity.x = Facing * movementSpeed;
+					targetVelocity.x = facing * movementSpeed;
 					targetVelocity *= 3f;
 				}
 				else
@@ -104,7 +108,7 @@ public class PlayerController : EntityController {
 				targetVelocity *=3f;
 			}
 			animatorVec = targetVelocity;
-			animatorVec.x *= Facing;
+			animatorVec.x *= facing;
 			return animatorVec;
 		}
 

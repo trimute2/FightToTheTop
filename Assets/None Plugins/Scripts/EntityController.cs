@@ -17,7 +17,7 @@ public abstract class EntityController : MonoBehaviour {
 	protected float vulnrabilityTimer;
 
 	/**<summary>The direction the player is facing</summary>*/
-	protected int Facing = 1;
+	protected int facing = 1;
 	/**<summary>The rigid body for the entity</summary>*/
 	private Rigidbody2D rb2d;
 	// im including this due to an issue with one of unitys features
@@ -90,7 +90,7 @@ public abstract class EntityController : MonoBehaviour {
 
 	// Use this for initialization
 	public virtual void Start () {
-		Facing = (int)gameObject.transform.localScale.x;
+		facing = (int)gameObject.transform.localScale.x;
 		rb2d = GetComponent<Rigidbody2D>();
 		entityCollider = GetComponent<Collider2D>();
 		animator = GetComponent<Animator>();
@@ -222,9 +222,16 @@ public abstract class EntityController : MonoBehaviour {
 		//Debug.Log(1 / Time.deltaTime);
 	}
 
-	//maybe I will make entity abstract as well as this by extension
+	/// <summary>
+	/// Update the entity bassed off of the current flags
+	/// </summary>
+	/// <param name="previousTarget">The previous target velocity</param>
+	/// <returns>The vector to update the animators velocity with</returns>
 	protected abstract Vector2 EntityUpdate(Vector2 previousTarget);
 
+	/// <summary>
+	/// Check what moves are availible to the entity and change the current move if necissary
+	/// </summary>
 	protected abstract void CheckMoves();
 
 	public virtual void StartMove(MoveData move)
@@ -288,7 +295,7 @@ public abstract class EntityController : MonoBehaviour {
 				float val = 0;
 				if (GetValue(ValueFlags.xVelocity, out val))
 				{
-					targetVelocity.x = val * Facing;
+					targetVelocity.x = val * facing;
 				}
 				if(GetValue(ValueFlags.yVelocity, out val))
 				{
