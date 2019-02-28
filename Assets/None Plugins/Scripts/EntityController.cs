@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-
+//TODO: Further abstract this class
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 public abstract class EntityController : MonoBehaviour {
@@ -128,6 +128,12 @@ public abstract class EntityController : MonoBehaviour {
 		Movement(deltaPosition * Vector2.up);
 	}
 
+	//for other classes to override
+	protected virtual void EntityFixedUpdate()
+	{
+
+	}
+
 	void Movement(Vector2 move)
 	{
 		/* im copying this over from the prototype, a lot of it is based on a
@@ -141,6 +147,7 @@ public abstract class EntityController : MonoBehaviour {
 		for(int i = 0; i < count; i++)
 		{
 			bool add = true;
+			//TODO: another way of checking that does not involve tags
 			if (hitBuffer[i].collider.tag == "Entity")
 			{
 				if (dodgeing|| hitBuffer[i].collider.GetComponent<EntityController>().Dodgeing)

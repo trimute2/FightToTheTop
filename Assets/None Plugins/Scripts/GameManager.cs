@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
 	private static GameManager _instance = null;
+	//TODO: Track Entities through dictionary
 	private List<int> freeIds;
 	private int highestID;
 	public static GameManager Instance

@@ -12,8 +12,13 @@ public enum EnemyCommands
 }
 
 public class Enemy : EntityController {
-	
+	//the structure of enemy is currently unorganized
+	//currently changing it so that it will be organized around this tutorial
+	//https://gamedevelopment.tutsplus.com/tutorials/battle-circle-ai-let-your-player-feel-like-theyre-fighting-lots-of-enemies--gamedev-13535
 	private bool active;
+	private float longRange;
+	private float midRange;
+	private float closeRange;
 	private float decisionRange;
 	protected EnemyCommands currentCommand;
 
@@ -87,6 +92,7 @@ public class Enemy : EntityController {
 			return xdistance;
 		}
 	}
+
 	/// <summary>
 	/// Is this enemy close enough to the player to start considering attacks
 	/// </summary>
@@ -134,6 +140,20 @@ public class Enemy : EntityController {
 		decisionRange = 7.5f;
 
 		currentCommand = EnemyCommands.Idle;
+	}
+
+	protected override void EntityFixedUpdate()
+	{
+		if(currentMove != null)
+		{
+			return;
+		}
+		
+	}
+
+	protected virtual void Think()
+	{
+
 	}
 
 	protected override Vector2 EntityUpdate(Vector2 previousTarget)

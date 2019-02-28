@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 /// <summary>
 ///  A struct representing a group of enemies in relation to the player
 /// </summary>
@@ -218,6 +222,15 @@ public class EnemyManager : MonoBehaviour {
 		}
 	}
 
+	private void OnValidate()
+	{
+		if(ranges.Length != Enum.GetValues(typeof(AttackRange)).Length)
+		{
+			Debug.LogWarning("Don't change the 'ranges' field's array size!");
+		}
+	}
+
+
 	/* An old method for commanding enemies i decided to scrap
 	//At the end of the frame figure out enemies movements for next frame
 	private void LateUpdate()
@@ -259,7 +272,51 @@ public class EnemyManager : MonoBehaviour {
 			//check if it can move to that location
 		}
 	}*/
-
-
-
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(EnemyManager))]
+public class EnemyManagerEditor: Editor
+{
+	public void OnSceneGUI()
+	{
+		GameObject player = GameObject.FindGameObjectWithTag("Player");
+		EnemyManager manager = target as EnemyManager;
+		if (player != null)
+		{
+			Color[] colors =
+			{
+				Color.red,
+				Color.yellow,
+				Color.cyan,
+				Color.green
+			};
+			Vector3 pos = player.transform.position;
+			for(int i = 0; i < manager.ranges.Length; i++)
+			{
+				EnemyGroup eg = manager.ranges[i];
+				Vector3[] vert =
+				{
+					pos + new Vector3(-eg.startingRange, -10, 0),
+					pos + new Vector3(eg.startingRange, -10, 0),
+					pos + new Vector3(eg.startingRange, 10, 0),
+					pos + new Vector3(-eg.startingRange, 10, 0)
+				};
+				Color transp = new Color(0, 0, 0, 0);
+				if (eg.startingRange != 0)
+				{
+					Handles.DrawSolidRectangleWithOutline(vert, transp, colors[i]);
+				}
+				Vector3[] vert2 =
+				{
+					pos + new Vector3(-eg.endingRange, -10, 0),
+					pos + new Vector3(eg.endingRange, -10, 0),
+					pos + new Vector3(eg.endingRange, 10, 0),
+					pos + new Vector3(-eg.endingRange, 10, 0)
+				};
+				Handles.DrawSolidRectangleWithOutline(vert2, transp, colors[i]);
+			}
+		}
+	}
+}
+#endif
