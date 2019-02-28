@@ -242,6 +242,13 @@ public abstract class EntityController : MonoBehaviour {
 		}
 		else
 		{
+			if(currentMove != null)
+			{
+				foreach (EntityEffects e in currentMove.EffectsOnExit)
+				{
+					e.Effect(this);
+				}
+			}
 			currentMove = move;
 			moveTime = -1;
 			listenToMoveMotion = true;
@@ -311,6 +318,7 @@ public abstract class EntityController : MonoBehaviour {
 
 	protected virtual void EnterGenericState(float transitionTime = 0)
 	{
+		//TODO: I dont know why this if does not incaptulate the rest of the method, their is probably a reason I did it, so I will check later
 		if (currentMove != null)
 		{
 			foreach (EntityEffects e in currentMove.EffectsOnExit)
@@ -382,6 +390,20 @@ public abstract class EntityController : MonoBehaviour {
 		targetVelocity = vector;
 	}
 
+	/// <summary>
+	/// Set certain flags to be off
+	/// </summary>
+	/// <param name="flags">The flags to turn off</param>
+	public void TurnCommonFlagsOff(CommonFlags flags)
+	{
+		flagData.commonFlags &= ~flags;
+	}
+
+
+	public void TurnCommonFlagsOn(CommonFlags flags)
+	{
+		flagData.commonFlags |= flags;
+	}
 
 	//TODO: should make interface to handle damage and such may do later
 	public virtual void HitEnemy(EntityController target)

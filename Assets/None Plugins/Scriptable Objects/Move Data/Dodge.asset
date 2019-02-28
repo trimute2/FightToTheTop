@@ -159,7 +159,8 @@ MonoBehaviour:
   HitTargetEffects: []
   HitUserEffects: []
   EffectsOnEnter: []
-  EffectsOnExit: []
+  EffectsOnExit:
+  - {fileID: 11400000, guid: f0ce26428788c6448ac6f1b3f53a140e, type: 2}
   HitVisualEffect: {fileID: 0}
   combinedFlagCurves:
   - serializedVersion: 2

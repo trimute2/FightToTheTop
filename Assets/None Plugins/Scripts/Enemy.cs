@@ -6,18 +6,43 @@ public enum EnemyCommands
 {
 	None = 0,
 	Idle,
-	MoveCloser,
-	MoveAway,
+	MoveIn,
+	MakeSpace,
 	Attack,
 }
 
 public class Enemy : EntityController {
-
-	public float baseAgression;
+	
 	private bool active;
 	private float decisionRange;
-	private EnemyCommands currentComand;
+	protected EnemyCommands currentCommand;
 
+	public EnemyCommands CurrentCommand
+	{
+		get
+		{
+			return currentCommand;
+		}
+		set
+		{
+			currentCommand = value;
+		}
+	}
+
+	public float baseAgression;
+	private float agro;
+
+	public float Agro
+	{
+		get
+		{
+			return agro;
+		}
+	}
+
+	public int enemySize;
+
+	
 	/// <summary>
 	/// The target of the enemies attacks
 	/// </summary>
@@ -54,10 +79,48 @@ public class Enemy : EntityController {
 	/// the distance to the enemies target
 	/// </summary>
 	private float xdistance;
+
+	public float XDistance
+	{
+		get
+		{
+			return xdistance;
+		}
+	}
 	/// <summary>
 	/// Is this enemy close enough to the player to start considering attacks
 	/// </summary>
 	private bool inDecisionRange;
+
+	protected AttackRange currentRange;
+
+	public AttackRange CurrentRange
+	{
+		get
+		{
+			return currentRange;
+		}
+		set
+		{
+			if(currentRange != value)
+			{
+				currentCommand = EnemyCommands.None;
+			}
+			currentRange = value;
+		}
+	}
+
+
+	/// <summary>
+	/// Does the manager need to send this enemy a command
+	/// </summary>
+	public bool ManagerDecision
+	{
+		get
+		{
+			return (inDecisionRange && currentMove == null);
+		}
+	}
 	
 	// Use this for initialization
 	public override void Start()
@@ -70,7 +133,7 @@ public class Enemy : EntityController {
 		//temp decisionRange for test
 		decisionRange = 7.5f;
 
-		currentComand = EnemyCommands.None;
+		currentCommand = EnemyCommands.Idle;
 	}
 
 	protected override Vector2 EntityUpdate(Vector2 previousTarget)
@@ -96,8 +159,17 @@ public class Enemy : EntityController {
 		}
 		if (inDecisionRange)
 		{
-			//TODO check if sharing space with another enemy
-			//It maybe aceptable to share a position with another enemy if that enemy is of a different type
+			EnemyDecision();
+
+			switch (currentCommand)
+			{
+				case EnemyCommands.MoveIn:
+					targetVelocity.x = facing * movementSpeed;
+					break;
+				case EnemyCommands.MakeSpace:
+					targetVelocity.x = -facing * movementSpeed;
+					break;
+			}
 		}
 		else
 		{
@@ -113,13 +185,20 @@ public class Enemy : EntityController {
 		if(inDecisionRange)
 		{
 			
-			
 		}
 	}
 
+	protected virtual void EnemyDecision()
+	{
+		/*
+		switch (currentRange)
+		{
+			case AttackRange.Close =
+
+		}*/
+	}
 
 	protected override void ExecuteCondition(LinkCondition condition)
 	{
 	}
-
 }

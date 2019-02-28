@@ -24,6 +24,8 @@ public class PlayerController : EntityController {
 
 	private int dodgeCount;
 
+	public bool d;
+
 	private bool doubleJump;
 
 
@@ -38,6 +40,7 @@ public class PlayerController : EntityController {
 			inputBuffers[i] = new InputBuffer(inputNames[i]);
 		}
 		dodgeCount = 0;
+		d = false;
 	}
 
 
@@ -87,8 +90,10 @@ public class PlayerController : EntityController {
 				EnterGenericState(0.3f);
 			}
 		}
+		d = false;
 		if((flagData.commonFlags & CommonFlags.Dodgeing) != CommonFlags.None)
 		{
+			d = true;
 			if (targetVelocity == Vector2.zero)
 			{
 				if (previousTarget == Vector2.zero)
