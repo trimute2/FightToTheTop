@@ -166,6 +166,7 @@ public class Enemy : EntityController {
 		}
 
 		xdistance = target.transform.position.x - transform.position.x;
+		int previousRange = currentTargetRange;
 		//get what range the enemy is in 
 		if(xdistance<= closeRange)
 		{
@@ -180,6 +181,10 @@ public class Enemy : EntityController {
 		else
 		{
 			currentTargetRange = 4;
+		}
+		if(currentTargetRange != previousRange)
+		{
+			//call remove range on target
 		}
 		if(currentTargetRange < 4)
 		{
@@ -202,7 +207,11 @@ public class Enemy : EntityController {
 				}
 				else
 				{
-					//if(avoidVec != Vector3.zero)
+					if(avoidVec != Vector3.zero)
+					{
+						//check if currently in knockback
+						targetVelocity.x = avoidVec.x;
+					}
 				}
 			}
 		}
@@ -253,6 +262,22 @@ public class Enemy : EntityController {
 		{
 			targetVelocity.x = facing * movementSpeed;
 		}
+
+		if (vulnrabilityTimer != 0)
+		{
+			vulnrabilityTimer -= Time.deltaTime;
+			if (vulnrabilityTimer <= 0)
+			{
+				vulnrabilityTimer = 0;
+				velocity.x = 0;
+				EnterGenericState();
+			}
+		}
+		else
+		{
+			CheckMoves();
+		}
+
 
 		return new Vector2(Mathf.Abs(targetVelocity.x), velocity.y);
 	}

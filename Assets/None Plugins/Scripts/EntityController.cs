@@ -210,6 +210,7 @@ public abstract class EntityController : MonoBehaviour {
 		Vector2 previousTarget = targetVelocity;
 		targetVelocity = Vector2.zero;
 		Vector2 animVel = EntityUpdate(previousTarget);
+		/*
 		if (vulnrabilityTimer != 0)
 		{
 			vulnrabilityTimer -= Time.deltaTime;
@@ -223,7 +224,7 @@ public abstract class EntityController : MonoBehaviour {
 		else
 		{
 			CheckMoves();
-		}
+		}*/
 		animator.SetFloat("VelocityX", animVel.x);
 		animator.SetFloat("VelocityY", animVel.y);
 		//Debug.Log(1 / Time.deltaTime);

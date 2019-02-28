@@ -46,6 +46,7 @@ public class PlayerController : EntityController {
 
 	protected override Vector2 EntityUpdate(Vector2 previousTarget)
 	{
+		targetVelocity = Vector2.zero;
 		if (Input.GetKey("escape"))
 			Application.Quit();
 		Vector2 animatorVec = Vector2.zero;
@@ -115,6 +116,21 @@ public class PlayerController : EntityController {
 			animatorVec = targetVelocity;
 			animatorVec.x *= facing;
 			return animatorVec;
+		}
+
+		if (vulnrabilityTimer != 0)
+		{
+			vulnrabilityTimer -= Time.deltaTime;
+			if (vulnrabilityTimer <= 0)
+			{
+				vulnrabilityTimer = 0;
+				velocity.x = 0;
+				EnterGenericState();
+			}
+		}
+		else
+		{
+			CheckMoves();
 		}
 
 		return new Vector2(Mathf.Abs(targetVelocity.x), velocity.y);
