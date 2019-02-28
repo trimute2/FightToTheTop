@@ -18,7 +18,7 @@ public class FightTrigger : MonoBehaviour {
 		PlayerController p = collision.transform.root.GetComponent<PlayerController>();
 		if (p != null)
 		{
-			enemy.Target = p;
+			enemy.Targetv = p;
 			Destroy(this);
 		}
 	}

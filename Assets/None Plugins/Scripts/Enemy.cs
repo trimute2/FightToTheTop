@@ -16,10 +16,19 @@ public class Enemy : EntityController {
 	//currently changing it so that it will be organized around this tutorial
 	//https://gamedevelopment.tutsplus.com/tutorials/battle-circle-ai-let-your-player-feel-like-theyre-fighting-lots-of-enemies--gamedev-13535
 	private bool active;
-	private float longRange;
-	private float midRange;
-	private float closeRange;
+	public float longRange;
+	public float midRange;
+	//does this have permision to go to mid range
+	protected bool engageMidRange = false;
+	public float closeRange;
+	//does this enemy have permission to go to close range
+	protected bool engageCloseRange = false;
+	private int targetRange = 2;
+	private int currentTargetRange = 3;
 	private float decisionRange;
+	private Avoider avoider;
+	private Vector3 avoidVec = Vector3.zero;
+	private bool attackPermission = false;
 	protected EnemyCommands currentCommand;
 
 	public EnemyCommands CurrentCommand
@@ -56,7 +65,7 @@ public class Enemy : EntityController {
 	/// <summary>
 	/// The Target of the enemies attacks
 	/// </summary>
-	public EntityController Target
+	public EntityController Targetv
 	{
 		get
 		{
@@ -138,7 +147,7 @@ public class Enemy : EntityController {
 		xdistance = float.MaxValue;
 		//temp decisionRange for test
 		decisionRange = 7.5f;
-
+		avoider = GetComponent<Avoider>();
 		currentCommand = EnemyCommands.Idle;
 	}
 
@@ -148,12 +157,61 @@ public class Enemy : EntityController {
 		{
 			return;
 		}
+		//any spaced out calls go here
 		
+
+		if(target == null)
+		{
+			return;
+		}
+
+		xdistance = target.transform.position.x - transform.position.x;
+		//get what range the enemy is in 
+		if(xdistance<= closeRange)
+		{
+			currentTargetRange = Target.CLOSE_RANGE;
+		}else if (xdistance<= midRange)
+		{
+			currentTargetRange = Target.MID_RANGE;
+		}else if (xdistance <= longRange)
+		{
+			currentTargetRange = Target.LONG_RANGE;
+		}
+		else
+		{
+			currentTargetRange = 4;
+		}
+		if(currentTargetRange < 4)
+		{
+			if (targetRange != currentTargetRange)
+			{
+				if (targetRange < currentTargetRange)
+				{
+					targetVelocity.x = facing * movementSpeed;
+				}
+				else if (targetRange > currentTargetRange)
+				{
+					targetVelocity.x = -facing * movementSpeed;
+				}
+			}
+			else
+			{
+				if (attackPermission)
+				{
+					//request attack permission
+				}
+				else
+				{
+					//if(avoidVec != Vector3.zero)
+				}
+			}
+		}
 	}
+
 
 	protected virtual void Think()
 	{
-
+		
 	}
 
 	protected override Vector2 EntityUpdate(Vector2 previousTarget)

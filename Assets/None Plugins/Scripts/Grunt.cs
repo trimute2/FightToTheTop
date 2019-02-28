@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Grunt : Enemy {
 
+	protected override void Think()
+	{
+		
+	}
+
 	protected override void EnemyDecision()
 	{
 		EnemyCommands previousCommand = currentCommand;
