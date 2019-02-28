@@ -208,23 +208,7 @@ public abstract class EntityController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Vector2 previousTarget = targetVelocity;
-		targetVelocity = Vector2.zero;
 		Vector2 animVel = EntityUpdate(previousTarget);
-		/*
-		if (vulnrabilityTimer != 0)
-		{
-			vulnrabilityTimer -= Time.deltaTime;
-			if (vulnrabilityTimer <= 0)
-			{
-				vulnrabilityTimer = 0;
-				velocity.x = 0;
-				EnterGenericState();
-			}
-		}
-		else
-		{
-			CheckMoves();
-		}*/
 		animator.SetFloat("VelocityX", animVel.x);
 		animator.SetFloat("VelocityY", animVel.y);
 		//Debug.Log(1 / Time.deltaTime);

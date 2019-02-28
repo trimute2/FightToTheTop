@@ -2103,6 +2103,22 @@ MonoBehaviour:
   m_SortingOrder: 8
   m_BoneTransforms:
   - {fileID: 372070547}
+--- !u!1 &992933988 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1247809689074940, guid: 2c955529c05e4ed439a4f4b5de0758fc,
+    type: 2}
+  m_PrefabInternal: {fileID: 2094858245}
+--- !u!114 &992933989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 992933988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a908b45054ae9e4895102e65b206fab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1023402012
 GameObject:
   m_ObjectHideFlags: 0
@@ -2137,6 +2153,9 @@ MonoBehaviour:
   maxHealth: 100
   test: {fileID: 0}
   HitBoxes: []
+  longRange: 7.5
+  midRange: 4.5
+  closeRange: 3.2
   baseAgression: 0
   enemySize: 0
 --- !u!50 &1023402014

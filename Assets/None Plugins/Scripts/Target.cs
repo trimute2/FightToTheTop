@@ -18,6 +18,7 @@ public class Target : MonoBehaviour {
 		}
 	}
 
+	public const int OUT_RANGE = 3;
 	public const int LONG_RANGE = 2;
 	public const int MID_RANGE = 1;
 	public const int CLOSE_RANGE = 0;

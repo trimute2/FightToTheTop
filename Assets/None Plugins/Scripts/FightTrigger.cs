@@ -15,7 +15,7 @@ public class FightTrigger : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		PlayerController p = collision.transform.root.GetComponent<PlayerController>();
+		Target p = collision.transform.root.GetComponent<Target>();
 		if (p != null)
 		{
 			enemy.Targetv = p;

@@ -44,7 +44,7 @@ public class Enemy : EntityController {
 	}
 
 	public float baseAgression;
-	private float agro;
+	private float agro = 0;
 
 	public float Agro
 	{
@@ -60,12 +60,12 @@ public class Enemy : EntityController {
 	/// <summary>
 	/// The target of the enemies attacks
 	/// </summary>
-	private EntityController target;
+	private Target target;
 
 	/// <summary>
 	/// The Target of the enemies attacks
 	/// </summary>
-	public EntityController Targetv
+	public Target Targetv
 	{
 		get
 		{
@@ -75,17 +75,6 @@ public class Enemy : EntityController {
 		{
 			target = value;
 			active = true;
-		}
-	}
-
-	/// <summary>
-	/// the Entity ID of the target
-	/// </summary>
-	public int TargetID
-	{
-		get
-		{
-			return target.EntityID;
 		}
 	}
 
@@ -151,7 +140,7 @@ public class Enemy : EntityController {
 		currentCommand = EnemyCommands.Idle;
 	}
 
-	protected override void EntityFixedUpdate()
+	protected virtual void EnemyUpdate()
 	{
 		if(currentMove != null)
 		{
@@ -225,6 +214,7 @@ public class Enemy : EntityController {
 
 	protected override Vector2 EntityUpdate(Vector2 previousTarget)
 	{
+		targetVelocity = Vector2.zero;
 		if (!active || target == null)
 		{
 			inDecisionRange = false;
@@ -233,6 +223,7 @@ public class Enemy : EntityController {
 		}
 		//update distance to target
 		xdistance = target.transform.position.x - transform.position.x;
+		int previousRange = currentTargetRange;
 		inDecisionRange = (Mathf.Abs(xdistance) <= decisionRange);
 		if((flagData.commonFlags & CommonFlags.CanTurn) != CommonFlags.None)
 		{
@@ -244,18 +235,56 @@ public class Enemy : EntityController {
 				transform.localScale = sca;
 			}
 		}
-		if (inDecisionRange)
+		float distance = Mathf.Abs(xdistance);
+		if (distance <= closeRange)
 		{
+			currentTargetRange = Target.CLOSE_RANGE;
+		}
+		else if (distance <= midRange)
+		{
+			currentTargetRange = Target.MID_RANGE;
+		}
+		else if (distance <= longRange)
+		{
+			currentTargetRange = Target.LONG_RANGE;
+		}
+		else
+		{
+			currentTargetRange = Target.OUT_RANGE;
+		}
+		if (currentTargetRange != previousRange)
+		{
+			//call remove range on target
+		}
+		if(currentTargetRange != Target.OUT_RANGE)
+		{
+			//set variables on what to do
 			EnemyDecision();
-
-			switch (currentCommand)
+			if (targetRange != currentTargetRange)
 			{
-				case EnemyCommands.MoveIn:
+				if (targetRange < currentTargetRange)
+				{
 					targetVelocity.x = facing * movementSpeed;
-					break;
-				case EnemyCommands.MakeSpace:
+				}
+				else if (targetRange > currentTargetRange)
+				{
 					targetVelocity.x = -facing * movementSpeed;
-					break;
+				}
+			}
+			else
+			{
+				if (attackPermission)
+				{
+					//request attack permission
+				}
+				else
+				{
+					if (avoidVec != Vector3.zero)
+					{
+						//check if currently in knockback
+						targetVelocity.x = avoidVec.x;
+					}
+				}
 			}
 		}
 		else
@@ -293,6 +322,7 @@ public class Enemy : EntityController {
 
 	protected virtual void EnemyDecision()
 	{
+		targetRange = Target.MID_RANGE;
 		/*
 		switch (currentRange)
 		{
