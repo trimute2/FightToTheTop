@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class Target : MonoBehaviour {
 
-	public float LongRange;
-	private float longRangeTension;
+	private float longRangeTension = 0;
 	private List<Enemy> LongRangeEnemies;
-	public float MidRange;
-	private float midRangeTension;
+	private float midRangeTension = 0;
 	private List<Enemy> MidRangeEnemies;
-	public float CloseRange;
-	private float closeRangeTension;
+	private float closeRangeTension = 0;
 	private List<Enemy> CloseRangeEnemies;
 	public float Tension
 	{
@@ -49,7 +46,64 @@ public class Target : MonoBehaviour {
 
 	public int RequestEnemyCount(int Range)
 	{
-		//TODO: implement RequestEnemyCount
-		throw new System.NotImplementedException();
+		switch (Range)
+		{
+			case LONG_RANGE:
+				return LongRangeEnemies.Count;
+			case MID_RANGE:
+				return MidRangeEnemies.Count;
+			case CLOSE_RANGE:
+				return CloseRangeEnemies.Count;
+			default:
+				return 0;
+		}
+	}
+
+	public void AddToRange(int Range, Enemy enemy)
+	{
+		switch (Range)
+		{
+			case LONG_RANGE:
+				if (!LongRangeEnemies.Contains(enemy))
+				{
+					LongRangeEnemies.Add(enemy);
+				}
+				break;
+			case MID_RANGE:
+				if (!MidRangeEnemies.Contains(enemy))
+				{
+					MidRangeEnemies.Add(enemy);
+				}
+				break;
+			case CLOSE_RANGE:
+				if (!CloseRangeEnemies.Contains(enemy))
+				{
+					CloseRangeEnemies.Add(enemy);
+				}
+				break;
+		}
+	}
+
+	public void RemoveFromAllRanges(Enemy enemy)
+	{
+		LongRangeEnemies.Remove(enemy);
+		MidRangeEnemies.Remove(enemy);
+		CloseRangeEnemies.Remove(enemy);
+	}
+
+	public void RemoveFromRange(int Range, Enemy enemy)
+	{
+		switch (Range)
+		{
+			case LONG_RANGE:
+				LongRangeEnemies.Remove(enemy);
+				break;
+			case MID_RANGE:
+				MidRangeEnemies.Remove(enemy);
+				break;
+			case CLOSE_RANGE:
+				CloseRangeEnemies.Remove(enemy);
+				break;
+		}
 	}
 }
