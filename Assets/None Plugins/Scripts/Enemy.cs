@@ -70,7 +70,13 @@ public class Enemy : EntityController {
 		base.Start();
 		active = false;
 		xdistance = float.MaxValue;
-		avoider = GetComponent<Avoider>();
+		avoider = GetComponentInChildren<Avoider>();
+		Test();
+	}
+
+	protected virtual void Test()
+	{
+
 	}
 
 	protected override Vector2 EntityUpdate(Vector2 previousTarget)
@@ -181,6 +187,15 @@ public class Enemy : EntityController {
 	protected virtual void SetTargetRange(int Range)
 	{
 		targetRange = Range;
+	}
+
+	protected void UpdateAvoidVec()
+	{
+		if(avoider != null && avoider.avoidTransform != null)
+		{
+			avoidVec = transform.position - avoider.avoidTransform.position;
+			avoidVec.Normalize();
+		}
 	}
 
 	public float GetTension()

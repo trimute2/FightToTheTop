@@ -4,24 +4,46 @@ using UnityEngine;
 
 public class Grunt : Enemy {
 
+	protected override void Test()
+	{
+		avoider.AvoiderType = "Grunt";
+		avoider.ThingsToAvoid.Add("Grunt");
+	}
+
 	protected override void EnemyDecision()
 	{
 		switch (currentTargetRange)
 		{
 			case Target.LONG_RANGE:
 				//Try and move in
-				if(target.RequestTargetCount(Target.CLOSE_RANGE) < 1)
+				if(target.RequestEnemyCount(Target.CLOSE_RANGE) < 1)
 				{
 					SetTargetRange(Target.CLOSE_RANGE);
-				}else if(target.RequestTargetCount(Target.MID_RANGE) < 2)
+				}else if(target.RequestEnemyCount(Target.MID_RANGE) < 4)
 				{
 					SetTargetRange(Target.MID_RANGE);
 				}
 				else
 				{
 					SetTargetRange(Target.LONG_RANGE);
-					//any long range attacks go here 
+					//any long range attack decisions go here
 				}
+				break;
+			case Target.MID_RANGE:
+				if (target.RequestEnemyCount(Target.CLOSE_RANGE) < 1)
+				{
+					SetTargetRange(Target.CLOSE_RANGE);
+				} else if(target.RequestEnemyCount(Target.MID_RANGE) > 4)
+				{
+					SetTargetRange(Target.LONG_RANGE);
+				}
+				else
+				{
+					UpdateAvoidVec();
+				}
+				break;
+			case Target.CLOSE_RANGE:
+				//try attacking
 				break;
 		}
 		//EnemyCommands previousCommand = currentCommand;

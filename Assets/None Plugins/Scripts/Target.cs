@@ -36,6 +36,9 @@ public class Target : MonoBehaviour {
 
 	//TODO: functoion that can let requester now what type of enemy is in a range
 
+
+	//TODO: way of figuring out who is leaving a range
+	
 	public float RequestTension(int Range)
 	{
 		switch (Range)

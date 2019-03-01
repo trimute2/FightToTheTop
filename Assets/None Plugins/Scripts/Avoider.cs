@@ -33,19 +33,19 @@ public class Avoider : MonoBehaviour {
 	//bassed off of https://github.com/tutsplus/battle-circle-ai/blob/master/src/Assets/Scripts/AI/Avoider.cs
 	// Use this for initialization
 
-	private void OnTriggerEnter(Collider other)
+	private void OnTriggerEnter2D(Collider2D other)
 	{
 		Avoider av = other.GetComponent<Avoider>();
-		if(other != null && thingsToAvoid.Contains(av.AvoiderType))
+		if(av != null && thingsToAvoid.Contains(av.AvoiderType))
 		{
 			avoidTransform = other.transform;
 		}
 	}
 
-	private void OnTriggerExit(Collider other)
+	private void OnTriggerExit2D(Collider2D other)
 	{
 		Avoider av = other.GetComponent<Avoider>();
-		if (other != null && thingsToAvoid.Contains(av.AvoiderType))
+		if (av != null && thingsToAvoid.Contains(av.AvoiderType))
 		{
 			avoidTransform = null;
 		}
