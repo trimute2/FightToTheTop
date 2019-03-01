@@ -92,6 +92,12 @@ public class Target : MonoBehaviour {
 		CloseRangeEnemies.Remove(enemy);
 	}
 
+	public void SwapRanges(int removeRange, int addRange, Enemy enemy)
+	{
+		RemoveFromRange(removeRange, enemy);
+		AddToRange(addRange, enemy);
+	}
+
 	public void RemoveFromRange(int Range, Enemy enemy)
 	{
 		switch (Range)

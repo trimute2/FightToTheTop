@@ -43,7 +43,7 @@ public class PlayerController : EntityController {
 		d = false;
 	}
 
-
+	//TODO: rewrite this so there are no early exits
 	protected override Vector2 EntityUpdate(Vector2 previousTarget)
 	{
 		targetVelocity = Vector2.zero;

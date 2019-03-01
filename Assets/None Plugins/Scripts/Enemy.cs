@@ -65,7 +65,7 @@ public class Enemy : EntityController {
 	/// <summary>
 	/// The Target of the enemies attacks
 	/// </summary>
-	public Target Targetv
+	public Target CurrentTarget
 	{
 		get
 		{
@@ -140,78 +140,6 @@ public class Enemy : EntityController {
 		currentCommand = EnemyCommands.Idle;
 	}
 
-	protected virtual void EnemyUpdate()
-	{
-		if(currentMove != null)
-		{
-			return;
-		}
-		//any spaced out calls go here
-		
-
-		if(target == null)
-		{
-			return;
-		}
-
-		xdistance = target.transform.position.x - transform.position.x;
-		int previousRange = currentTargetRange;
-		//get what range the enemy is in 
-		if(xdistance<= closeRange)
-		{
-			currentTargetRange = Target.CLOSE_RANGE;
-		}else if (xdistance<= midRange)
-		{
-			currentTargetRange = Target.MID_RANGE;
-		}else if (xdistance <= longRange)
-		{
-			currentTargetRange = Target.LONG_RANGE;
-		}
-		else
-		{
-			currentTargetRange = 4;
-		}
-		if(currentTargetRange != previousRange)
-		{
-			//call remove range on target
-		}
-		if(currentTargetRange < 4)
-		{
-			if (targetRange != currentTargetRange)
-			{
-				if (targetRange < currentTargetRange)
-				{
-					targetVelocity.x = facing * movementSpeed;
-				}
-				else if (targetRange > currentTargetRange)
-				{
-					targetVelocity.x = -facing * movementSpeed;
-				}
-			}
-			else
-			{
-				if (attackPermission)
-				{
-					//request attack permission
-				}
-				else
-				{
-					if(avoidVec != Vector3.zero)
-					{
-						//check if currently in knockback
-						targetVelocity.x = avoidVec.x;
-					}
-				}
-			}
-		}
-	}
-
-
-	protected virtual void Think()
-	{
-		
-	}
-
 	protected override Vector2 EntityUpdate(Vector2 previousTarget)
 	{
 		targetVelocity = Vector2.zero;
@@ -254,44 +182,8 @@ public class Enemy : EntityController {
 		}
 		if (currentTargetRange != previousRange)
 		{
-			//call remove range on target
+			target.SwapRanges(previousRange, currentTargetRange, this);
 		}
-		if(currentTargetRange != Target.OUT_RANGE)
-		{
-			//set variables on what to do
-			EnemyDecision();
-			if (targetRange != currentTargetRange)
-			{
-				if (targetRange < currentTargetRange)
-				{
-					targetVelocity.x = facing * movementSpeed;
-				}
-				else if (targetRange > currentTargetRange)
-				{
-					targetVelocity.x = -facing * movementSpeed;
-				}
-			}
-			else
-			{
-				if (attackPermission)
-				{
-					//request attack permission
-				}
-				else
-				{
-					if (avoidVec != Vector3.zero)
-					{
-						//check if currently in knockback
-						targetVelocity.x = avoidVec.x;
-					}
-				}
-			}
-		}
-		else
-		{
-			targetVelocity.x = facing * movementSpeed;
-		}
-
 		if (vulnrabilityTimer != 0)
 		{
 			vulnrabilityTimer -= Time.deltaTime;
@@ -304,9 +196,41 @@ public class Enemy : EntityController {
 		}
 		else
 		{
-			CheckMoves();
+			if (currentTargetRange != Target.OUT_RANGE)
+			{
+				//set variables on what to do
+				EnemyDecision();
+				if (targetRange != currentTargetRange)
+				{
+					if (targetRange < currentTargetRange)
+					{
+						targetVelocity.x = facing * movementSpeed;
+					}
+					else if (targetRange > currentTargetRange)
+					{
+						targetVelocity.x = -facing * movementSpeed;
+					}
+				}
+				else
+				{
+					if (attackPermission)
+					{
+						CheckMoves();
+					}
+					else
+					{
+						if (avoidVec != Vector3.zero)
+						{
+							targetVelocity.x = avoidVec.x;
+						}
+					}
+				}
+			}
+			else
+			{
+				targetVelocity.x = facing * movementSpeed;
+			}
 		}
-
 
 		return new Vector2(Mathf.Abs(targetVelocity.x), velocity.y);
 	}
