@@ -24,6 +24,8 @@ public class PlayerController : EntityController {
 
 	private int dodgeCount;
 
+	private float overDodge;
+
 	public bool d;
 
 	private bool doubleJump;
@@ -40,6 +42,7 @@ public class PlayerController : EntityController {
 			inputBuffers[i] = new InputBuffer(inputNames[i]);
 		}
 		dodgeCount = 0;
+		overDodge = 0f;
 		d = false;
 	}
 
@@ -108,10 +111,13 @@ public class PlayerController : EntityController {
 				}
 			}
 			else {
-				
 				targetVelocity.y /= 2f;
 				
 				targetVelocity *=3f;
+			}
+			if(overDodge != 0)
+			{
+				targetVelocity.y = movementSpeed;
 			}
 			animatorVec = targetVelocity;
 			animatorVec.x *= facing;
@@ -227,7 +233,17 @@ public class PlayerController : EntityController {
 
 	protected override void EnterGenericState(float transitionTime = 0)
 	{
+		if (Dodgeing && !TestOverlap())
+		{
+			overDodge += Time.deltaTime;
+			return;
+		}
 		base.EnterGenericState(transitionTime);
+		if(overDodge != 0)
+		{
+			Debug.Log("OverDodge" + overDodge);
+		}
+		overDodge = 0;
 		dodgeCount = 0;
 	}
 

@@ -204,6 +204,20 @@ public abstract class EntityController : MonoBehaviour {
 	}
 	#endregion fixedUpdateFunctions
 
+	protected bool TestOverlap()
+	{
+		int count = entityCollider.Cast(Vector2.zero, contactFilter, hitBuffer, 0.01f);
+		hitBufferList.Clear();
+		for (int i = 0; i < count; i++)
+		{
+			if (hitBuffer[i].collider.tag == "Entity")
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
 	#region updateFunctions
 	// Update is called once per frame
 	void Update () {
