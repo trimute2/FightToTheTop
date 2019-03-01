@@ -239,10 +239,6 @@ public class PlayerController : EntityController {
 			return;
 		}
 		base.EnterGenericState(transitionTime);
-		if(overDodge != 0)
-		{
-			Debug.Log("OverDodge" + overDodge);
-		}
 		overDodge = 0;
 		dodgeCount = 0;
 	}
