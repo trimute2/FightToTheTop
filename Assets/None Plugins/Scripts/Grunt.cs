@@ -12,6 +12,7 @@ public class Grunt : Enemy {
 
 	protected override void EnemyDecision()
 	{
+		shouldAvoid = false;
 		switch (currentTargetRange)
 		{
 			case Target.LONG_RANGE:
@@ -26,6 +27,8 @@ public class Grunt : Enemy {
 				else
 				{
 					SetTargetRange(Target.LONG_RANGE);
+					shouldAvoid = true;
+
 					//any long range attack decisions go here
 				}
 				break;
@@ -39,11 +42,15 @@ public class Grunt : Enemy {
 				}
 				else
 				{
-					UpdateAvoidVec();
+					SetTargetRange(Target.MID_RANGE);
+					shouldAvoid = true;
 				}
 				break;
 			case Target.CLOSE_RANGE:
-				//try attacking
+				if (target.RequestEnemyRemaining(Target.CLOSE_RANGE) > 1)
+				{
+					SetTargetRange(Target.MID_RANGE);
+				}
 				break;
 		}
 		//EnemyCommands previousCommand = currentCommand;

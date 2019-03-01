@@ -69,6 +69,24 @@ public class Target : MonoBehaviour {
 		}
 	}
 
+	public int RequestEnemyRemaining(int Range)
+	{
+		List<Enemy> target = new List<Enemy>();
+		switch (Range)
+		{
+			case MID_RANGE:
+				target.AddRange(MidRangeEnemies);
+				break;
+			case CLOSE_RANGE:
+				target.AddRange(CloseRangeEnemies);
+				break;
+			default:
+				return 0;
+		}
+		target.RemoveAll(item => item.TargetRange != Range);
+		return target.Count;
+	}
+
 	public int RequestTargetCount(int Range)
 	{
 		switch (Range)

@@ -12,6 +12,13 @@ public class Enemy : EntityController {
 	public float closeRange;
 	//does this enemy have permission to go to close 
 	private int targetRange = Target.LONG_RANGE;
+	public int TargetRange
+	{
+		get
+		{
+			return targetRange;
+		}
+	}
 	protected int currentTargetRange = Target.OUT_RANGE;
 	protected Avoider avoider;
 	private Vector3 avoidVec = Vector3.zero;
@@ -19,6 +26,8 @@ public class Enemy : EntityController {
 
 	public float baseAgression;
 	private float agro = 0;
+
+	protected bool shouldAvoid = false;
 
 	public float Agro
 	{
@@ -137,6 +146,7 @@ public class Enemy : EntityController {
 			{
 				//set variables on what to do
 				EnemyDecision();
+				UpdateAvoidVec();
 				if (targetRange != currentTargetRange)
 				{
 					if (targetRange < currentTargetRange)
@@ -156,7 +166,7 @@ public class Enemy : EntityController {
 					}
 					else
 					{
-						if (avoidVec != Vector3.zero)
+						if (shouldAvoid&&avoidVec != Vector3.zero)
 						{
 							targetVelocity.x = avoidVec.x;
 						}
@@ -196,6 +206,10 @@ public class Enemy : EntityController {
 			avoidVec = transform.position - avoider.avoidTransform.position;
 			avoidVec.Normalize();
 		}
+		else
+		{
+			avoidVec = Vector3.zero;
+		}
 	}
 
 	public float GetTension()
@@ -207,5 +221,15 @@ public class Enemy : EntityController {
 
 	protected override void ExecuteCondition(LinkCondition condition)
 	{
+	}
+
+	private void OnDrawGizmos()
+	{
+		if(target != null)
+		{
+			Gizmos.DrawWireSphere(target.transform.position, closeRange);
+			Gizmos.DrawWireSphere(target.transform.position, midRange);
+			Gizmos.DrawWireSphere(target.transform.position, longRange);
+		}
 	}
 }
