@@ -24,9 +24,9 @@ public class Enemy : EntityController {
 	//does this enemy have permission to go to close range
 	protected bool engageCloseRange = false;
 	private int targetRange = 2;
-	private int currentTargetRange = 3;
+	protected int currentTargetRange = Target.OUT_RANGE;
 	private float decisionRange;
-	private Avoider avoider;
+	protected Avoider avoider;
 	private Vector3 avoidVec = Vector3.zero;
 	private bool attackPermission = false;
 	protected EnemyCommands currentCommand;
@@ -60,7 +60,7 @@ public class Enemy : EntityController {
 	/// <summary>
 	/// The target of the enemies attacks
 	/// </summary>
-	private Target target;
+	protected Target target;
 
 	/// <summary>
 	/// The Target of the enemies attacks
@@ -253,6 +253,19 @@ public class Enemy : EntityController {
 			case AttackRange.Close =
 
 		}*/
+	}
+
+	//TODO: either add more functinallity to this or make target range protected
+	protected virtual void SetTargetRange(int Range)
+	{
+		targetRange = Range;
+	}
+
+	public float GetTension()
+	{
+		//TODO: add Tension calculations, requires certain stuff I have yet to add in yet
+		//for now this is a temp variable
+		return 12.0f;
 	}
 
 	protected override void ExecuteCondition(LinkCondition condition)

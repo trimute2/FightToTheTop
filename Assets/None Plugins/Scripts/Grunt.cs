@@ -6,8 +6,26 @@ public class Grunt : Enemy {
 
 	protected override void EnemyDecision()
 	{
-		EnemyCommands previousCommand = currentCommand;
-		switch (currentRange)
+		switch (currentTargetRange)
+		{
+			case Target.LONG_RANGE:
+				//Try and move in
+				if(target.RequestTargetCount(Target.CLOSE_RANGE) < 1)
+				{
+					SetTargetRange(Target.CLOSE_RANGE);
+				}else if(target.RequestTargetCount(Target.MID_RANGE) < 2)
+				{
+					SetTargetRange(Target.MID_RANGE);
+				}
+				else
+				{
+					SetTargetRange(Target.LONG_RANGE);
+					//any long range attacks go here 
+				}
+				break;
+		}
+		//EnemyCommands previousCommand = currentCommand;
+		/*switch (currentRange)
 		{
 			case AttackRange.Close:
 				//if just attacked allow to move back
@@ -34,6 +52,6 @@ public class Grunt : Enemy {
 		if(currentCommand != previousCommand)
 		{
 			//EnemyManager.Instance
-		}
+		}*/
 	}
 }
