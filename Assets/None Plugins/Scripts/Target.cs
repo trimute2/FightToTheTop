@@ -69,6 +69,13 @@ public class Target : MonoBehaviour {
 		}
 	}
 
+	public int RequestEnemyCount(int Range, int sign)
+	{
+		List<Enemy> target = GetRangeEnemyList(Range);
+		target.RemoveAll(item => sign != Mathf.Sign(item.XDistance));
+		return target.Count;
+	}
+
 	public int RequestEnemyRemaining(int Range)
 	{
 		List<Enemy> target = new List<Enemy>();
@@ -201,5 +208,23 @@ public class Target : MonoBehaviour {
 				CloseRangeEnemies.Remove(enemy);
 				break;
 		}
+	}
+
+	private List<Enemy> GetRangeEnemyList(int Range)
+	{
+		List<Enemy> target = new List<Enemy>();
+		switch (Range)
+		{
+			case LONG_RANGE:
+				target.AddRange(LongRangeEnemies);
+				break;
+			case MID_RANGE:
+				target.AddRange(MidRangeEnemies);
+				break;
+			case CLOSE_RANGE:
+				target.AddRange(CloseRangeEnemies);
+				break;
+		}
+		return target;
 	}
 }

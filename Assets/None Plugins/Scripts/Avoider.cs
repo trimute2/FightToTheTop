@@ -28,6 +28,7 @@ public class Avoider : MonoBehaviour {
 			thingsToAvoid = value;
 		}
 	}
+	private List<Transform> avoidList;
 	[HideInInspector]
 	public Transform avoidTransform;
 	//bassed off of https://github.com/tutsplus/battle-circle-ai/blob/master/src/Assets/Scripts/AI/Avoider.cs
@@ -38,7 +39,9 @@ public class Avoider : MonoBehaviour {
 		Avoider av = other.GetComponent<Avoider>();
 		if(av != null && thingsToAvoid.Contains(av.AvoiderType))
 		{
-			avoidTransform = other.transform;
+			//avoidTransform = other.transform;
+			avoidList.Add(other.transform);
+			UpdateAvoiderTarget();
 		}
 	}
 
@@ -47,12 +50,30 @@ public class Avoider : MonoBehaviour {
 		Avoider av = other.GetComponent<Avoider>();
 		if (av != null && thingsToAvoid.Contains(av.AvoiderType))
 		{
-			avoidTransform = null;
+			//avoidTransform = null;
+			avoidList.Remove(other.transform);
+			if(other.transform == avoidTransform)
+			{
+				avoidTransform = null;
+				UpdateAvoiderTarget();
+			}
+		}
+	}
+
+	private void UpdateAvoiderTarget()
+	{
+		if(avoidTransform == null)
+		{
+			if(avoidList.Count != 0)
+			{
+				avoidTransform = avoidList[0];
+			}
 		}
 	}
 
 	private void Awake()
 	{
 		thingsToAvoid = new List<string>();
+		avoidList = new List<Transform>();
 	}
 }

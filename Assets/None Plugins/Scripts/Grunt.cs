@@ -20,7 +20,8 @@ public class Grunt : Enemy {
 				if(target.RequestEnemyCount(Target.CLOSE_RANGE) < 1)
 				{
 					SetTargetRange(Target.CLOSE_RANGE);
-				}else if(target.RequestEnemyCount(Target.MID_RANGE) < 4)
+				}//else if(target.RequestEnemyCount(Target.MID_RANGE) < 4)
+				else if (target.RequestEnemyCount(Target.MID_RANGE,Direction) < 2)
 				{
 					SetTargetRange(Target.MID_RANGE);
 				}
@@ -36,7 +37,8 @@ public class Grunt : Enemy {
 				if (target.RequestEnemyCount(Target.CLOSE_RANGE) < 1)
 				{
 					SetTargetRange(Target.CLOSE_RANGE);
-				} else if(target.RequestEnemyCount(Target.MID_RANGE) > 4)
+				} //else if(target.RequestEnemyCount(Target.MID_RANGE) > 4)
+				else if (target.RequestEnemyCount(Target.MID_RANGE,Direction) > 2)
 				{
 					SetTargetRange(Target.LONG_RANGE);
 				}

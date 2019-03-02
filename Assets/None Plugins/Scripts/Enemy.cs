@@ -72,6 +72,14 @@ public class Enemy : EntityController {
 			return xdistance;
 		}
 	}
+
+	public int Direction
+	{
+		get
+		{
+			return (int)Mathf.Sign(xdistance);
+		}
+	}
 	
 	// Use this for initialization
 	public override void Start()
