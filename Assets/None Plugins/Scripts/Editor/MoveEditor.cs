@@ -38,7 +38,7 @@ public class MoveEditor : Editor {
 	bool foldOutValueCurves = false;
 
 
-	private void OnEnable()
+	protected virtual void OnEnable()
 	{
 		stateList = new List<AnimatorState>();
 		animationName = serializedObject.FindProperty("animationStateName");
@@ -142,6 +142,7 @@ public class MoveEditor : Editor {
 		EditorGUILayout.PropertyField(speed, new GUIContent("playback speed"));
 		EditorGUILayout.PropertyField(damage, new GUIContent("damage"));
 		EditorGUILayout.PropertyField(knockBack, new GUIContent("knockBack"));
+		InheritedEditor();
 		DisplayFlags("commonFlags", cFCurvesProp, 0, typeof(CommonFlags), "Common Flags");
 		DisplayFlags("valueFlags", vFCurvesProp, 1, typeof(ValueFlags), "Value Flags");
 		foldOutValueCurves = EditorGUILayout.Foldout(foldOutValueCurves, "Value Curves");
@@ -168,6 +169,11 @@ public class MoveEditor : Editor {
 		}
 		//base.OnInspectorGUI();
 		//test(typeof(CommonFlags))
+	}
+
+	protected virtual void InheritedEditor()
+	{
+
 	}
 
 	private void DrawFlagCurves(int flags, SerializedProperty curves, Type flagType, bool restraint = true, float minCurve = 0, float maxCurve = 1)
