@@ -5,4 +5,5 @@ using UnityEngine;
 public abstract class EntityEffects : ScriptableObject {
 
 	public abstract void Effect(EntityController entity);
+	public abstract void Effect(MoveHandler moveHandler);
 }

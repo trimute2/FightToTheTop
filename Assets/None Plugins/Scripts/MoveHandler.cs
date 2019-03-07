@@ -47,6 +47,7 @@ public class MoveHandler : MonoBehaviour {
 	void Start () {
 		currentMove = null;
 		animator = GetComponent<Animator>();
+		entityController = GetComponent<EntityController>();
 		flagData = new FlagData(defaultFlagValues, ValueFlags.None);
 		moveTime = 0;
 		listenToMoveMotion = true;
@@ -117,6 +118,33 @@ public class MoveHandler : MonoBehaviour {
 		}
 	}
 
+	public void StartMove(MoveData move)
+	{
+		if(move == null)
+		{
+			EnterGenericState();
+		}
+		else
+		{
+			if (currentMove != null)
+			{
+				foreach (EntityEffects e in currentMove.EffectsOnExit)
+				{
+					e.Effect(this);
+				}
+			}
+			currentMove = move;
+			moveTime = -1;
+			listenToMoveMotion = true;
+			foreach (EntityEffects e in move.EffectsOnEnter)
+			{
+				e.Effect(this);
+			}
+			animator.Play(currentMove.animationStateName);
+			animator.speed = currentMove.playBackSpeed;
+		}
+	}
+
 	private void LateUpdate()
 	{
 		if (currentMove != null)
@@ -141,8 +169,8 @@ public class MoveHandler : MonoBehaviour {
 				float val = 0;
 				if (GetValue(ValueFlags.xVelocity, out val))
 				{
-					//TODO: get facing so this works
-					//targetVelocity.x = val * facing;
+					
+					targetVelocity.x = val * entityController.Facing;
 				}
 				if (GetValue(ValueFlags.yVelocity, out val))
 				{
@@ -166,5 +194,30 @@ public class MoveHandler : MonoBehaviour {
 		}
 		value = 0;
 		return false;
+	}
+
+	public void AddForce(Vector2 force)
+	{
+		//TODO: add force in move Handler
+		throw new System.NotImplementedException();
+	}
+
+	public void SetVelocity(Vector2 vector)
+	{
+		listenToMoveMotion = false;
+		if (entityController != null)
+		{
+			entityController.TargetVelocity = vector;
+		}
+	}
+
+	public void TurnCommonFlagsOff(CommonFlags flags)
+	{
+		flagData.commonFlags &= ~flags;
+	}
+
+	public void TurnCommonFlagsOn(CommonFlags flags)
+	{
+		flagData.commonFlags |= flags;
 	}
 }

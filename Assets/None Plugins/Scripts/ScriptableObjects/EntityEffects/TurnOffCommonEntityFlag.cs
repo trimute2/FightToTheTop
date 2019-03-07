@@ -11,4 +11,9 @@ public class TurnOffCommonEntityFlag : EntityEffects
 	{
 		entity.TurnCommonFlagsOff(flags);
 	}
+
+	public override void Effect(MoveHandler moveHandler)
+	{
+		moveHandler.TurnCommonFlagsOff(flags);
+	}
 }

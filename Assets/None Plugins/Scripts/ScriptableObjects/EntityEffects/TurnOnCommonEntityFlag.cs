@@ -12,4 +12,9 @@ public class TurnOnCommonEntityFlag : EntityEffects
 	{
 		entity.TurnCommonFlagsOn(flags);
 	}
+
+	public override void Effect(MoveHandler moveHandler)
+	{
+		throw new System.NotImplementedException();
+	}
 }

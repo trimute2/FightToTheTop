@@ -10,4 +10,9 @@ public class SetVelocityEffect : EntityEffects
 	{
 		entity.SetVelocity(velocity);
 	}
+
+	public override void Effect(MoveHandler moveHandler)
+	{
+		moveHandler.SetVelocity(velocity);
+	}
 }

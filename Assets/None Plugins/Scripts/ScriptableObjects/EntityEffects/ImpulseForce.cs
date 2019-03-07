@@ -10,4 +10,9 @@ public class ImpulseForce : EntityEffects {
 	{
 		entity.AddForce(force);
 	}
+
+	public override void Effect(MoveHandler moveHandler)
+	{
+		moveHandler.AddForce(force);
+	}
 }

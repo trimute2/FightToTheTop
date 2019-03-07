@@ -18,6 +18,17 @@ public abstract class EntityController : MonoBehaviour {
 
 	/**<summary>The direction the player is facing</summary>*/
 	protected int facing = 1;
+	public int Facing
+	{
+		get
+		{
+			return facing;
+		}
+		set
+		{
+			facing = value;
+		}
+	}
 	/**<summary>The rigid body for the entity</summary>*/
 	private Rigidbody2D rb2d;
 	// im including this due to an issue with one of unitys features
