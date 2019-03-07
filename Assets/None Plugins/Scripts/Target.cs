@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Target : MonoBehaviour {
-
+	//this was somewhat stupid, this should have been an array of three lists
+	//TODO: clean up by making array of lists
 	private float longRangeTension = 0;
 	private List<Enemy> LongRangeEnemies;
 	private float midRangeTension = 0;
@@ -12,6 +13,7 @@ public class Target : MonoBehaviour {
 	private float closeRangeTension = 0;
 	private List<Enemy> CloseRangeEnemies;
 	private List<Enemy> CloseRangeTargets;
+	private float[] LatestAttack;
 	public float Tension
 	{
 		get
@@ -32,6 +34,11 @@ public class Target : MonoBehaviour {
 		MidRangeTargets = new List<Enemy>();
 		CloseRangeEnemies = new List<Enemy>();
 		CloseRangeTargets = new List<Enemy>();
+		LatestAttack = new float[OUT_RANGE];
+		for(int i = 0; i < OUT_RANGE; i++)
+		{
+			LatestAttack[i] = 0;
+		}
 	}
 
 	//TODO: functoion that can let requester now what type of enemy is in a range
@@ -56,17 +63,7 @@ public class Target : MonoBehaviour {
 
 	public int RequestEnemyCount(int Range)
 	{
-		switch (Range)
-		{
-			case LONG_RANGE:
-				return LongRangeEnemies.Count;
-			case MID_RANGE:
-				return MidRangeEnemies.Count;
-			case CLOSE_RANGE:
-				return CloseRangeEnemies.Count;
-			default:
-				return 0;
-		}
+		return GetRangeEnemyList(Range).Count;
 	}
 
 	public int RequestEnemyCount(int Range, int sign)
@@ -98,8 +95,6 @@ public class Target : MonoBehaviour {
 	{
 		switch (Range)
 		{
-			//case LONG_RANGE:
-				//return 0;
 			case MID_RANGE:
 				return MidRangeTargets.Count;
 			case CLOSE_RANGE:
@@ -226,5 +221,36 @@ public class Target : MonoBehaviour {
 				break;
 		}
 		return target;
+	}
+
+	public void StartAttack(int Range)
+	{
+		if(Range >= 0 && Range < OUT_RANGE)
+		{
+			LatestAttack[Range] = Time.time;
+		}
+	}
+
+	public float LastAttack(int Range)
+	{
+		if(Range >= 0 && Range < OUT_RANGE)
+		{
+			return Time.time - LatestAttack[Range];
+		}
+		return LastAttack();
+	}
+
+	public float LastAttack()
+	{
+		float minimumTime = Time.time - LatestAttack[0];
+		for (int i = 1; i < OUT_RANGE; i++)
+		{
+			float t = Time.time - LatestAttack[i];
+			if(t < minimumTime)
+			{
+				minimumTime = t;
+			}
+		}
+		return minimumTime;
 	}
 }

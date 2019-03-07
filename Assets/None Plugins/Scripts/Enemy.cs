@@ -10,6 +10,7 @@ public class Enemy : EntityController {
 	public float longRange;
 	public float midRange;
 	public float closeRange;
+	public List<MoveLink> enemyMoves;
 	//does this enemy have permission to go to close 
 	private int targetRange = Target.LONG_RANGE;
 	public int TargetRange
@@ -22,12 +23,13 @@ public class Enemy : EntityController {
 	protected int currentTargetRange = Target.OUT_RANGE;
 	protected Avoider avoider;
 	private Vector3 avoidVec = Vector3.zero;
-	private bool attackPermission = false;
+	protected bool attackPermission = false;
 
 	public float baseAgression;
 	private float agro = 0;
 
 	protected bool shouldAvoid = false;
+	protected float AttackTime;
 
 	public float Agro
 	{
@@ -88,6 +90,7 @@ public class Enemy : EntityController {
 		active = false;
 		xdistance = float.MaxValue;
 		avoider = GetComponentInChildren<Avoider>();
+		AttackTime = Time.time;
 		Test();
 	}
 
@@ -168,7 +171,7 @@ public class Enemy : EntityController {
 				}
 				else
 				{
-					if (attackPermission)
+					if (attackPermission && currentMove == null)
 					{
 						CheckMoves();
 					}
@@ -193,7 +196,75 @@ public class Enemy : EntityController {
 	// Update is called once per frame
 	protected override void CheckMoves()
 	{
+		List<MoveLink> links = new List<MoveLink>();
+		links.AddRange(enemyMoves);
+		if (currentMove != null)
+		{
+			float moveTime = MoveTime;
+			foreach (MoveLink l in currentMove.links)
+			{
+				if ((l.minTime <= moveTime) && (l.maxTime >= moveTime))
+				{
+					links.Add(l);
+				}
+			}
+		}
+		int nextMoveIndex = -1;
+		int priority = -100;
+		for (int i = 0; i < links.Count; i++)
+		{
+			MoveLink currentLink = links[i];
+			if (currentLink.priority > priority)
+			{
+				bool meetsConditions = false;
+				for (int j = 0; j < currentLink.conditions.Count; j++)
+				{
+					LinkCondition condition = currentLink.conditions[j];
+					meetsConditions = TestCondition(condition);
+					if (!meetsConditions)
+					{
+						break;
+					}
+				}
+				if (meetsConditions)
+				{
+					nextMoveIndex = i;
+					priority = currentLink.priority;
+				}
+			}
+		}
+		if (nextMoveIndex != -1)
+		{
+			foreach (LinkCondition l in links[nextMoveIndex].conditions)
+			{
+				ExecuteCondition(l);
+			}
+			StartMove(links[nextMoveIndex].move);
+		}
+	}
 
+	protected override bool TestCondition(LinkCondition condition)
+	{
+		switch (condition.conditionType)
+		{
+			case ConditionType.RangeCondition:
+				if(target != null)
+				{
+					// I should probably rename button index to something else
+					return currentTargetRange == condition.buttonIndex;
+				}
+				return false;
+			case ConditionType.AttackTimeCondition:
+				if(target != null)
+				{
+					return target.LastAttack(condition.buttonIndex) > condition.TimeCondition;
+				}
+				return false;
+			case ConditionType.MoveTimeCondition:
+				return (Time.time - AttackTime) > condition.TimeCondition;
+			default:
+				return base.TestCondition(condition);
+		}
 	}
 
 	protected virtual void EnemyDecision()
@@ -212,6 +283,10 @@ public class Enemy : EntityController {
 		if(avoider != null && avoider.avoidTransform != null)
 		{
 			avoidVec = transform.position - avoider.avoidTransform.position;
+			if (avoidVec == Vector3.zero)
+			{
+				avoidVec.x = Random.Range(-1, 1);
+			}
 			avoidVec.Normalize();
 		}
 		else
@@ -224,11 +299,19 @@ public class Enemy : EntityController {
 	{
 		//TODO: add Tension calculations, requires certain stuff I have yet to add in yet
 		//for now this is a temp variable
+		if (currentMove != null && currentMove.GetType() == typeof(EnemyMoveData))
+		{
+			return ((EnemyMoveData)currentMove).range[currentTargetRange];
+		}
 		return 12.0f;
 	}
 
 	protected override void ExecuteCondition(LinkCondition condition)
 	{
+		if(condition.conditionType == ConditionType.RangeCondition && target != null)
+		{
+			target.StartAttack(condition.buttonIndex);
+		}
 	}
 
 	private void OnDrawGizmos()
@@ -239,5 +322,11 @@ public class Enemy : EntityController {
 			Gizmos.DrawWireSphere(target.transform.position, midRange);
 			Gizmos.DrawWireSphere(target.transform.position, longRange);
 		}
+	}
+
+	protected override void EnterGenericState(float transitionTime = 0)
+	{
+		AttackTime = Time.time;
+		base.EnterGenericState(transitionTime);
 	}
 }

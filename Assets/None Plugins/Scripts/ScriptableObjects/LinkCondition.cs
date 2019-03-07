@@ -13,6 +13,9 @@ public enum ConditionType
 	weaponHoldCondition,
 	AttackFlagCondition,
 	CanDodge,
+	RangeCondition,
+	AttackTimeCondition,
+	MoveTimeCondition,
 }
 
 [System.Serializable]
@@ -26,6 +29,8 @@ public class LinkCondition : ScriptableObject {
 	public int holdNumber;
 	//TODO: figure out how to properly set this
 	public int buttonIndex;
+
+	public float TimeCondition;
 
 	public bool BoolCondition(bool input)
 	{

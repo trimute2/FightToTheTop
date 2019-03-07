@@ -190,17 +190,20 @@ public abstract class EntityController : MonoBehaviour {
 	//will flesh this out later, maybe add stun and knock back
 	public virtual void Damage(int damage, Vector2 knockBack)
 	{
-		health -= damage;
-		EnterGenericState();
-		vulnrabilityTimer = 0.3f;
-		string toPlay = "Damage";
-		if(knockBack != Vector2.zero)
+		if ((flagData.commonFlags & CommonFlags.Dodgeing) == CommonFlags.None)
 		{
-			vulnrabilityTimer = 0.7f;
-			toPlay = "Knock Back";
-			velocity = knockBack;
+			health -= damage;
+			EnterGenericState();
+			vulnrabilityTimer = 0.3f;
+			string toPlay = "Damage";
+			if (knockBack != Vector2.zero)
+			{
+				vulnrabilityTimer = 0.7f;
+				toPlay = "Knock Back";
+				velocity = knockBack;
+			}
+			animator.CrossFade(toPlay, 0.001111111f);
 		}
-		animator.CrossFade(toPlay, 0.001111111f);
 	}
 	#endregion fixedUpdateFunctions
 
@@ -382,7 +385,10 @@ public abstract class EntityController : MonoBehaviour {
 
 	public void ActivateHitBox(int HitboxIndex)
 	{
-		HitBoxes[HitboxIndex].EnableHitBox(currentMove.damage,currentMove.knockBack);
+		if (currentMove != null)
+		{
+			HitBoxes[HitboxIndex].EnableHitBox(currentMove.damage, currentMove.knockBack);
+		}
 	}
 
 	public void DeactivateHitBox(int HitboxIndex)
@@ -414,19 +420,22 @@ public abstract class EntityController : MonoBehaviour {
 	//TODO: should make interface to handle damage and such may do later
 	public virtual void HitEnemy(EntityController target)
 	{
-		foreach(EntityEffects effect in currentMove.HitTargetEffects)
+		if (currentMove != null)
 		{
-			effect.Effect(target);
-		}
-		foreach (EntityEffects effect in currentMove.HitUserEffects)
-		{
-			effect.Effect(this);
+			foreach (EntityEffects effect in currentMove.HitTargetEffects)
+			{
+				effect.Effect(target);
+			}
+			foreach (EntityEffects effect in currentMove.HitUserEffects)
+			{
+				effect.Effect(this);
+			}
 		}
 	}
 
 	public void SpawnVisualEffect(Vector2 vector)
 	{
-		if (currentMove.HitVisualEffect != null)
+		if (currentMove != null && currentMove.HitVisualEffect != null)
 		{
 			Instantiate(currentMove.HitVisualEffect, new Vector3(vector.x, vector.y, 0), Quaternion.identity);
 		}
