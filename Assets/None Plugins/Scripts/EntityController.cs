@@ -246,7 +246,7 @@ public abstract class EntityController : MonoBehaviour {
 	}
 	#endregion fixedUpdateFunctions
 
-	protected bool TestOverlap()
+	public bool TestOverlap()
 	{
 		int count = entityCollider.Cast(Vector2.zero, contactFilter, hitBuffer, 0.01f);
 		hitBufferList.Clear();

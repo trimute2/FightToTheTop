@@ -9,6 +9,13 @@ public class MoveHandler : MonoBehaviour {
 	public event GenericStateListner GenericStateEvent;
 
 	private FlagData flagData;
+	public FlagData Flags
+	{
+		get
+		{
+			return flagData;
+		}
+	}
 	public CommonFlags CommonFlags
 	{
 		get
@@ -26,12 +33,14 @@ public class MoveHandler : MonoBehaviour {
 	private CommonFlags defaultFlagValues = CommonFlags.CanTurn | CommonFlags.MoveWithInput | CommonFlags.CanAttack;
 	private EntityController entityController;
 	private Animator animator;
+	private PlayerInputHandler playerInput;
 	/// <summary>
 	/// The current move
 	/// </summary>
 	private MoveData currentMove;
 
 	private float moveTime;
+	private float overDodge;
 
 	private bool listenToMoveMotion;
 
@@ -44,12 +53,14 @@ public class MoveHandler : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		currentMove = null;
 		animator = GetComponent<Animator>();
 		entityController = GetComponent<EntityController>();
+		playerInput = GetComponent<PlayerInputHandler>();
 		flagData = new FlagData(defaultFlagValues, ValueFlags.None);
 		moveTime = 0;
+		overDodge = 0;
 		listenToMoveMotion = true;
 	}
 	
@@ -62,12 +73,47 @@ public class MoveHandler : MonoBehaviour {
 	{
 		switch (condition.conditionType)
 		{
+			case ConditionType.inputCondition:
+				return (playerInput != null && playerInput[condition.buttonIndex].CanUse());
+			case ConditionType.holdCondition:
+				return (playerInput != null && playerInput[condition.buttonIndex].Hold() >= condition.holdNumber);
+			case ConditionType.releaseCondition:
+				return (playerInput != null && playerInput[condition.buttonIndex].Hold() <= 0);
 			case ConditionType.groundCondition:
 				if(entityController != null)
 				{
 					return entityController.Grounded == condition.boolSetting;
 				}
 				return true;
+			case ConditionType.weaponCondition:
+				//TODO: make equipment class and change this
+				if (playerInput != null)
+				{
+					if (playerInput.Weapon1 == condition.weapon)
+					{
+						return playerInput[PlayerInputHandler.WEAPON1INDEX].CanUse();
+					}
+					else if (playerInput.Weapon2 == condition.weapon)
+					{
+						return playerInput[PlayerInputHandler.WEAPON2INDEX].CanUse();
+					}
+				}
+				return false;
+			case ConditionType.weaponHoldCondition:
+				if (playerInput != null)
+				{
+					if (playerInput.Weapon1 == condition.weapon)
+					{
+						return playerInput[PlayerInputHandler.WEAPON1INDEX].Hold() >= condition.holdNumber;
+					}
+					else if (playerInput.Weapon2 == condition.weapon)
+					{
+						return playerInput[PlayerInputHandler.WEAPON2INDEX].Hold() >= condition.holdNumber;
+					}
+				}
+				return false;
+			case ConditionType.AttackFlagCondition:
+				return ((flagData.commonFlags & CommonFlags.CanAttack) != CommonFlags.None) == condition.boolSetting;
 			default:
 				return false;
 		}
@@ -87,6 +133,13 @@ public class MoveHandler : MonoBehaviour {
 
 	public void EnterGenericState(float transitionTime = 0)
 	{
+		if (((flagData.commonFlags & CommonFlags.Dodgeing) != CommonFlags.None) &&
+			entityController != null && !entityController.TestOverlap())
+		{
+			overDodge += Time.deltaTime;
+			return;
+		}
+		overDodge = 0;
 		if (currentMove != null)
 		{
 			foreach (EntityEffects e in currentMove.EffectsOnExit)
