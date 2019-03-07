@@ -64,7 +64,35 @@ public abstract class EntityController : MonoBehaviour {
 	protected Vector2 velocity;
 	protected Vector2 targetVelocity;
 
+	public Vector2 Velocity
+	{
+		get
+		{
+			return velocity + targetVelocity;
+		}
+	}
+
+	public Vector2 TargetVelocity
+	{
+		get
+		{
+			return targetVelocity;
+		}
+		set
+		{
+			targetVelocity = value;
+		}
+	}
+
 	private bool grounded;
+
+	public bool Grounded
+	{
+		get
+		{
+			return grounded;
+		}
+	}
 
 	private bool listenToMoveMotion;
 
