@@ -15,6 +15,6 @@ public class TurnOnCommonEntityFlag : EntityEffects
 
 	public override void Effect(MoveHandler moveHandler)
 	{
-		throw new System.NotImplementedException();
+		moveHandler.TurnCommonFlagsOn(flags);
 	}
 }

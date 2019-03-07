@@ -8,6 +8,12 @@ public class MoveHandler : MonoBehaviour {
 
 	public event GenericStateListner GenericStateEvent;
 
+	public int maxDodge;
+
+	private int dodgeCount;
+
+	public List<HitBoxScript> HitBoxes;
+
 	private FlagData flagData;
 	public FlagData Flags
 	{
@@ -31,7 +37,7 @@ public class MoveHandler : MonoBehaviour {
 		}
 	}
 	private CommonFlags defaultFlagValues = CommonFlags.CanTurn | CommonFlags.MoveWithInput | CommonFlags.CanAttack;
-	private EntityController entityController;
+	private EntityControllerComp entityController;
 	private Animator animator;
 	private PlayerInputHandler playerInput;
 	/// <summary>
@@ -41,6 +47,13 @@ public class MoveHandler : MonoBehaviour {
 
 	private float moveTime;
 	private float overDodge;
+	public float OverDodge
+	{
+		get
+		{
+			return overDodge;
+		}
+	}
 
 	private bool listenToMoveMotion;
 
@@ -56,17 +69,71 @@ public class MoveHandler : MonoBehaviour {
 	void Awake () {
 		currentMove = null;
 		animator = GetComponent<Animator>();
-		entityController = GetComponent<EntityController>();
+		entityController = GetComponent<EntityControllerComp>();
 		playerInput = GetComponent<PlayerInputHandler>();
 		flagData = new FlagData(defaultFlagValues, ValueFlags.None);
 		moveTime = 0;
+		dodgeCount = 0;
 		overDodge = 0;
 		listenToMoveMotion = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (entityController != null)
+		{
+			Vector2 velocity = entityController.Velocity;
+			animator.SetFloat("VelocityX", velocity.x * entityController.Facing);
+			animator.SetFloat("VelocityY", velocity.y);
+		}
+	}
+
+	public void CheckMoves(List<MoveLink> moveLinks)
+	{
+		List<MoveLink> links = new List<MoveLink>();
+		links.AddRange(moveLinks);
+		if (currentMove != null)
+		{
+			foreach (MoveLink l in currentMove.links)
+			{
+				if ((l.minTime <= moveTime) && (l.maxTime >= moveTime))
+				{
+					links.Add(l);
+				}
+			}
+		}
+		int nextMoveIndex = -1;
+		int priority = -100;
+		for (int i = 0; i < links.Count; i++)
+		{
+			MoveLink currentLink = links[i];
+			if (currentLink.priority > priority)
+			{
+				bool meetsConditions = false;
+				for (int j = 0; j < currentLink.conditions.Count; j++)
+				{
+					LinkCondition condition = currentLink.conditions[j];
+					meetsConditions = CheckCondition(condition);
+					if (!meetsConditions)
+					{
+						break;
+					}
+				}
+				if (meetsConditions)
+				{
+					nextMoveIndex = i;
+					priority = currentLink.priority;
+				}
+			}
+		}
+		if (nextMoveIndex != -1)
+		{
+			foreach (LinkCondition l in links[nextMoveIndex].conditions)
+			{
+				ExecuteCondition(l);
+			}
+			StartMove(links[nextMoveIndex].move);
+		}
 	}
 
 	private bool CheckCondition(LinkCondition condition)
@@ -114,8 +181,36 @@ public class MoveHandler : MonoBehaviour {
 				return false;
 			case ConditionType.AttackFlagCondition:
 				return ((flagData.commonFlags & CommonFlags.CanAttack) != CommonFlags.None) == condition.boolSetting;
+			case ConditionType.CanDodge:
+				return (maxDodge <= 0 || dodgeCount < maxDodge);
 			default:
 				return false;
+		}
+	}
+
+	public void ExecuteCondition(LinkCondition condition)
+	{
+		switch (condition.conditionType)
+		{
+			case ConditionType.inputCondition:
+				if (playerInput != null)
+				{
+					playerInput[condition.buttonIndex].Execute();
+				}
+				break;
+			case ConditionType.weaponCondition:
+				if (playerInput != null) {
+					int ind = PlayerInputHandler.WEAPON1INDEX;
+					if (playerInput.Weapon2 == condition.weapon)
+					{
+						ind = PlayerInputHandler.WEAPON2INDEX;
+					}
+					playerInput[ind].Execute();
+				}
+				break;
+			case ConditionType.CanDodge:
+				dodgeCount++;
+				break;
 		}
 	}
 
@@ -140,11 +235,12 @@ public class MoveHandler : MonoBehaviour {
 			return;
 		}
 		overDodge = 0;
+		dodgeCount = 0;
 		if (currentMove != null)
 		{
 			foreach (EntityEffects e in currentMove.EffectsOnExit)
 			{
-				//e.Effect(this);
+				e.Effect(this);
 			}
 		}
 		string toPlay;
@@ -165,6 +261,11 @@ public class MoveHandler : MonoBehaviour {
 		animator.speed = 1;
 
 		currentMove = null;
+		for (int i = 0; i < HitBoxes.Count; i++)
+		{
+			HitBoxes[i].DisableHitBox();
+		}
+
 		if (GenericStateEvent != null)
 		{
 			GenericStateEvent();
@@ -236,6 +337,10 @@ public class MoveHandler : MonoBehaviour {
 				EnterGenericState();
 			}
 		}
+		if (entityController != null)
+		{
+			entityController.AllowEntityCollision = (flagData.commonFlags & CommonFlags.Dodgeing) == CommonFlags.None;
+		}
 	}
 
 	private bool GetValue(ValueFlags flag, out float value)
@@ -249,6 +354,7 @@ public class MoveHandler : MonoBehaviour {
 		return false;
 	}
 
+	#region EffectFunctions
 	public void AddForce(Vector2 force)
 	{
 		//TODO: add force in move Handler
@@ -272,5 +378,27 @@ public class MoveHandler : MonoBehaviour {
 	public void TurnCommonFlagsOn(CommonFlags flags)
 	{
 		flagData.commonFlags |= flags;
+	}
+
+	public void SetGravity(bool gravity)
+	{
+		if(entityController != null)
+		{
+			entityController.GravityOn = gravity;
+		}
+	}
+
+	#endregion EffectFunctions
+	public void ActivateHitBox(int HitboxIndex)
+	{
+		if (currentMove != null)
+		{
+			HitBoxes[HitboxIndex].EnableHitBox(currentMove.damage, currentMove.knockBack);
+		}
+	}
+
+	public void DeactivateHitBox(int HitboxIndex)
+	{
+		HitBoxes[HitboxIndex].DisableHitBox();
 	}
 }

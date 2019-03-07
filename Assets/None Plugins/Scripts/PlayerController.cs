@@ -140,7 +140,6 @@ public class PlayerController : EntityController {
 		}
 
 		return new Vector2(Mathf.Abs(targetVelocity.x), velocity.y);
-
 	}
 
 	protected override void CheckMoves()

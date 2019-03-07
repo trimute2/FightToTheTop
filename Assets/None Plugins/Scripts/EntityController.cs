@@ -56,17 +56,6 @@ public abstract class EntityController : MonoBehaviour {
 			return (flagData.commonFlags & CommonFlags.Dodgeing) != CommonFlags.None;
 		}
 	}
-
-	#region inputBufferVariables
-	//TODO: change to dictionary 
-	//private InputBuffer[] inputBuffers;
-
-	//private string[] inputNames = { "Weapon1", "Weapon2", "Jump", "Dodge" };
-
-	//private const int WEAPON1INDEX = 0;
-	//private const int WEAPON2INDEX = 1;
-
-	#endregion inputBufferVariables
 	// physics variables
 	private ContactFilter2D contactFilter;
 	private RaycastHit2D[] hitBuffer = new RaycastHit2D[16];

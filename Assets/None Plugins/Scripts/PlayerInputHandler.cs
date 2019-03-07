@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MoveHandler))]
-[RequireComponent(typeof(EntityController))]
+[RequireComponent(typeof(EntityControllerComp))]
 public class PlayerInputHandler : MonoBehaviour {
 
 	public float movementSpeed = 4.5f;
-
-	public int maxDodge;
 
 	public string Weapon1;
 
@@ -31,17 +29,15 @@ public class PlayerInputHandler : MonoBehaviour {
 	public const int WEAPON1INDEX = 0;
 	public const int WEAPON2INDEX = 1;
 
-	private int dodgeCount;
-
 	private bool doubleJump;
 
 	private MoveHandler moveHandler;
-	private EntityController entityController;
+	private EntityControllerComp entityController;
 
 	// Use this for initialization
-	void Start () {
+	/*void Start () {
 		moveHandler.GenericStateEvent += EnterGenericState;
-	}
+	}*/
 
 	private void Awake()
 	{
@@ -50,9 +46,8 @@ public class PlayerInputHandler : MonoBehaviour {
 		{
 			inputBuffers[i] = new InputBuffer(inputNames[i]);
 		}
-		dodgeCount = 0;
 		moveHandler = GetComponent<MoveHandler>();
-		entityController = GetComponent<EntityController>();
+		entityController = GetComponent<EntityControllerComp>();
 	}
 
 	// Update is called once per frame
@@ -122,38 +117,18 @@ public class PlayerInputHandler : MonoBehaviour {
 				targetVelocity *= 3f;
 			}
 
-			/*
-			if (overDodge != 0)
+			
+			if (moveHandler.OverDodge != 0)
 			{
 				targetVelocity.y = movementSpeed;
 			}
-			animatorVec = targetVelocity;
+			/*animatorVec = targetVelocity;
 			animatorVec.x *= facing;
 			return animatorVec;*/
 		}
 
-		/*
-		if (vulnrabilityTimer != 0)
-		{
-			vulnrabilityTimer -= Time.deltaTime;
-			if (vulnrabilityTimer <= 0)
-			{
-				vulnrabilityTimer = 0;
-				velocity.x = 0;
-				EnterGenericState();
-			}
-		}
-		else
-		{
-			CheckMoves();
-		}*/
-
 		entityController.TargetVelocity = targetVelocity;
-	}
-
-	public void EnterGenericState()
-	{
-		dodgeCount = 0;
+		moveHandler.CheckMoves(playerMoves);
 	}
 
 	
