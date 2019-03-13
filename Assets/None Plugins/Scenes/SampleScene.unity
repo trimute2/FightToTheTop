@@ -7767,6 +7767,7 @@ GameObject:
   - component: {fileID: 1226581967}
   - component: {fileID: 1226581966}
   - component: {fileID: 1226581973}
+  - component: {fileID: 1226581974}
   m_Layer: 14
   m_Name: Test Grunt (4)
   m_TagString: Entity
@@ -7899,6 +7900,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDodge: 0
   HitBoxes: []
+--- !u!114 &1226581974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1226581965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15c1ccd46cc7831489a350d5d034db87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 4.5
 --- !u!1 &1230033978
 GameObject:
   m_ObjectHideFlags: 0

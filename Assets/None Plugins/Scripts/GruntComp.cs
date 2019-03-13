@@ -4,17 +4,19 @@ using UnityEngine;
 
 [RequireComponent(typeof(MoveHandler))]
 [RequireComponent(typeof(Targeter))]
-[RequireComponent(typeof(EntityController))]
+[RequireComponent(typeof(EntityControllerComp))]
 public class GruntComp : MonoBehaviour {
 	public float movementSpeed = 4.5f;
 	private MoveHandler moveHandler;
 	private Targeter targeter;
 	private EntityControllerComp entityController;
+	private FlagHandler flagHandler;
 	// Use this for initialization
 	void Start () {
 		moveHandler = GetComponent<MoveHandler>();
 		targeter = GetComponent<Targeter>();
 		entityController = GetComponent<EntityControllerComp>();
+		flagHandler = GetComponent<FlagHandler>();
 	}
 	
 	// Update is called once per frame
@@ -22,6 +24,8 @@ public class GruntComp : MonoBehaviour {
 		Target target = targeter.target;
 		if (target != null)
 		{
+			bool moveToRange = true;
+			Vector2 targetVelocity = Vector2.zero;
 			switch (targeter.CurrentRange)
 			{
 				case Target.LONG_RANGE:
@@ -69,6 +73,16 @@ public class GruntComp : MonoBehaviour {
 					}
 					break;
 			}
+			if ((flagHandler.CommonFlags & CommonFlags.MoveWithInput) != CommonFlags.None) {
+				//any movement stuff goes here
+				if (moveToRange)
+				{
+					targetVelocity = targeter.TargetDirection();
+					targetVelocity.x *= entityController.Facing * movementSpeed;
+				}
+			}
+
+			entityController.TargetVelocity = targetVelocity;
 		}
 	}
 }
