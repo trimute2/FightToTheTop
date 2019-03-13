@@ -7901,7 +7901,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDodge: 0
-  HitBoxes: []
+  HitBoxes:
+  - {fileID: 1292660279}
 --- !u!114 &1226581974
 MonoBehaviour:
   m_ObjectHideFlags: 0
