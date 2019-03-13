@@ -72,6 +72,11 @@ public class Target : MonoBehaviour {
 		return GetRangeEnemyList(Range).Count;
 	}
 
+	public int RequestTargeterCount(int Range)
+	{
+		return GetRangeTargeterList(Range).Count;
+	}
+
 	public int RequestEnemyCount(int Range, int sign)
 	{
 		List<Enemy> target = GetRangeEnemyList(Range);
@@ -271,6 +276,24 @@ public class Target : MonoBehaviour {
 				break;
 			case CLOSE_RANGE:
 				target.AddRange(CloseRangeEnemies);
+				break;
+		}
+		return target;
+	}
+
+	private List<Targeter> GetRangeTargeterList(int Range)
+	{
+		List<Targeter> target = new List<Targeter>();
+		switch (Range)
+		{
+			case LONG_RANGE:
+				target.AddRange(LongRangeTargeters);
+				break;
+			case MID_RANGE:
+				target.AddRange(MidRangeTargeters);
+				break;
+			case CLOSE_RANGE:
+				target.AddRange(CloseRangeTargeters);
 				break;
 		}
 		return target;

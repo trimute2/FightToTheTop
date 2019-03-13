@@ -104,9 +104,8 @@ public class Targeter : MonoBehaviour {
 			}
 			if(currentRange != previousRange)
 			{
-				//target.SwapRanges(previousRange, currentRange, this);
+				target.SwapRanges(previousRange, currentRange, this);
 			}
-			//TODO: either call some form of AI Component, or have the AI update on its own and call functions here
 		}
 	}
 
