@@ -7,12 +7,15 @@ public class Target : MonoBehaviour {
 	//TODO: clean up by making array of lists
 	private float longRangeTension = 0;
 	private List<Enemy> LongRangeEnemies;
+	private List<Targeter> LongRangeTargeters;
 	private float midRangeTension = 0;
 	private List<Enemy> MidRangeEnemies;
 	private List<Enemy> MidRangeTargets;
+	private List<Targeter> MidRangeTargeters;
 	private float closeRangeTension = 0;
 	private List<Enemy> CloseRangeEnemies;
 	private List<Enemy> CloseRangeTargets;
+	private List<Targeter> CloseRangeTargeters;
 	private float[] LatestAttack;
 	public float Tension
 	{
@@ -30,9 +33,12 @@ public class Target : MonoBehaviour {
 	private void Awake()
 	{
 		LongRangeEnemies = new List<Enemy>();
+		LongRangeTargeters = new List<Targeter>();
 		MidRangeEnemies = new List<Enemy>();
+		MidRangeTargeters = new List<Targeter>();
 		MidRangeTargets = new List<Enemy>();
 		CloseRangeEnemies = new List<Enemy>();
+		CloseRangeTargeters = new List<Targeter>();
 		CloseRangeTargets = new List<Enemy>();
 		LatestAttack = new float[OUT_RANGE];
 		for(int i = 0; i < OUT_RANGE; i++)
@@ -144,6 +150,31 @@ public class Target : MonoBehaviour {
 		}
 	}
 
+	public void AddToRange(int Range, Targeter targeter)
+	{
+		switch (Range)
+		{
+			case LONG_RANGE:
+				if (!LongRangeTargeters.Contains(targeter))
+				{
+					LongRangeTargeters.Add(targeter);
+				}
+				break;
+			case MID_RANGE:
+				if (!MidRangeTargeters.Contains(targeter))
+				{
+					MidRangeTargeters.Add(targeter);
+				}
+				break;
+			case CLOSE_RANGE:
+				if (!CloseRangeTargeters.Contains(targeter))
+				{
+					CloseRangeTargeters.Add(targeter);
+				}
+				break;
+		}
+	}
+
 	public void AddToTargetRange(int Range, Enemy enemy)
 	{
 		switch (Range)
@@ -189,6 +220,12 @@ public class Target : MonoBehaviour {
 		AddToRange(addRange, enemy);
 	}
 
+	public void SwapRanges(int removeRange, int addRange, Targeter targeter)
+	{
+		RemoveFromRange(removeRange, targeter);
+		AddToRange(addRange, targeter);
+	}
+
 	public void RemoveFromRange(int Range, Enemy enemy)
 	{
 		switch (Range)
@@ -201,6 +238,22 @@ public class Target : MonoBehaviour {
 				break;
 			case CLOSE_RANGE:
 				CloseRangeEnemies.Remove(enemy);
+				break;
+		}
+	}
+
+	public void RemoveFromRange(int Range, Targeter targeter)
+	{
+		switch (Range)
+		{
+			case LONG_RANGE:
+				LongRangeTargeters.Remove(targeter);
+				break;
+			case MID_RANGE:
+				MidRangeTargeters.Remove(targeter);
+				break;
+			case CLOSE_RANGE:
+				CloseRangeTargeters.Remove(targeter);
 				break;
 		}
 	}
