@@ -101,6 +101,7 @@ public class EntityControllerComp : MonoBehaviour {
 		{
 			velocity += Physics2D.gravity * Time.deltaTime;
 		}
+		velocity.x = 0;
 		Vector2 deltaPosition = velocity;
 		deltaPosition += targetVelocity;
 		deltaPosition *= Time.deltaTime;
