@@ -233,6 +233,12 @@ public class MoveHandler : MonoBehaviour {
 			case ConditionType.CanDodge:
 				dodgeCount++;
 				break;
+			case ConditionType.RangeCondition:
+				if (targeter != null && targeter.CurrentTarget != null)
+				{
+					targeter.CurrentTarget.StartAttack(condition.buttonIndex);
+				}
+				break;
 		}
 	}
 
