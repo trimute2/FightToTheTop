@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(FlagHandler))]
 [RequireComponent(typeof(Animator))]
 public class MoveHandler : MonoBehaviour {
 	public delegate void GenericStateListner();
@@ -14,29 +15,8 @@ public class MoveHandler : MonoBehaviour {
 
 	public List<HitBoxScript> HitBoxes;
 
-	private FlagData flagData;
-	public FlagData Flags
-	{
-		get
-		{
-			return flagData;
-		}
-	}
-	public CommonFlags CommonFlags
-	{
-		get
-		{
-			return flagData.commonFlags;
-		}
-	}
-	public ValueFlags ValueFlags
-	{
-		get
-		{
-			return flagData.valueFlags;
-		}
-	}
 	private CommonFlags defaultFlagValues = CommonFlags.CanTurn | CommonFlags.MoveWithInput | CommonFlags.CanAttack;
+	private FlagHandler flagHandler;
 	private EntityControllerComp entityController;
 	private Animator animator;
 	private PlayerInputHandler playerInput;
@@ -69,9 +49,10 @@ public class MoveHandler : MonoBehaviour {
 	void Awake () {
 		currentMove = null;
 		animator = GetComponent<Animator>();
+		flagHandler = GetComponent<FlagHandler>();
 		entityController = GetComponent<EntityControllerComp>();
 		playerInput = GetComponent<PlayerInputHandler>();
-		flagData = new FlagData(defaultFlagValues, ValueFlags.None);
+		flagHandler.Flags = new FlagData(defaultFlagValues, ValueFlags.None);
 		moveTime = 0;
 		dodgeCount = 0;
 		overDodge = 0;
@@ -180,7 +161,7 @@ public class MoveHandler : MonoBehaviour {
 				}
 				return false;
 			case ConditionType.AttackFlagCondition:
-				return ((flagData.commonFlags & CommonFlags.CanAttack) != CommonFlags.None) == condition.boolSetting;
+				return ((flagHandler.CommonFlags & CommonFlags.CanAttack) != CommonFlags.None) == condition.boolSetting;
 			case ConditionType.CanDodge:
 				return (maxDodge <= 0 || dodgeCount < maxDodge);
 			default:
@@ -228,7 +209,7 @@ public class MoveHandler : MonoBehaviour {
 
 	public void EnterGenericState(float transitionTime = 0)
 	{
-		if (((flagData.commonFlags & CommonFlags.Dodgeing) != CommonFlags.None) &&
+		if (((flagHandler.CommonFlags & CommonFlags.Dodgeing) != CommonFlags.None) &&
 			entityController != null && !entityController.TestOverlap())
 		{
 			overDodge += Time.deltaTime;
@@ -256,8 +237,8 @@ public class MoveHandler : MonoBehaviour {
 			toPlay = "GoingUp";
 		}
 		animator.CrossFade(toPlay, transitionTime);
-		flagData.valueFlags = ValueFlags.None;
-		flagData.commonFlags = defaultFlagValues;
+		flagHandler.ValueFlags = ValueFlags.None;
+		flagHandler.CommonFlags = defaultFlagValues;
 		animator.speed = 1;
 
 		currentMove = null;
@@ -303,6 +284,7 @@ public class MoveHandler : MonoBehaviour {
 	{
 		if (currentMove != null)
 		{
+			FlagData flagData = flagHandler.Flags;
 			moveTime = moveTime == -1 ? 0 : moveTime + Time.deltaTime;
 			//get the state of the flags tracked by the move
 			CommonFlags moveFlags = (CommonFlags)currentMove.GetActiveFlags(moveTime, FlagTypes.CommonFlags);
@@ -317,7 +299,8 @@ public class MoveHandler : MonoBehaviour {
 
 			flagData.valueFlags = (ValueFlags)currentMove.GetActiveFlags(moveTime, FlagTypes.ValueFlags);
 
-			if (listenToMoveMotion && entityController != null && flagData.valueFlags != ValueFlags.None)
+			flagHandler.Flags = flagData;
+			if (listenToMoveMotion && entityController != null && flagHandler.ValueFlags != ValueFlags.None)
 			{
 				Vector2 targetVelocity = entityController.TargetVelocity;
 				float val = 0;
@@ -339,13 +322,13 @@ public class MoveHandler : MonoBehaviour {
 		}
 		if (entityController != null)
 		{
-			entityController.AllowEntityCollision = (flagData.commonFlags & CommonFlags.Dodgeing) == CommonFlags.None;
+			entityController.AllowEntityCollision = (flagHandler.CommonFlags & CommonFlags.Dodgeing) == CommonFlags.None;
 		}
 	}
 
 	private bool GetValue(ValueFlags flag, out float value)
 	{
-		if ((flagData.valueFlags & flag) != ValueFlags.None)
+		if ((flagHandler.ValueFlags & flag) != ValueFlags.None)
 		{
 			value = currentMove.GetAnimatedValue(moveTime, flag);
 			return true;
@@ -372,12 +355,12 @@ public class MoveHandler : MonoBehaviour {
 
 	public void TurnCommonFlagsOff(CommonFlags flags)
 	{
-		flagData.commonFlags &= ~flags;
+		flagHandler.TurnCommonFlagsOff(flags);
 	}
 
 	public void TurnCommonFlagsOn(CommonFlags flags)
 	{
-		flagData.commonFlags |= flags;
+		flagHandler.TurnCommonFlagsOn(flags);
 	}
 
 	public void SetGravity(bool gravity)

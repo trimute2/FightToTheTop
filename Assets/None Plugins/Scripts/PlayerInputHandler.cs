@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(FlagHandler))]
 [RequireComponent(typeof(MoveHandler))]
 [RequireComponent(typeof(EntityControllerComp))]
 public class PlayerInputHandler : MonoBehaviour {
@@ -31,6 +32,7 @@ public class PlayerInputHandler : MonoBehaviour {
 
 	private bool doubleJump;
 
+	private FlagHandler flagHandler;
 	private MoveHandler moveHandler;
 	private EntityControllerComp entityController;
 
@@ -46,13 +48,14 @@ public class PlayerInputHandler : MonoBehaviour {
 		{
 			inputBuffers[i] = new InputBuffer(inputNames[i]);
 		}
+		flagHandler = GetComponent<FlagHandler>();
 		moveHandler = GetComponent<MoveHandler>();
 		entityController = GetComponent<EntityControllerComp>();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		FlagData flagData = moveHandler.Flags;
+		FlagData flagData = flagHandler.Flags;
 		Vector2 movementInput = Vector2.zero;
 		movementInput.x = Input.GetAxisRaw("Horizontal");
 		movementInput.y = Input.GetAxisRaw("Vertical");
