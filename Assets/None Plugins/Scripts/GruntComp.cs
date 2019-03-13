@@ -11,6 +11,7 @@ public class GruntComp : MonoBehaviour {
 	private Targeter targeter;
 	private EntityControllerComp entityController;
 	private FlagHandler flagHandler;
+	public MoveData Punch;
 	// Use this for initialization
 	void Start () {
 		moveHandler = GetComponent<MoveHandler>();
@@ -34,42 +35,44 @@ public class GruntComp : MonoBehaviour {
 					{
 						targeter.TargetRange = Target.CLOSE_RANGE;
 					}
-					else if (target.RequestEnemyCount(Target.MID_RANGE, targeter.Direction) < 2)
+					else if (target.RequestTargeterCount(Target.MID_RANGE, targeter.Direction) < 2)
 					{
 						targeter.TargetRange = Target.MID_RANGE;
 					}
 					else
 					{
 						targeter.TargetRange = Target.LONG_RANGE;
+						moveToRange = false;
 						//shouldAvoid = true;
 
 						//any long range attack decisions go here
 					}
 					break;
 				case Target.MID_RANGE:
-					if (target.RequestEnemyCount(Target.CLOSE_RANGE) < 1)
+					if (target.RequestTargeterCount(Target.CLOSE_RANGE) < 1)
 					{
 						targeter.TargetRange = Target.CLOSE_RANGE;
 					} //else if(target.RequestEnemyCount(Target.MID_RANGE) > 4)
-					else if (target.RequestEnemyCount(Target.MID_RANGE, targeter.Direction) > 2)
+					else if (target.RequestTargeterCount(Target.MID_RANGE, targeter.Direction) > 2)
 					{
 						targeter.TargetRange = Target.LONG_RANGE;
 					}
 					else
 					{
 						targeter.TargetRange = Target.MID_RANGE;
+						moveToRange = false;
 						//shouldAvoid = true;
 					}
 					break;
 				case Target.CLOSE_RANGE:
-					if (target.RequestEnemyRemaining(Target.CLOSE_RANGE) > 1)
+					if (target.RequestTargeterRemaining(Target.CLOSE_RANGE) > 1)
 					{
 						targeter.TargetRange = Target.MID_RANGE;
 					}
 					else
 					{
 						targeter.TargetRange = Target.CLOSE_RANGE;
-						//attackPermission = true;
+						moveToRange = false;
 					}
 					break;
 			}

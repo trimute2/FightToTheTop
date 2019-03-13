@@ -84,6 +84,13 @@ public class Target : MonoBehaviour {
 		return target.Count;
 	}
 
+	public int RequestTargeterCount(int Range, int sign)
+	{
+		List<Targeter> target = GetRangeTargeterList(Range);
+		target.RemoveAll(item => sign != Mathf.Sign(item.XDistance));
+		return target.Count;
+	}
+
 	public int RequestEnemyRemaining(int Range)
 	{
 		List<Enemy> target = new List<Enemy>();
@@ -101,6 +108,25 @@ public class Target : MonoBehaviour {
 		target.RemoveAll(item => item.TargetRange != Range);
 		return target.Count;
 	}
+
+	public int RequestTargeterRemaining(int Range)
+	{
+		List<Targeter> target = new List<Targeter>();
+		switch (Range)
+		{
+			case MID_RANGE:
+				target.AddRange(MidRangeTargeters);
+				break;
+			case CLOSE_RANGE:
+				target.AddRange(CloseRangeTargeters);
+				break;
+			default:
+				return 0;
+		}
+		target.RemoveAll(item => item.TargetRange != Range);
+		return target.Count;
+	}
+
 
 	public int RequestTargetCount(int Range)
 	{

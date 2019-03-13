@@ -20,6 +20,7 @@ public class MoveHandler : MonoBehaviour {
 	private EntityControllerComp entityController;
 	private Animator animator;
 	private PlayerInputHandler playerInput;
+	private Targeter targeter;
 	/// <summary>
 	/// The current move
 	/// </summary>
@@ -52,6 +53,7 @@ public class MoveHandler : MonoBehaviour {
 		flagHandler = GetComponent<FlagHandler>();
 		entityController = GetComponent<EntityControllerComp>();
 		playerInput = GetComponent<PlayerInputHandler>();
+		targeter = GetComponent<Targeter>();
 		flagHandler.Flags = new FlagData(defaultFlagValues, ValueFlags.None);
 		moveTime = 0;
 		dodgeCount = 0;
@@ -164,6 +166,12 @@ public class MoveHandler : MonoBehaviour {
 				return ((flagHandler.CommonFlags & CommonFlags.CanAttack) != CommonFlags.None) == condition.boolSetting;
 			case ConditionType.CanDodge:
 				return (maxDodge <= 0 || dodgeCount < maxDodge);
+			case ConditionType.RangeCondition:
+				if(targeter != null)
+				{
+					return ((targeter.CurrentTarget != null) && (targeter.CurrentRange == condition.buttonIndex));
+				}
+				return false;
 			default:
 				return false;
 		}
