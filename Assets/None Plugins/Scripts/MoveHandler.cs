@@ -46,6 +46,7 @@ public class MoveHandler : MonoBehaviour {
 		}
 	}
 
+	private float MoveTime;
 	// Use this for initialization
 	void Awake () {
 		currentMove = null;
@@ -59,6 +60,7 @@ public class MoveHandler : MonoBehaviour {
 		dodgeCount = 0;
 		overDodge = 0;
 		listenToMoveMotion = true;
+		MoveTime = 0;
 	}
 	
 	// Update is called once per frame
@@ -90,7 +92,7 @@ public class MoveHandler : MonoBehaviour {
 		for (int i = 0; i < links.Count; i++)
 		{
 			MoveLink currentLink = links[i];
-			if (currentLink.priority > priority)
+			if (currentLink.priority >= priority)
 			{
 				bool meetsConditions = false;
 				for (int j = 0; j < currentLink.conditions.Count; j++)
@@ -117,6 +119,21 @@ public class MoveHandler : MonoBehaviour {
 			}
 			StartMove(links[nextMoveIndex].move);
 		}
+	}
+
+	public bool CheckMove(MoveLink link)
+	{
+		bool meetsConditions = false;
+		for (int j = 0; j < link.conditions.Count; j++)
+		{
+			LinkCondition condition = link.conditions[j];
+			meetsConditions = CheckCondition(condition);
+			if (!meetsConditions)
+			{
+				break;
+			}
+		}
+		return meetsConditions;
 	}
 
 	private bool CheckCondition(LinkCondition condition)
@@ -172,8 +189,24 @@ public class MoveHandler : MonoBehaviour {
 					return ((targeter.CurrentTarget != null) && (targeter.CurrentRange == condition.buttonIndex));
 				}
 				return false;
+			case ConditionType.AttackTimeCondition:
+				if (targeter != null)
+				{
+					return ((targeter.CurrentTarget != null) && (targeter.CurrentTarget.LastAttack(condition.buttonIndex) > condition.TimeCondition));
+				}
+				return false;
+			case ConditionType.MoveTimeCondition:
+				return (Time.time - MoveTime) > condition.TimeCondition;
 			default:
 				return false;
+		}
+	}
+
+	public void ExecuteConditions(MoveLink link)
+	{
+		foreach(LinkCondition condition in link.conditions)
+		{
+			ExecuteCondition(condition);
 		}
 	}
 
@@ -225,6 +258,7 @@ public class MoveHandler : MonoBehaviour {
 		}
 		overDodge = 0;
 		dodgeCount = 0;
+		MoveTime = Time.time;
 		if (currentMove != null)
 		{
 			foreach (EntityEffects e in currentMove.EffectsOnExit)

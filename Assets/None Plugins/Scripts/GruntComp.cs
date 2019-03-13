@@ -11,13 +11,21 @@ public class GruntComp : MonoBehaviour {
 	private Targeter targeter;
 	private EntityControllerComp entityController;
 	private FlagHandler flagHandler;
-	public MoveData Punch;
+	private Avoider avoider;
+	public MoveLink Punch;
 	// Use this for initialization
 	void Start () {
 		moveHandler = GetComponent<MoveHandler>();
 		targeter = GetComponent<Targeter>();
 		entityController = GetComponent<EntityControllerComp>();
 		flagHandler = GetComponent<FlagHandler>();
+		avoider = GetComponentInChildren<Avoider>();
+#if UNITY_EDITOR
+		if (avoider == null)
+		{
+			Debug.LogWarning("This object should have an avoider as a child");
+		}
+#endif
 	}
 	
 	// Update is called once per frame
@@ -52,7 +60,7 @@ public class GruntComp : MonoBehaviour {
 					if (target.RequestTargeterCount(Target.CLOSE_RANGE) < 1)
 					{
 						targeter.TargetRange = Target.CLOSE_RANGE;
-					} //else if(target.RequestEnemyCount(Target.MID_RANGE) > 4)
+					}
 					else if (target.RequestTargeterCount(Target.MID_RANGE, targeter.Direction) > 2)
 					{
 						targeter.TargetRange = Target.LONG_RANGE;
@@ -73,6 +81,11 @@ public class GruntComp : MonoBehaviour {
 					{
 						targeter.TargetRange = Target.CLOSE_RANGE;
 						moveToRange = false;
+						if (moveHandler.CheckMove(Punch))
+						{
+							moveHandler.ExecuteConditions(Punch);
+							moveHandler.StartMove(Punch.move);
+						}
 					}
 					break;
 			}
