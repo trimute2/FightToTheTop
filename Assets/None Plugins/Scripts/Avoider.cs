@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Avoider : MonoBehaviour {
+	//TODO: avoid multiple objects at the same time
 	private string avoiderType;
 	public string AvoiderType
 	{
@@ -31,8 +32,15 @@ public class Avoider : MonoBehaviour {
 	private List<Transform> avoidList;
 	[HideInInspector]
 	public Transform avoidTransform;
+	private Vector3 avoidVector;
+	public Vector3 AvoidVector
+	{
+		get
+		{
+			return avoidVector;
+		}
+	}
 	//bassed off of https://github.com/tutsplus/battle-circle-ai/blob/master/src/Assets/Scripts/AI/Avoider.cs
-	// Use this for initialization
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
@@ -41,7 +49,7 @@ public class Avoider : MonoBehaviour {
 		{
 			//avoidTransform = other.transform;
 			avoidList.Add(other.transform);
-			UpdateAvoiderTarget();
+			//UpdateAvoiderTarget();
 		}
 	}
 
@@ -55,7 +63,7 @@ public class Avoider : MonoBehaviour {
 			if(other.transform == avoidTransform)
 			{
 				avoidTransform = null;
-				UpdateAvoiderTarget();
+				//UpdateAvoiderTarget();
 			}
 		}
 	}
@@ -71,9 +79,26 @@ public class Avoider : MonoBehaviour {
 		}
 	}
 
+	private void Update()
+	{
+		avoidVector = Vector3.zero;
+		Vector3 currentPos = transform.parent.position;
+		if(avoidList.Count != 0)
+		{
+			foreach(Transform t in avoidList)
+			{
+				Vector3 diff = currentPos - t.position;
+				diff.Normalize();
+				avoidVector += diff;
+			}
+			avoidVector /= avoidList.Count;
+		}
+	}
+
 	private void Awake()
 	{
 		thingsToAvoid = new List<string>();
 		avoidList = new List<Transform>();
+		avoidVector = Vector3.zero;
 	}
 }

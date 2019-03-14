@@ -20,6 +20,8 @@ public class GruntComp : MonoBehaviour {
 		entityController = GetComponent<EntityControllerComp>();
 		flagHandler = GetComponent<FlagHandler>();
 		avoider = GetComponentInChildren<Avoider>();
+		avoider.AvoiderType = "Grunt";
+		avoider.ThingsToAvoid.Add("Grunt");
 #if UNITY_EDITOR
 		if (avoider == null)
 		{
@@ -95,6 +97,9 @@ public class GruntComp : MonoBehaviour {
 				{
 					targetVelocity = targeter.TargetDirection();
 					targetVelocity.x *= entityController.Facing * movementSpeed;
+				}else if(avoider.AvoidVector != Vector3.zero)
+				{
+					targetVelocity.x = avoider.AvoidVector.x;
 				}
 			}
 
