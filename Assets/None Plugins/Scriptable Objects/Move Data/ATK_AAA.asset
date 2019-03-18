@@ -182,7 +182,7 @@ MonoBehaviour:
   frameRate: 0.016666668
   playBackSpeed: 1
   damage: 0
-  knockBack: {x: 15, y: 0}
+  knockBack: {x: 15, y: 4}
   holdTime: 0
   endTime: 0.6666667
   data:
