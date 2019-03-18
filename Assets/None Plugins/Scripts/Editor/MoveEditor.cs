@@ -13,6 +13,8 @@ public class MoveEditor : Editor {
 	SerializedProperty frameRateProp;
 	SerializedProperty speed;
 	SerializedProperty damage;
+	SerializedProperty hitStun;
+	SerializedProperty hitStunFrame;
 	SerializedProperty knockBack;
 	SerializedProperty controllerProp;
 	SerializedProperty cFCurvesProp;
@@ -46,6 +48,8 @@ public class MoveEditor : Editor {
 		frameRateProp = serializedObject.FindProperty("frameRate");
 		speed = serializedObject.FindProperty("playBackSpeed");
 		damage = serializedObject.FindProperty("damage");
+		hitStun = serializedObject.FindProperty("hitStun");
+		hitStunFrame = serializedObject.FindProperty("hitStunFrame");
 		knockBack = serializedObject.FindProperty("knockBack");
 		controllerProp = serializedObject.FindProperty("controller");
 		cFCurvesProp = serializedObject.FindProperty("commonFlagsCurves");
@@ -141,6 +145,8 @@ public class MoveEditor : Editor {
 		}
 		EditorGUILayout.PropertyField(speed, new GUIContent("playback speed"));
 		EditorGUILayout.PropertyField(damage, new GUIContent("damage"));
+		EditorGUILayout.PropertyField(hitStun, new GUIContent("Hit Stun"));
+		EditorGUILayout.PropertyField(hitStunFrame, new GUIContent("Hit Stun Frame"));
 		EditorGUILayout.PropertyField(knockBack, new GUIContent("knockBack"));
 		InheritedEditor();
 		DisplayFlags("commonFlags", cFCurvesProp, 0, typeof(CommonFlags), "Common Flags");

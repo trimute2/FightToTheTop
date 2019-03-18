@@ -32,6 +32,8 @@ public class MoveData : ScriptableObject {
 	public float frameRate;
 	public float playBackSpeed = 1;
 	public int damage = 0;
+	public float hitStun = 0;
+	public float hitStunFrame;
 	public Vector2 knockBack;
 	public float holdTime;
 	public float endTime;
