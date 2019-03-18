@@ -115,7 +115,7 @@ public class PlayerInputHandler : MonoBehaviour {
 			}
 			else
 			{
-				targetVelocity.y /= 2f;
+				//targetVelocity.y /= 2f;
 
 				targetVelocity *= 3f;
 			}
