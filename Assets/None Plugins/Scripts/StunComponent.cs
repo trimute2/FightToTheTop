@@ -13,6 +13,7 @@ public class StunComponent : MonoBehaviour {
 	private Vector2 knockBack;
 
 	private bool stunned = false;
+	private bool liftOff = false;
 
 	public bool Stunned
 	{
@@ -43,17 +44,36 @@ public class StunComponent : MonoBehaviour {
 	void Update () {
 		if (stunned)
 		{
-			if(Time.time - hitTime < stunDuration)
+			bool stopStun = false;
+			if(liftOff && hasEntityController && knockBack != Vector2.zero)
 			{
-				//object is stunned
-				if (hasEntityController)
+				if (entityController.Grounded)
+				{
+					stopStun = true;
+				}
+				else
 				{
 					entityController.TargetVelocity = knockBack;
+				}
+			} else if(Time.time - hitTime < stunDuration)
+			{
+				if(hasEntityController && knockBack != Vector2.zero)
+				{
+					entityController.TargetVelocity = knockBack;
+					if (!entityController.Grounded)
+					{
+						liftOff = true;
+					}
 				}
 			}
 			else
 			{
+				stopStun = true;
+			}
+			if(stopStun)
+			{
 				stunned = false;
+				liftOff = false;
 				moveHandler.EnterGenericState();
 			}
 		}
