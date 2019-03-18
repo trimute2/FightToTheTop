@@ -7,7 +7,7 @@ public class FightTrigger : MonoBehaviour {
 
 	//private Collider2D FightArea;
 
-	public List<Enemy> enemies;
+	public List<Targeter> targeters;
 	// Use this for initialization
 	/*void Start () {
 		FightArea = GetComponent<Collider2D>();
@@ -18,9 +18,9 @@ public class FightTrigger : MonoBehaviour {
 		Target p = collision.transform.root.GetComponent<Target>();
 		if (p != null)
 		{
-			foreach(Enemy e in enemies)
+			foreach(Targeter t in targeters)
 			{
-				e.CurrentTarget = p;
+				t.CurrentTarget = p;
 			}
 			Destroy(this);
 		}

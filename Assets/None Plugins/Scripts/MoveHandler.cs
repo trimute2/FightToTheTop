@@ -301,6 +301,11 @@ public class MoveHandler : MonoBehaviour {
 		}
 	}
 
+	public void EneterDamageState()
+	{
+		EnterGenericState();
+	}
+
 	public void StartMove(MoveData move)
 	{
 		if(move == null)
@@ -383,6 +388,24 @@ public class MoveHandler : MonoBehaviour {
 		}
 		value = 0;
 		return false;
+	}
+
+	public virtual void HitEnemy(MoveHandler target)
+	{
+		if (currentMove != null)
+		{
+			if (target != null)
+			{
+				foreach (EntityEffects effect in currentMove.HitTargetEffects)
+				{
+					effect.Effect(target);
+				}
+			}
+			foreach (EntityEffects effect in currentMove.HitUserEffects)
+			{
+				effect.Effect(this);
+			}
+		}
 	}
 
 	#region EffectFunctions

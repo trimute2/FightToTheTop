@@ -54,4 +54,9 @@ public class FlagHandler : MonoBehaviour {
 	{
 		flagData.commonFlags |= flags;
 	}
+
+	public bool CheckCommonFlag(CommonFlags flag)
+	{
+		return ((flagData.commonFlags & flag) != CommonFlags.None);
+	}
 }

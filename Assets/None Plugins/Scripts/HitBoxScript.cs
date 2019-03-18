@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class HitBoxScript : MonoBehaviour {
 
+	private MoveHandler moveHandler;
 	private EntityController entityController;
 	private Collider2D damageCollider;
 	private int damage;
@@ -22,7 +23,19 @@ public class HitBoxScript : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		EntityController target = collision.transform.root.GetComponent<EntityController>();
+		HealthComponent target = collision.transform.root.GetComponent<HealthComponent>();
+		if(target != null)
+		{
+			MoveHandler enemyHandler = target.GetComponent<MoveHandler>();
+			moveHandler.HitEnemy(enemyHandler);
+			int direction = 1;
+			if (knockBack != Vector2.zero)
+			{
+				direction = (int)Mathf.Sign(target.transform.position.x - entityController.transform.position.x);
+			}
+			target.Damage(damage, knockBack*direction);
+		}
+		/*EntityController target = collision.transform.root.GetComponent<EntityController>();
 		if (target != null)
 		{
 			if (!entitiesHit.Contains(target.EntityID))
@@ -36,7 +49,7 @@ public class HitBoxScript : MonoBehaviour {
 				target.Damage(damage,knockBack*direction);
 				entitiesHit.Add(target.EntityID);
 			}
-		}
+		}*/
 	}
 	// Update is called once per frame
 
