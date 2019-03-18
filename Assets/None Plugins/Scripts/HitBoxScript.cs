@@ -32,7 +32,10 @@ public class HitBoxScript : MonoBehaviour {
 			{
 				direction = (int)Mathf.Sign(target.transform.position.x - moveHandler.transform.position.x);
 			}
-			target.Damage(damage, knockBack*direction);
+			Vector2 kb = knockBack;
+			kb.x *= direction;
+			float hitStun = moveHandler.GetHitStun();
+			target.Damage(damage, kb,hitStun);
 		}
 		/*EntityController target = collision.transform.root.GetComponent<EntityController>();
 		if (target != null)

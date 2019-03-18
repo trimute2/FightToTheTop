@@ -389,7 +389,16 @@ public class MoveHandler : MonoBehaviour {
 		return false;
 	}
 
-	public virtual void HitEnemy(MoveHandler target)
+	public float GetHitStun()
+	{
+		if(currentMove == null)
+		{
+			return 0;
+		}
+		return currentMove.hitStun + currentMove.hitStunFrame - moveTime;
+	}
+
+	public void HitEnemy(MoveHandler target)
 	{
 		if (currentMove != null)
 		{
