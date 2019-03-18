@@ -254,7 +254,7 @@ public class MoveHandler : MonoBehaviour {
 		return true;
 	}
 
-	public void EnterGenericState(float transitionTime = 0)
+	public void EnterGenericState(string animationName = "", float transitionTime = 0)
 	{
 		if (((flagHandler.CommonFlags & CommonFlags.Dodgeing) != CommonFlags.None) &&
 			entityController != null && !entityController.TestOverlap())
@@ -272,17 +272,21 @@ public class MoveHandler : MonoBehaviour {
 				e.Effect(this);
 			}
 		}
-		string toPlay;
-		if(entityController == null || entityController.Grounded)
+		string toPlay = animationName;
+		if (toPlay == "")
 		{
-			toPlay = "Idle";
-		}else if(entityController.Velocity.y < 0)
-		{
-			toPlay = "Falling";
-		}
-		else
-		{
-			toPlay = "GoingUp";
+			if (entityController == null || entityController.Grounded)
+			{
+				toPlay = "Idle";
+			}
+			else if (entityController.Velocity.y < 0)
+			{
+				toPlay = "Falling";
+			}
+			else
+			{
+				toPlay = "GoingUp";
+			}
 		}
 		animator.CrossFade(toPlay, transitionTime);
 		flagHandler.ValueFlags = ValueFlags.None;
@@ -299,11 +303,6 @@ public class MoveHandler : MonoBehaviour {
 		{
 			GenericStateEvent();
 		}
-	}
-
-	public void EneterDamageState()
-	{
-		EnterGenericState();
 	}
 
 	public void StartMove(MoveData move)

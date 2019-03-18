@@ -3,44 +3,74 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MoveHandler))]
+[RequireComponent(typeof(FlagHandler))]
 public class StunComponent : MonoBehaviour {
-
-	public float damageTime = 0.3f;
-	public float knockBackTime = 0.7f;
+	
 
 	private float hitTime = 0;
-	private int vunlrabilityType = 0;
+	private float stunDuration;
+
+	private Vector2 knockBack;
+
+	private bool stunned = false;
+
+	public bool Stunned
+	{
+		get
+		{
+			return stunned;
+		}
+	}
 
 	private MoveHandler moveHandler;
+	private FlagHandler flagHandler;
 
-	private bool stuned = false;
+	private EntityControllerComp entityController;
+	private bool hasEntityController;
 
-	private const int DAMAGE_STUN = 0;
-	private const int KNOCKBACK_STUN = 1;
 
-	private void Awake()
+	private void Start()
 	{
 		moveHandler = GetComponent<MoveHandler>();
+		flagHandler = GetComponent<FlagHandler>();
+
+		entityController = GetComponent<EntityControllerComp>();
+		hasEntityController = (entityController != null);
+
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (stuned)
+		if (stunned)
 		{
-			float waitTime = damageTime;
-			if(vunlrabilityType == KNOCKBACK_STUN)
+			if(Time.time - hitTime < stunDuration)
 			{
-				waitTime = knockBackTime;
+				//object is stunned
+				if (hasEntityController)
+				{
+					entityController.TargetVelocity = knockBack;
+				}
 			}
-			if(Time.time - hitTime >= waitTime)
+			else
 			{
-				//TODO: get out of stun;
+				stunned = false;
+				moveHandler.EnterGenericState();
 			}
 		}
 	}
 
-	public void Stun()
+	public void Stun(Vector2 knockBack, float stunDuration, int stunPoints)
 	{
-
+		stunned = true;
+		hitTime = Time.time;
+		this.stunDuration = stunDuration;
+		this.knockBack = knockBack;
+		string toPlay = "Damage";
+		if(this.knockBack != Vector2.zero)
+		{
+			toPlay = "Knock Back";
+		}
+		moveHandler.EnterGenericState(toPlay, 0.001111111f);
+		flagHandler.CommonFlags = CommonFlags.None;
 	}
 }

@@ -96,7 +96,7 @@ public class PlayerInputHandler : MonoBehaviour {
 		{
 			if (movementInput.x != 0)
 			{
-				moveHandler.EnterGenericState(0.3f);
+				moveHandler.EnterGenericState("",0.3f);
 			}
 		}
 		if ((flagData.commonFlags & CommonFlags.Dodgeing) != CommonFlags.None)

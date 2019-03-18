@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(FlagHandler))]
-[RequireComponent(typeof(MoveHandler))]
+
 public class HealthComponent : MonoBehaviour {
+	public delegate void HealthUpdate();
+	public event HealthUpdate HealthUpdateEvent;
 
 	public int maxHealth = 100;
 	private int health;
-	private MoveHandler moveHandler;
-	private FlagHandler flagHandler;
 	public int Health
 	{
 		get
@@ -18,24 +17,36 @@ public class HealthComponent : MonoBehaviour {
 		}
 	}
 
-	private void Awake()
-	{
-		moveHandler = GetComponent<MoveHandler>();
-		flagHandler = GetComponent<FlagHandler>();
-	}
+	private StunComponent stunComponent;
+	private bool hasStunComponent;
+	private FlagHandler flagHandler;
+	private bool hasFlagHandler;
 
 	private void Start()
 	{
 		health = maxHealth;
+		stunComponent = GetComponent<StunComponent>();
+		hasStunComponent = (stunComponent != null);
+		flagHandler = GetComponent<FlagHandler>();
+		hasFlagHandler = (flagHandler != null);
 	}
 
-	public void Damage(int damage, Vector2 knockBack)
+	public void Damage(int damage, Vector2 knockBack, float stunDuration = 0.3f, int stunPoints = 0)
 	{
-		if (flagHandler.CheckCommonFlag(CommonFlags.Dodgeing))
+		if (hasFlagHandler && flagHandler.CheckCommonFlag(CommonFlags.Dodgeing))
 		{
 			return;
 		}
 		health -= damage;
-		moveHandler.EneterDamageState();
+		if (hasStunComponent)
+		{
+			stunComponent.Stun(knockBack, stunDuration, stunPoints);
+		}
+
+		//call health update event
+		if(HealthUpdateEvent != null)
+		{
+			HealthUpdateEvent();
+		}
 	}
 }

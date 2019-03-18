@@ -6,14 +6,13 @@ using UnityEngine;
 public class HitBoxScript : MonoBehaviour {
 
 	private MoveHandler moveHandler;
-	private EntityController entityController;
 	private Collider2D damageCollider;
 	private int damage;
 	private Vector2 knockBack;
 	private List<int> entitiesHit;
 	// Use this for initialization
 	void Start () {
-		entityController = transform.root.GetComponent<EntityController>();
+		moveHandler = transform.root.GetComponent<MoveHandler>();
 		damageCollider = this.GetComponent<Collider2D>();
 		damageCollider.enabled = false;
 		entitiesHit = new List<int>();
@@ -31,7 +30,7 @@ public class HitBoxScript : MonoBehaviour {
 			int direction = 1;
 			if (knockBack != Vector2.zero)
 			{
-				direction = (int)Mathf.Sign(target.transform.position.x - entityController.transform.position.x);
+				direction = (int)Mathf.Sign(target.transform.position.x - moveHandler.transform.position.x);
 			}
 			target.Damage(damage, knockBack*direction);
 		}
