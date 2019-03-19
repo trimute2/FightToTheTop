@@ -25,7 +25,7 @@ public class EntityControllerComp : MonoBehaviour {
 		}
 		set
 		{
-			gravityOn = false;
+			gravityOn = value;
 		}
 	}
 
