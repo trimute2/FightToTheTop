@@ -292,6 +292,7 @@ public class MoveHandler : MonoBehaviour {
 		flagHandler.ValueFlags = ValueFlags.None;
 		flagHandler.CommonFlags = defaultFlagValues;
 		animator.speed = 1;
+		SetGravity(true);
 
 		currentMove = null;
 		for (int i = 0; i < HitBoxes.Count; i++)
