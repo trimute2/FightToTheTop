@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 114874776865536750}
   - component: {fileID: 114860737978388488}
   - component: {fileID: 114969409219229006}
+  - component: {fileID: 114444505356257044}
   m_Layer: 14
   m_Name: Test Grunt
   m_TagString: Entity
@@ -2004,6 +2005,19 @@ MonoBehaviour:
     m_RestoreDefaultPose: 1
     targetPosition: {x: 9.503512, y: -1.9730393, z: 0}
     flip: 1
+--- !u!114 &114444505356257044
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1263044702732114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb9e1724025f5f48b71cd14ffdbefe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aimingPoints:
+  - {fileID: 4216286142191242}
 --- !u!114 &114474599256065898
 MonoBehaviour:
   m_ObjectHideFlags: 1
