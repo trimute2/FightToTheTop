@@ -451,6 +451,12 @@ public class MoveHandler : MonoBehaviour {
 		}
 	}
 
+	public void SetGravityAE(int i)
+	{
+		bool gravity = (i > 0);
+		SetGravity(gravity);
+	}
+
 	#endregion EffectFunctions
 	public void ActivateHitBox(int HitboxIndex)
 	{

@@ -13,6 +13,7 @@ public class GruntComp : MonoBehaviour {
 	private FlagHandler flagHandler;
 	private Avoider avoider;
 	public MoveLink Punch;
+	public MoveLink Shoot;
 	// Use this for initialization
 	void Start () {
 		moveHandler = GetComponent<MoveHandler>();
@@ -83,11 +84,11 @@ public class GruntComp : MonoBehaviour {
 					{
 						targeter.TargetRange = Target.CLOSE_RANGE;
 						moveToRange = false;
-						if (moveHandler.CheckMove(Punch))
+						/*if (moveHandler.CheckMove(Punch))
 						{
 							moveHandler.ExecuteConditions(Punch);
 							moveHandler.StartMove(Punch.move);
-						}
+						}*/
 					}
 					break;
 			}
@@ -100,6 +101,14 @@ public class GruntComp : MonoBehaviour {
 				}else if(avoider.AvoidVector != Vector3.zero)
 				{
 					targetVelocity.x = avoider.AvoidVector.x;
+				}
+				else
+				{
+					if (moveHandler.CheckMove(Shoot))
+					{
+						moveHandler.ExecuteConditions(Shoot);
+						moveHandler.StartMove(Shoot.move);
+					}
 				}
 			}
 
