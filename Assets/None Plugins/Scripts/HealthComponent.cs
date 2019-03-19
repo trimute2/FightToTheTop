@@ -31,11 +31,11 @@ public class HealthComponent : MonoBehaviour {
 		hasFlagHandler = (flagHandler != null);
 	}
 
-	public void Damage(int damage, Vector2 knockBack, float stunDuration = 0.3f, int stunPoints = 0)
+	public bool Damage(int damage, Vector2 knockBack, float stunDuration = 0.3f, int stunPoints = 0)
 	{
 		if (hasFlagHandler && flagHandler.CheckCommonFlag(CommonFlags.Dodgeing))
 		{
-			return;
+			return false;
 		}
 		health -= damage;
 		if (hasStunComponent)
@@ -48,5 +48,6 @@ public class HealthComponent : MonoBehaviour {
 		{
 			HealthUpdateEvent();
 		}
+		return true;
 	}
 }

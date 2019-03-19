@@ -10,12 +10,14 @@ public class HitBoxScript : MonoBehaviour {
 	private int damage;
 	private Vector2 knockBack;
 	private List<int> entitiesHit;
+	private List<HealthComponent> hasHit;
 	// Use this for initialization
 	void Start () {
 		moveHandler = transform.root.GetComponent<MoveHandler>();
 		damageCollider = this.GetComponent<Collider2D>();
 		damageCollider.enabled = false;
 		entitiesHit = new List<int>();
+		hasHit = new List<HealthComponent>();
 		damage = 0;
 		knockBack = Vector2.zero;
 	}
@@ -23,7 +25,7 @@ public class HitBoxScript : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		HealthComponent target = collision.transform.root.GetComponent<HealthComponent>();
-		if(target != null)
+		if(target != null && !hasHit.Contains(target))
 		{
 			MoveHandler enemyHandler = target.GetComponent<MoveHandler>();
 			moveHandler.HitEnemy(enemyHandler);
@@ -35,7 +37,10 @@ public class HitBoxScript : MonoBehaviour {
 			Vector2 kb = knockBack;
 			kb.x *= direction;
 			float hitStun = moveHandler.GetHitStun();
-			target.Damage(damage, kb,hitStun);
+			if(target.Damage(damage, kb, hitStun))
+			{
+				hasHit.Add(target);
+			}
 		}
 		/*EntityController target = collision.transform.root.GetComponent<EntityController>();
 		if (target != null)
@@ -58,6 +63,7 @@ public class HitBoxScript : MonoBehaviour {
 	public void ResetHitBox()
 	{
 		entitiesHit.Clear();
+		hasHit.Clear();
 	}
 
 	public void EnableHitBox(int damage, Vector2 knockBack)
