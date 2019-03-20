@@ -129,7 +129,7 @@ namespace Anima2D
 		{
 #if UNITY_2018_3_OR_NEWER
 			var currentStage = UnityEditor.SceneManagement.StageUtility.GetCurrentStageHandle();
-            return  currentStage.FindComponentsOfType<T>().Where(x => x.gameObject.scene.isLoaded).ToArray();
+            return  currentStage.FindComponentsOfType<T>().Where(x => x.gameObject.scene.isLoaded && x.gameObject.activeInHierarchy).ToArray();
 #else
 			return GameObject.FindObjectsOfType<T>();
 #endif

@@ -1,4 +1,8 @@
 VERSION LOG
+v1.1.6.3 2019-02-27
+- Fixed Bone gizmos on inactive GameObjects regression
+- Removed "Editor Default Resources/Anima2D" directory. Content moved to Anima2D/Scripts/Editor/Resources
+
 v1.1.6.2 2019-01-09
 - Fix prefab isolation mode
 
