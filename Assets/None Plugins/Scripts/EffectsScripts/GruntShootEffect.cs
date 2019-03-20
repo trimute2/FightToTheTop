@@ -9,6 +9,7 @@ namespace VisualEffects
 	{
 		public LineRenderer topBeam;
 		public LineRenderer midBeam;
+		public LineRenderer bottomBeam;
 
 		private Vector3 aimPoint;
 
@@ -32,7 +33,9 @@ namespace VisualEffects
 			midBeam.SetPosition(0, originPoint);
 			midBeam.SetPosition(1, aimPoint);
 			topBeam.SetPosition(0, originPoint + up);
-			topBeam.SetPosition(1, aimPoint + up);
+			topBeam.SetPosition(1, aimPoint);
+			bottomBeam.SetPosition(0, originPoint-up);
+			bottomBeam.SetPosition(1, aimPoint);
 		}
 
 		public void EndEffect()

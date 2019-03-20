@@ -1045,6 +1045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb9e1724025f5f48b71cd14ffdbefe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AimPoint: {fileID: 4889934104419936}
   aimingControls:
   - {fileID: 4216286142191242}
   aimingPoints:

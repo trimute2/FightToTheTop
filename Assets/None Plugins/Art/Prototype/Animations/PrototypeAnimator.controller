@@ -14,19 +14,25 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: VelocityY
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: HitDirectionX
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: Targeting
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -48,6 +54,22 @@ BlendTree:
   m_PrefabAsset: {fileID: 0}
   m_Name: Blend Tree
   m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 99b13358c77fd3344b54de28bbdc379d, type: 2}
+    m_Threshold: -90
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: VelocityX
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: bd84597d36ec34445be6f7384a711447, type: 2}
+    m_Threshold: -45
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: VelocityX
+    m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 70656fdcbe8e44349a975d3808efeee9, type: 2}
     m_Threshold: 0
@@ -72,9 +94,9 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityX
     m_Mirror: 0
-  m_BlendParameter: VelocityX
+  m_BlendParameter: Targeting
   m_BlendParameterY: VelocityX
-  m_MinThreshold: 0
+  m_MinThreshold: -90
   m_MaxThreshold: 90
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
@@ -547,7 +569,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Blend Tree
+  m_Name: GruntShoot
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -587,6 +609,32 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 2af5e97658e319742b7838e347b04591, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &1102248752616088040
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GruntShoot_AngleDown
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: bd84597d36ec34445be6f7384a711447, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -639,6 +687,32 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 69bbef6e3c4985d4ba5394cc6f14e872, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &1102346914874852316
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GruntShoot_Down
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 99b13358c77fd3344b54de28bbdc379d, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -717,32 +791,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: eb2a7390b8fb26640918c74e178033e4, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &1102478311452069654
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: GruntShoot
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 70656fdcbe8e44349a975d3808efeee9, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1146,10 +1194,10 @@ AnimatorStateMachine:
     m_Position: {x: -360, y: 456, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102844849480698554}
-    m_Position: {x: -204, y: 564, z: 0}
+    m_Position: {x: -408, y: 624, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102231201369050152}
-    m_Position: {x: -204, y: 516, z: 0}
+    m_Position: {x: -12, y: 528, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102220342000316846}
     m_Position: {x: -240, y: 288, z: 0}
@@ -1172,9 +1220,6 @@ AnimatorStateMachine:
     m_State: {fileID: 1102312110541786332}
     m_Position: {x: -136, y: 392, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1102478311452069654}
-    m_Position: {x: -252, y: 480, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 1102982875422798722}
     m_Position: {x: -217, y: 545, z: 0}
   - serializedVersion: 1
@@ -1183,6 +1228,12 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102226774549776564}
     m_Position: {x: -14.472595, y: 730.1189, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102346914874852316}
+    m_Position: {x: 20.527405, y: 795.1189, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102248752616088040}
+    m_Position: {x: 55.527405, y: 860.1189, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

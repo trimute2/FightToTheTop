@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MoveHandler))]
+[RequireComponent(typeof(Animator))]
 public class AnimationAimComponent : MonoBehaviour {
 
 	private MoveHandler moveHandler;
+	private Animator animator;
 
 	private Targeter targeter;
 	private bool hasTargeter;
+
+	public Transform AimPoint;
 
 	public List<Transform> aimingControls;
 	public List<Transform> aimingPoints;
@@ -21,6 +25,9 @@ public class AnimationAimComponent : MonoBehaviour {
 	private Transform animationTarget;
 
 	private Vector3 holdPoint;
+	public float currentAim;
+
+	public float maxAimSpeed = 15.0f;
 
 	private Vector3 TargetPoint
 	{
@@ -41,10 +48,25 @@ public class AnimationAimComponent : MonoBehaviour {
 		moveHandler = GetComponent<MoveHandler>();
 		moveHandler.GenericStateEvent += StopTargeting;
 
+		animator = GetComponent<Animator>();
+
 		targeter = GetComponent<Targeter>();
 		hasTargeter = (targeter != null);
 
 		attatchedEffects = new List<VisualEffects.IVisualEffect>();
+	}
+
+	private void Update()
+	{
+		if (targeting)
+		{
+			float targetAngle = CalculateAim();
+			float changeAngle = Mathf.Clamp(targetAngle - currentAim, -maxAimSpeed, maxAimSpeed);
+			currentAim += changeAngle;
+			currentAim = Mathf.Clamp(currentAim, -90, 90);
+			animator.SetFloat("Targeting", currentAim);
+			
+		}
 	}
 
 	private void LateUpdate()
@@ -52,6 +74,8 @@ public class AnimationAimComponent : MonoBehaviour {
 		bool updateEffects = false;
 		if (targeting)
 		{
+			//TODO: make this track slowly
+			//reference for later https://answers.unity.com/questions/690341/2d-ai-aim-at-player-even-when-jumping.html
 			animationTargeter.position = animationTarget.position;
 			updateEffects = true;
 		}else if (holding)
@@ -89,6 +113,7 @@ public class AnimationAimComponent : MonoBehaviour {
 			animationTarget = target;
 			targeting = true;
 			animationTargeter.position = animationTarget.position;
+			currentAim = CalculateAim();
 		}
 	}
 
@@ -142,5 +167,14 @@ public class AnimationAimComponent : MonoBehaviour {
 			VisualEffects.IVisualEffect attatch = (VisualEffects.IVisualEffect)obj.GetComponent<VisualEffects.IVisualEffect>();
 			AttatchVisualEffect(attatch);
 		}
+	}
+
+	private float CalculateAim()
+	{
+		Vector3 diff = animationTarget.position - AimPoint.position;
+		diff.Normalize();
+		float dir = Mathf.Sign(transform.localScale.x);
+		float rot = Mathf.Atan2(diff.y, dir * diff.x) * Mathf.Rad2Deg;
+		return rot;
 	}
 }
