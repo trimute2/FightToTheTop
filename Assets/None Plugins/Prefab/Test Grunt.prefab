@@ -932,6 +932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b0eef0d0373d7c45b2ef5c7eb59a285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravityOn: 1
   allowEntityCollision: 0
 --- !u!114 &114352130762748706
 MonoBehaviour:
@@ -1050,6 +1051,8 @@ MonoBehaviour:
   - {fileID: 4216286142191242}
   aimingPoints:
   - {fileID: 4891008014773366}
+  currentAim: 0
+  maxAimSpeed: 15
 --- !u!1 &1265411841546654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2374,8 +2377,8 @@ GameObject:
   - component: {fileID: 4097759897573170}
   - component: {fileID: 114867986296786686}
   - component: {fileID: 70530373642717544}
-  m_Layer: 0
-  m_Name: GameObject
+  m_Layer: 15
+  m_Name: Avoider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

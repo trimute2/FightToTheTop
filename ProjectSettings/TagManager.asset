@@ -21,7 +21,7 @@ TagManager:
   - UnalignedHitBoxes
   - EntityCollision
   - EnemyCollision
-  - 
+  - FightTrigger
   - 
   - 
   - 

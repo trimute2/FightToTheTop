@@ -19,8 +19,9 @@ namespace VisualEffects
 
 		private void Start()
 		{
-			layerMask = LayerMask.GetMask("Default");
-			//layerMask = Physics2D.GetLayerCollisionMask(gameObject.layer);//LayerMask.GetMask("EnemyCollision");
+			//layerMask = LayerMask.GetMask("Default");
+			layerMask = Physics2D.GetLayerCollisionMask(gameObject.layer);
+			//layerMask = LayerMask.GetMask("EnemyCollision");
 			//LayerMask Test = LayerMask.GetMask(new string[] { "Default", "EntityCollision"});
 			//layerMask = LayerMask.GetMask(new string[] { "Default", "EntityCollision" });
 			//Debug.Break();
@@ -44,6 +45,8 @@ namespace VisualEffects
 			direction.y = Mathf.Sin(f);*/
 			transform.rotation = Quaternion.Euler(0, 0, f);
 			Vector3 dir = transform.right;
+			transform.rotation = Quaternion.Euler(0, 0, -f);
+
 			//Vector3 dir = Quaternion.AngleAxis(f, Vector3.forward) * Vector3.right;
 			Vector2 direction = new Vector2(dir.x, dir.y);
 			RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 100, layerMask);
@@ -51,7 +54,9 @@ namespace VisualEffects
 			Vector2 hitPoint;
 			if (hit.collider != null)
 			{
+				Debug.Log(transform.InverseTransformPoint(hit.point));
 				hitPoint = Vector3.right * hit.distance;
+				Debug.Log(transform.InverseTransformPoint(hitPoint));
 				Debug.Break();
 				//hitPoint = transform.InverseTransformPoint(hit.point);
 			}
