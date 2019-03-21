@@ -65,10 +65,25 @@ public class AnimationAimComponent : MonoBehaviour {
 			currentAim += changeAngle;
 			currentAim = Mathf.Clamp(currentAim, -90, 90);
 			animator.SetFloat("Targeting", currentAim);
-			
+		}
+		if(attatchedEffects.Count > 0)
+		{
+			foreach (VisualEffects.IVisualEffect e in attatchedEffects)
+			{
+				float ea = currentAim;
+				if(Mathf.Sign(transform.localScale.x) == -1)
+				{
+					ea = 180 + currentAim;
+				}
+				if (e != null)
+				{
+					e.EffectUpdate(currentAim);
+				}
+			}
 		}
 	}
 
+	/*
 	private void LateUpdate()
 	{
 		bool updateEffects = false;
@@ -94,7 +109,7 @@ public class AnimationAimComponent : MonoBehaviour {
 				}
 			}
 		}
-	}
+	}*/
 
 	public void StartTargetingTarget(int pointIndex)
 	{
@@ -168,6 +183,19 @@ public class AnimationAimComponent : MonoBehaviour {
 			AttatchVisualEffect(attatch);
 		}
 	}
+
+	public void SpawnAndAttatchEffectAE(AnimationEvent animationEvent)
+	{
+		if(animationEvent.objectReferenceParameter != null && animationEvent.objectReferenceParameter is GameObject &&
+			((GameObject)animationEvent.objectReferenceParameter).GetComponentInChildren<VisualEffects.IVisualEffect>() != null)
+		{
+			GameObject obj = Instantiate(((GameObject)animationEvent.objectReferenceParameter), aimingPoints[animationEvent.intParameter]);
+			VisualEffects.IVisualEffect attatch = (VisualEffects.IVisualEffect)obj.GetComponent<VisualEffects.IVisualEffect>();
+			AttatchVisualEffect(attatch);
+		}
+	}
+
+
 
 	private float CalculateAim()
 	{

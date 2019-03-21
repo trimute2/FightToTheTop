@@ -161,7 +161,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   animationStateName: GruntShoot
-  length: 0.71666664
+  length: 1.05
   frameRate: 0.016666668
   playBackSpeed: 1
   damage: 0
@@ -169,7 +169,7 @@ MonoBehaviour:
   hitStunFrame: 0
   knockBack: {x: 0, y: 0}
   holdTime: 0
-  endTime: 0.71666664
+  endTime: 1.05
   data:
     commonFlags: 9
     valueFlags: 2

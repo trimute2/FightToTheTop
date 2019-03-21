@@ -16,7 +16,7 @@ public class EntityControllerComp : MonoBehaviour {
 		}
 	}
 
-	private bool gravityOn = true;
+	public bool gravityOn = true;
 	public bool GravityOn
 	{
 		get
@@ -25,6 +25,10 @@ public class EntityControllerComp : MonoBehaviour {
 		}
 		set
 		{
+			if(value != gravityOn)
+			{
+				velocity.y = 0;
+			}
 			gravityOn = value;
 		}
 	}
