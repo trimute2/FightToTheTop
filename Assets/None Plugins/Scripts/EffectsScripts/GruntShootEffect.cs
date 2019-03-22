@@ -57,7 +57,7 @@ namespace VisualEffects
 				Debug.Log(transform.InverseTransformPoint(hit.point));
 				hitPoint = Vector3.right * hit.distance;
 				Debug.Log(transform.InverseTransformPoint(hitPoint));
-				Debug.Break();
+				//Debug.Break();
 				//hitPoint = transform.InverseTransformPoint(hit.point);
 			}
 			else

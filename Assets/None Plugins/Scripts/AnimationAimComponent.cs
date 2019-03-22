@@ -13,6 +13,7 @@ public class AnimationAimComponent : MonoBehaviour {
 	private bool hasTargeter;
 
 	public Transform AimPoint;
+	public float aimDist;
 
 	public List<Transform> aimingControls;
 	public List<Transform> aimingPoints;
@@ -110,6 +111,32 @@ public class AnimationAimComponent : MonoBehaviour {
 			}
 		}
 	}*/
+
+	private void LateUpdate()
+	{
+		if (targeting)
+		{
+
+			Vector3 diff = animationTarget.position - animationTargeter.position;
+			Vector3 debug = Vector3.RotateTowards(animationTargeter.position, diff, Mathf.Deg2Rad*maxAimSpeed,0.0f);
+
+			animationTargeter.position = debug;
+			Debug.Break();
+			/*debug -= AimPoint.position;
+			Debug.DrawLine(AimPoint.position, debug,Color.red);
+
+			diff -= AimPoint.position;
+			debug = Vector3.RotateTowards(animationTargeter.position - AimPoint.position, diff, Mathf.Deg2Rad * maxAimSpeed, 0.0f);
+			Debug.DrawLine(AimPoint.position, debug, Color.green);*/
+
+			//diff.Normalize();
+			//float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+			//float changeAngle = Mathf.Clamp(rot - currentAim, -maxAimSpeed, maxAimSpeed);
+			//currentAim += changeAngle;
+			//currentAim = Mathf.Clamp(currentAim, -90, 90);
+			//Vector3 un = Quaternion.
+		}
+	}
 
 	public void StartTargetingTarget(int pointIndex)
 	{

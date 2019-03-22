@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Test Grunt 1
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: SpriteMeshes
+    m_Weight: 0
+  - m_Path: SpriteMeshes/PrototypeHips
+    m_Weight: 0
+  - m_Path: SpriteMeshes/PrototypeTorso
+    m_Weight: 0
+  - m_Path: SpriteMeshes/PrototypeNeck
+    m_Weight: 0
+  - m_Path: SpriteMeshes/PrototypeHead
+    m_Weight: 0
+  - m_Path: SpriteMeshes/F_PrototypeUpperArm
+    m_Weight: 0
+  - m_Path: SpriteMeshes/F_PrototypeForeArm
+    m_Weight: 0
+  - m_Path: SpriteMeshes/F_PrototypeHand
+    m_Weight: 0
+  - m_Path: SpriteMeshes/B_PrototypeUpperArm
+    m_Weight: 0
+  - m_Path: SpriteMeshes/B_PrototypeForeArm
+    m_Weight: 0
+  - m_Path: SpriteMeshes/B_PrototypeHand
+    m_Weight: 0
+  - m_Path: SpriteMeshes/F_PrototypeUpperLeg
+    m_Weight: 0
+  - m_Path: SpriteMeshes/F_PrototypeLowerLeg
+    m_Weight: 0
+  - m_Path: SpriteMeshes/F_PrototypeFoot
+    m_Weight: 0
+  - m_Path: SpriteMeshes/B_PrototypeUpperLeg
+    m_Weight: 0
+  - m_Path: SpriteMeshes/B_PrototypeLowerLeg
+    m_Weight: 0
+  - m_Path: SpriteMeshes/B_PrototypeFoot
+    m_Weight: 0
+  - m_Path: Bones
+    m_Weight: 1
+  - m_Path: Bones/Hip
+    m_Weight: 1
+  - m_Path: Bones/Hip/Spine
+    m_Weight: 1
+  - m_Path: Bones/Hip/Spine/Neck
+    m_Weight: 1
+  - m_Path: Bones/Hip/Spine/F_UpperArm
+    m_Weight: 1
+  - m_Path: Bones/Hip/Spine/F_UpperArm/F_ForeArm
+    m_Weight: 1
+  - m_Path: Bones/Hip/Spine/F_UpperArm/F_ForeArm/F_Hand
+    m_Weight: 1
+  - m_Path: Bones/Hip/Spine/F_UpperArm/F_ForeArm/F_Hand/HitBox
+    m_Weight: 0
+  - m_Path: Bones/Hip/Spine/B_UpperArm
+    m_Weight: 1
+  - m_Path: Bones/Hip/Spine/B_UpperArm/B_ForeArm
+    m_Weight: 1
+  - m_Path: Bones/Hip/Spine/B_UpperArm/B_ForeArm/B_Hand
+    m_Weight: 1
+  - m_Path: Bones/Hip/B_UpperLeg
+    m_Weight: 1
+  - m_Path: Bones/Hip/B_UpperLeg/B_LowerLeg
+    m_Weight: 1
+  - m_Path: Bones/Hip/B_UpperLeg/B_LowerLeg/B_Foot
+    m_Weight: 1
+  - m_Path: Bones/Hip/F_UpperLeg
+    m_Weight: 1
+  - m_Path: Bones/Hip/F_UpperLeg/F_LowerLeg
+    m_Weight: 1
+  - m_Path: Bones/Hip/F_UpperLeg/F_LowerLeg/F_Foot
+    m_Weight: 1
+  - m_Path: Bones/Hip/SpineSolver
+    m_Weight: 1
+  - m_Path: Bones/Hip/B_ArmSolver
+    m_Weight: 1
+  - m_Path: Bones/Hip/F_ArmSolver
+    m_Weight: 1
+  - m_Path: Bones/Hip/B_LegSolver
+    m_Weight: 1
+  - m_Path: Bones/Hip/F_LegSolver
+    m_Weight: 1
+  - m_Path: Controls
+    m_Weight: 1
+  - m_Path: Controls/SpineSolver_Target
+    m_Weight: 1
+  - m_Path: Controls/F_Arm_IK
+    m_Weight: 1
+  - m_Path: Controls/B_Arm_IK
+    m_Weight: 1
+  - m_Path: Controls/F_Leg_IK
+    m_Weight: 1
+  - m_Path: Controls/B_Leg_IK
+    m_Weight: 1
+  - m_Path: Controls/Control Hip
+    m_Weight: 1
+  - m_Path: Controls/Control Neck
+    m_Weight: 1
+  - m_Path: Avoider
+    m_Weight: 0

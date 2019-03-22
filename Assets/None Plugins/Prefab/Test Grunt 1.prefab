@@ -257,8 +257,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081382377161836}
-  m_LocalRotation: {x: -0, y: -0, z: 0.70510525, w: 0.7091028}
-  m_LocalPosition: {x: -0.037794463, y: 1.1474777, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0.04817933, y: 1.1467543, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4522598586342300}
@@ -982,6 +982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AimPoint: {fileID: 4889934104419936}
+  aimDist: 1.4500009
   aimingControls:
   - {fileID: 465086854971597277}
   aimingPoints:
