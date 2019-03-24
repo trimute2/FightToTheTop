@@ -84,11 +84,11 @@ public class GruntComp : MonoBehaviour {
 					{
 						targeter.TargetRange = Target.CLOSE_RANGE;
 						moveToRange = false;
-						/*if (moveHandler.CheckMove(Punch))
+						if (moveHandler.CheckMove(Punch))
 						{
 							moveHandler.ExecuteConditions(Punch);
 							moveHandler.StartMove(Punch.move);
-						}*/
+						}
 					}
 					break;
 			}

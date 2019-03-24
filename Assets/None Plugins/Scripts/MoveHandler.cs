@@ -14,6 +14,7 @@ public class MoveHandler : MonoBehaviour {
 	private int dodgeCount;
 
 	public List<HitBoxScript> HitBoxes;
+	public List<RayCaster> RayCasters;
 
 	private CommonFlags defaultFlagValues = CommonFlags.CanTurn | CommonFlags.MoveWithInput | CommonFlags.CanAttack;
 	private FlagHandler flagHandler;
@@ -469,5 +470,13 @@ public class MoveHandler : MonoBehaviour {
 	public void DeactivateHitBox(int HitboxIndex)
 	{
 		HitBoxes[HitboxIndex].DisableHitBox();
+	}
+
+	public void FireRay(int RayCastIndex)
+	{
+		if (currentMove != null)
+		{
+			RayCasters[RayCastIndex].RayCastAttack(currentMove.damage, currentMove.knockBack);
+		}
 	}
 }

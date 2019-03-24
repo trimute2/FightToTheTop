@@ -27,6 +27,7 @@ public class HitBoxScript : MonoBehaviour {
 		HealthComponent target = collision.transform.root.GetComponent<HealthComponent>();
 		if(target != null && !hasHit.Contains(target))
 		{
+			//todo: re write this so that the oponent does not tnee a move handler and so that its all inside the damage check
 			MoveHandler enemyHandler = target.GetComponent<MoveHandler>();
 			moveHandler.HitEnemy(enemyHandler);
 			int direction = 1;

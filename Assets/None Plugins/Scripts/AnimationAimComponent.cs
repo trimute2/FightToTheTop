@@ -78,7 +78,7 @@ public class AnimationAimComponent : MonoBehaviour {
 				VisualEffects.IVisualEffect e = attatchedEffects[i];
 				if (!e.Equals(null))
 				{
-					e.EffectUpdate(currentAim);
+					e.EffectUpdate();
 				}
 			}
 		}
