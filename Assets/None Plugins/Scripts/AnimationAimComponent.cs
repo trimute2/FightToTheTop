@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MoveHandler))]
-[RequireComponent(typeof(Animator))]
 public class AnimationAimComponent : MonoBehaviour {
 
 	private MoveHandler moveHandler;
-	private Animator animator;
 
 	private Targeter targeter;
 	private bool hasTargeter;
@@ -21,7 +19,6 @@ public class AnimationAimComponent : MonoBehaviour {
 	private bool targeting = false;
 	private bool holding = false;
 
-	private Transform animationPoint;
 	private Transform animationTargeter;
 	private Transform animationTarget;
 
@@ -49,92 +46,41 @@ public class AnimationAimComponent : MonoBehaviour {
 		moveHandler = GetComponent<MoveHandler>();
 		moveHandler.GenericStateEvent += StopTargeting;
 
-		animator = GetComponent<Animator>();
-
 		targeter = GetComponent<Targeter>();
 		hasTargeter = (targeter != null);
 
 		attatchedEffects = new List<VisualEffects.IVisualEffect>();
 	}
 
-	private void Update()
+	private void LateUpdate()
 	{
 		if (targeting)
 		{
-			float targetAngle = CalculateAim();
-			float changeAngle = Mathf.Clamp(targetAngle - currentAim, -maxAimSpeed, maxAimSpeed);
+			float targetAngle = CalcAim();
+			float clamp = maxAimSpeed * Mathf.Deg2Rad * Time.deltaTime;
+			float changeAngle = Mathf.Clamp(targetAngle - currentAim, -clamp, clamp);
 			currentAim += changeAngle;
-			currentAim = Mathf.Clamp(currentAim, -90, 90);
-			animator.SetFloat("Targeting", currentAim);
+			
 		}
-		if(attatchedEffects.Count > 0)
+		if(targeting || holding)
 		{
-			foreach (VisualEffects.IVisualEffect e in attatchedEffects)
+			Vector3 p = AimPoint.position;
+			float xPos = Mathf.Cos(currentAim) * aimDist;
+			float yPos = Mathf.Sin(currentAim) * aimDist;
+			Vector3 test = new Vector3(p.x + xPos, p.y + yPos, 0);
+			Debug.DrawLine(p, animationTarget.position);
+			animationTargeter.position = test;
+		}
+		if (attatchedEffects.Count > 0)
+		{
+			for (int i = attatchedEffects.Count - 1; i >= 0; i--)
 			{
-				float ea = currentAim;
-				if(Mathf.Sign(transform.localScale.x) == -1)
-				{
-					ea = 180 + currentAim;
-				}
-				if (e != null)
+				VisualEffects.IVisualEffect e = attatchedEffects[i];
+				if (!e.Equals(null))
 				{
 					e.EffectUpdate(currentAim);
 				}
 			}
-		}
-	}
-
-	/*
-	private void LateUpdate()
-	{
-		bool updateEffects = false;
-		if (targeting)
-		{
-			//TODO: make this track slowly
-			//reference for later https://answers.unity.com/questions/690341/2d-ai-aim-at-player-even-when-jumping.html
-			animationTargeter.position = animationTarget.position;
-			updateEffects = true;
-		}else if (holding)
-		{
-			animationTargeter.position = holdPoint;
-			updateEffects = true;
-		}
-		if (updateEffects && attatchedEffects.Count > 0)
-		{
-			Vector3[] updateList = new[] { animationPoint.position, TargetPoint };
-			foreach(VisualEffects.IVisualEffect e in attatchedEffects)
-			{
-				if(e != null)
-				{
-					e.EffectUpdate(updateList);
-				}
-			}
-		}
-	}*/
-
-	private void LateUpdate()
-	{
-		if (targeting)
-		{
-
-			Vector3 diff = animationTarget.position - animationTargeter.position;
-			Vector3 debug = Vector3.RotateTowards(animationTargeter.position, diff, Mathf.Deg2Rad*maxAimSpeed,0.0f);
-
-			animationTargeter.position = debug;
-			Debug.Break();
-			/*debug -= AimPoint.position;
-			Debug.DrawLine(AimPoint.position, debug,Color.red);
-
-			diff -= AimPoint.position;
-			debug = Vector3.RotateTowards(animationTargeter.position - AimPoint.position, diff, Mathf.Deg2Rad * maxAimSpeed, 0.0f);
-			Debug.DrawLine(AimPoint.position, debug, Color.green);*/
-
-			//diff.Normalize();
-			//float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-			//float changeAngle = Mathf.Clamp(rot - currentAim, -maxAimSpeed, maxAimSpeed);
-			//currentAim += changeAngle;
-			//currentAim = Mathf.Clamp(currentAim, -90, 90);
-			//Vector3 un = Quaternion.
 		}
 	}
 
@@ -150,12 +96,11 @@ public class AnimationAimComponent : MonoBehaviour {
 	{
 		if(pointIndex >= 0 && pointIndex < aimingControls.Count)
 		{
-			animationPoint = aimingPoints[pointIndex];
 			animationTargeter = aimingControls[pointIndex];
 			animationTarget = target;
 			targeting = true;
 			animationTargeter.position = animationTarget.position;
-			currentAim = CalculateAim();
+			currentAim = CalcAim();//CalculateAim();
 		}
 	}
 
@@ -190,11 +135,16 @@ public class AnimationAimComponent : MonoBehaviour {
 		}
 	}
 
+	public void DetatchVisualEffect(VisualEffects.IVisualEffect visualEffect)
+	{
+		attatchedEffects.Remove(visualEffect);
+	}
+
 	public void RemoveVisualEffect()
 	{
 		for(int i = attatchedEffects.Count - 1; i >= 0; i--)
 		{
-			if (attatchedEffects[i] != null)
+			if (!attatchedEffects[i].Equals(null))
 			{
 				attatchedEffects[i].EndEffect();
 			}
@@ -231,5 +181,17 @@ public class AnimationAimComponent : MonoBehaviour {
 		float dir = Mathf.Sign(transform.localScale.x);
 		float rot = Mathf.Atan2(diff.y, dir * diff.x) * Mathf.Rad2Deg;
 		return rot;
+	}
+
+	private float CalcAim()
+	{
+		Vector3 p = AimPoint.position;
+		Vector3 d1 = animationTarget.position - p;
+		float angle = Mathf.Atan2(d1.y, d1.x);
+		if(angle < 0)
+		{
+			angle += Mathf.PI * 2;
+		}
+		return angle;
 	}
 }

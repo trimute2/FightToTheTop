@@ -9,6 +9,7 @@ namespace VisualEffects
 		void EffectHook(List<Vector3> points, List<Transform> transforms);
 		void EffectUpdate(Vector3[] points);
 		void EffectUpdate(float f);
+		void EffectUpdate();
 		void EndEffect();
 	}
 }
