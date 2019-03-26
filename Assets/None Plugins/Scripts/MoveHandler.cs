@@ -157,11 +157,11 @@ public class MoveHandler : MonoBehaviour {
 				//TODO: make equipment class and change this
 				if (playerInput != null)
 				{
-					if (playerInput.Weapon1 == condition.weapon)
+					if (playerInput.Weapon1.Name == condition.weapon)
 					{
 						return playerInput[PlayerInputHandler.WEAPON1INDEX].CanUse();
 					}
-					else if (playerInput.Weapon2 == condition.weapon)
+					else if (playerInput.Weapon2.Name == condition.weapon)
 					{
 						return playerInput[PlayerInputHandler.WEAPON2INDEX].CanUse();
 					}
@@ -170,11 +170,11 @@ public class MoveHandler : MonoBehaviour {
 			case ConditionType.weaponHoldCondition:
 				if (playerInput != null)
 				{
-					if (playerInput.Weapon1 == condition.weapon)
+					if (playerInput.Weapon1.Name == condition.weapon)
 					{
 						return playerInput[PlayerInputHandler.WEAPON1INDEX].Hold() >= condition.holdNumber;
 					}
-					else if (playerInput.Weapon2 == condition.weapon)
+					else if (playerInput.Weapon2.Name == condition.weapon)
 					{
 						return playerInput[PlayerInputHandler.WEAPON2INDEX].Hold() >= condition.holdNumber;
 					}
@@ -224,7 +224,7 @@ public class MoveHandler : MonoBehaviour {
 			case ConditionType.weaponCondition:
 				if (playerInput != null) {
 					int ind = PlayerInputHandler.WEAPON1INDEX;
-					if (playerInput.Weapon2 == condition.weapon)
+					if (playerInput.Weapon2.Name == condition.weapon)
 					{
 						ind = PlayerInputHandler.WEAPON2INDEX;
 					}

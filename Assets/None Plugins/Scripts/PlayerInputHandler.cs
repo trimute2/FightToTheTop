@@ -9,11 +9,13 @@ public class PlayerInputHandler : MonoBehaviour {
 
 	public float movementSpeed = 4.5f;
 
-	public string Weapon1;
+	public WeaponData Weapon1;
 
-	public string Weapon2;
+	public WeaponData Weapon2;
 
 	public List<MoveLink> playerMoves;
+
+	private List<MoveLink> CurrentMoves;
 
 	private InputBuffer[] inputBuffers;
 
@@ -51,6 +53,8 @@ public class PlayerInputHandler : MonoBehaviour {
 		flagHandler = GetComponent<FlagHandler>();
 		moveHandler = GetComponent<MoveHandler>();
 		entityController = GetComponent<EntityControllerComp>();
+		CurrentMoves = new List<MoveLink>();
+		GenerateMoveList();
 	}
 
 	// Update is called once per frame
@@ -131,8 +135,20 @@ public class PlayerInputHandler : MonoBehaviour {
 		}
 
 		entityController.TargetVelocity = targetVelocity;
-		moveHandler.CheckMoves(playerMoves);
+		moveHandler.CheckMoves(CurrentMoves);
 	}
 
-	
+	public void GenerateMoveList()
+	{
+		CurrentMoves.Clear();
+		CurrentMoves.AddRange(playerMoves);
+		if (Weapon1 != null)
+		{
+			CurrentMoves.AddRange(Weapon1.Moves);
+		}
+		if (Weapon2 != null)
+		{
+			CurrentMoves.AddRange(Weapon2.Moves);
+		}
+	}
 }
