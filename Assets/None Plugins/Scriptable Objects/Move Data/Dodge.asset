@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -41,7 +42,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.3
+      time: 0.15
       value: 1
       inSlope: Infinity
       outSlope: Infinity
@@ -78,7 +79,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.3
+      time: 0.15
       value: 0
       inSlope: Infinity
       outSlope: Infinity
@@ -135,8 +136,10 @@ MonoBehaviour:
   animationStateName: Dodge
   length: 0.36666667
   frameRate: 0.016666668
-  playBackSpeed: 1
+  playBackSpeed: 2
   damage: 0
+  hitStun: 0
+  hitStunFrame: 0
   knockBack: {x: 0, y: 0}
   holdTime: 0
   endTime: 0.36666667

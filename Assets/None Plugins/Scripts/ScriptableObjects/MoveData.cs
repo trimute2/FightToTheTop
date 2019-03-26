@@ -92,6 +92,45 @@ public class MoveData : ScriptableObject {
 	{
 		return time >= (length / playBackSpeed)+holdTime;
 	}
+
+	public static List<string> PrintMoves(MoveLink link)
+	{
+		List<string> combos = new List<string>();
+		combos.Add("");
+		return PrintMoves(link, combos);
+	}
+
+	private static List<string> PrintMoves(MoveLink link, List<string> combos)
+	{
+		foreach(LinkCondition c in link.conditions)
+		{
+			if(c.conditionType == ConditionType.weaponCondition)
+			{
+				string s = combos[combos.Count];
+				if (c.weapon == "HandWraps")
+				{
+					s += "P";
+				}else if(c.weapon == "Sword")
+				{
+					s += "S";
+				}
+				s += ",";
+				break;
+			}
+		}
+		if(link.move.links.Count > 0)
+		{
+			combos = PrintMoves(link.move.links[0], combos);
+		}
+		if (link.move.links.Count > 1)
+		{
+			for(int i = 1; i < link.move.links.Count; i++)
+			{
+				combos = PrintMoves(link.move.links[i], combos);
+			}
+		}
+		return combos;
+	}
 	//for functions only called in the editor
 #if UNITY_EDITOR
 	#region EditorFunctions

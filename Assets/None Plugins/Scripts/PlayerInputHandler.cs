@@ -110,7 +110,7 @@ public class PlayerInputHandler : MonoBehaviour {
 				if (previousTarget == Vector2.zero)
 				{
 					targetVelocity.x = entityController.Facing * movementSpeed;
-					targetVelocity *= 3f;
+					targetVelocity *= 6f;
 				}
 				else
 				{
@@ -121,7 +121,7 @@ public class PlayerInputHandler : MonoBehaviour {
 			{
 				//targetVelocity.y /= 2f;
 
-				targetVelocity *= 3f;
+				targetVelocity *= 6f;
 			}
 
 			
