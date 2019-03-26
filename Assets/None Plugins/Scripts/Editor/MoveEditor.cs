@@ -146,7 +146,10 @@ public class MoveEditor : Editor {
 		EditorGUILayout.PropertyField(speed, new GUIContent("playback speed"));
 		EditorGUILayout.PropertyField(damage, new GUIContent("damage"));
 		EditorGUILayout.PropertyField(hitStun, new GUIContent("Hit Stun"));
-		EditorGUILayout.PropertyField(hitStunFrame, new GUIContent("Hit Stun Frame"));
+		float hitStunFrameValue = hitStunFrame.floatValue * 60;
+		hitStunFrameValue = EditorGUILayout.FloatField(new GUIContent("Hit Stun Frame"), hitStunFrameValue);
+		hitStunFrame.floatValue = hitStunFrameValue / 60;
+		//EditorGUILayout.PropertyField(hitStunFrame, new GUIContent("Hit Stun Frame"));
 		EditorGUILayout.PropertyField(knockBack, new GUIContent("knockBack"));
 		InheritedEditor();
 		DisplayFlags("commonFlags", cFCurvesProp, 0, typeof(CommonFlags), "Common Flags");

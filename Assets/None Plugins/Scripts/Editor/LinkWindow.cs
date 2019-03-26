@@ -21,8 +21,13 @@ public class LinkWindow : EditorWindow {
 		{
 			EditorGUILayout.PropertyField(link.FindPropertyRelative("move"), new GUIContent("move"));
 			EditorGUILayout.PropertyField(link.FindPropertyRelative("priority"), new GUIContent("priority"));
+			
 			EditorGUILayout.PropertyField(link.FindPropertyRelative("minTime"), new GUIContent("earliest entry"));
+			float ee = EditorGUILayout.FloatField(new GUIContent("earliest entry, frame"), link.FindPropertyRelative("minTime").floatValue * 60);
+			link.FindPropertyRelative("minTime").floatValue = ee / 60;
 			EditorGUILayout.PropertyField(link.FindPropertyRelative("maxTime"), new GUIContent("latest exit"));
+			float le = EditorGUILayout.FloatField(new GUIContent("latest exit, frame"), link.FindPropertyRelative("maxTime").floatValue * 60);
+			link.FindPropertyRelative("maxTime").floatValue = le / 60;
 			conditions.DoLayoutList();
 			link.serializedObject.ApplyModifiedProperties();
 		}
