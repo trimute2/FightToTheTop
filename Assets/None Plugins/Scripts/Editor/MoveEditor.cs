@@ -35,9 +35,12 @@ public class MoveEditor : Editor {
 	/** <summary>Does the name of the current animation state match
 	 * one in the controller</summary>*/
 	bool validName = true;
+	bool useFps = true;
 
+	bool check = false;
 	bool[][] foldOuts = new bool[2][];
 	bool foldOutValueCurves = false;
+	float fps;
 
 
 	protected virtual void OnEnable()
@@ -102,6 +105,7 @@ public class MoveEditor : Editor {
 
 	public override void OnInspectorGUI()
 	{
+		useFps = EditorGUILayout.Toggle("Use Frame rate", useFps);
 		serializedObject.Update();
 		EditorGUILayout.PropertyField(controllerProp, new GUIContent("Controller"));
 		if (GUI.changed)
@@ -119,8 +123,9 @@ public class MoveEditor : Editor {
 			GUI.backgroundColor = Color.white;
 		}
 		EditorGUILayout.PropertyField(animationName, new GUIContent("State Name"));
-		if (EditorGUI.EndChangeCheck())
+		if (EditorGUI.EndChangeCheck()||!check)
 		{
+			check = true;
 			validName = false;
 			int index = GetStateIndex(animationName.stringValue);
 			if(index != -1)
@@ -138,17 +143,23 @@ public class MoveEditor : Editor {
 				{
 					length.floatValue = clip.length;
 					endTime.floatValue = length.floatValue + holdTime.floatValue;
+					fps = clip.frameRate;
 					frameRateProp.floatValue = 1.0f/clip.frameRate;
 					validName = true;
 				}
 			}
 		}
+		float frameMultiplier = 1;
+		if (useFps)
+		{
+			frameMultiplier = fps;
+		}
 		EditorGUILayout.PropertyField(speed, new GUIContent("playback speed"));
 		EditorGUILayout.PropertyField(damage, new GUIContent("damage"));
 		EditorGUILayout.PropertyField(hitStun, new GUIContent("Hit Stun"));
-		float hitStunFrameValue = hitStunFrame.floatValue * 60;
+		float hitStunFrameValue = hitStunFrame.floatValue * frameMultiplier;
 		hitStunFrameValue = EditorGUILayout.FloatField(new GUIContent("Hit Stun Frame"), hitStunFrameValue);
-		hitStunFrame.floatValue = hitStunFrameValue / 60;
+		hitStunFrame.floatValue = hitStunFrameValue / frameMultiplier;
 		//EditorGUILayout.PropertyField(hitStunFrame, new GUIContent("Hit Stun Frame"));
 		EditorGUILayout.PropertyField(knockBack, new GUIContent("knockBack"));
 		InheritedEditor();
@@ -202,19 +213,44 @@ public class MoveEditor : Editor {
 		arrayLength = sp.intValue;
 
 		sp.Next(true);
-		Rect range = new Rect(0, minCurve, (length.floatValue / speed.floatValue) + holdTime.floatValue, maxCurve);
+		float frameMultiplier = 1;
+		if (useFps)
+		{
+			frameMultiplier = fps;
+		}
+
+		Rect range = new Rect(0, minCurve, ((length.floatValue * frameMultiplier) / speed.floatValue) + holdTime.floatValue, maxCurve);
 		for (int i = 0; i < arrayLength; i++)
 		{
 			if ((flags & test) == test)
 			{
+				AnimationCurve baseCurve = curves.GetArrayElementAtIndex(i).animationCurveValue;
+				AnimationCurve displayCurve = new AnimationCurve();
+				for(int j = 0; j < baseCurve.keys.Length; j++)
+				{
+					Keyframe k = baseCurve.keys[j];
+					k.time *= frameMultiplier;
+					displayCurve.AddKey(k);
+				}
+				//displayCurve = EditorGUILayout.CurveField(displayCurve);
 				if (restraint)
 				{
-					EditorGUILayout.CurveField(curves.GetArrayElementAtIndex(i), Color.green, range, new GUIContent(names[i + 1]));
+					displayCurve = EditorGUILayout.CurveField(new GUIContent(names[i + 1]),displayCurve, Color.green, range);
+					//EditorGUILayout.CurveField(curves.GetArrayElementAtIndex(i), Color.green, range, new GUIContent(names[i + 1]));
 				}
 				else
 				{
-					EditorGUILayout.PropertyField(curves.GetArrayElementAtIndex(i), new GUIContent(names[i + 1]));
+					displayCurve = EditorGUILayout.CurveField(new GUIContent(names[i + 1]), displayCurve);
+					//EditorGUILayout.PropertyField(curves.GetArrayElementAtIndex(i), new GUIContent(names[i + 1]));
 				}
+				AnimationCurve returnCurve = new AnimationCurve();
+				for (int j = 0; j < displayCurve.keys.Length; j++)
+				{
+					Keyframe k = displayCurve.keys[j];
+					k.time /= frameMultiplier;
+					returnCurve.AddKey(k);
+				}
+				curves.GetArrayElementAtIndex(i).animationCurveValue = returnCurve;
 			}
 			test = test << 1;
 		}
