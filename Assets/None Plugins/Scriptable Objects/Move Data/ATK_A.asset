@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -225,8 +226,14 @@ MonoBehaviour:
     - {fileID: 11400000, guid: e9713185cc46f974b8efce7e64b4bc5d, type: 2}
     move: {fileID: 11400000, guid: ec9b522635f17b048b7d298a005c6169, type: 2}
     priority: 2
-    minTime: 0.18333337
-    maxTime: 0.55
+    minTime: 0.18333334
+    maxTime: 0.43333334
+  - conditions:
+    - {fileID: 11400000, guid: e9713185cc46f974b8efce7e64b4bc5d, type: 2}
+    move: {fileID: 11400000, guid: 9f4e8045d22f38f4480f52ee6b12c13d, type: 2}
+    priority: 2
+    minTime: 0.43333334
+    maxTime: 0.56666666
   HitTargetEffects:
   - {fileID: 11400000, guid: 9aac0a03b6a1bc342926b06672b405e0, type: 2}
   HitUserEffects:
