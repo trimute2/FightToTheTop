@@ -6,6 +6,8 @@ using UnityEngine;
 public class HealthComponent : MonoBehaviour {
 	public delegate void HealthUpdate();
 	public event HealthUpdate HealthUpdateEvent;
+	public delegate void DeathEvent();
+	public event DeathEvent OnDeath;
 
 	public int maxHealth = 100;
 	private int health;
@@ -47,6 +49,10 @@ public class HealthComponent : MonoBehaviour {
 		if(HealthUpdateEvent != null)
 		{
 			HealthUpdateEvent();
+		}
+		if(health <= 0 && OnDeath != null)
+		{
+			OnDeath();
 		}
 		return true;
 	}

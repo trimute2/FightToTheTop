@@ -14,15 +14,26 @@ public class MatchPosition : ScriptableWizard
 	[MenuItem("Debug/Match Position")]
 	static void CreateWizard()
 	{
-		MatchPosition p = DisplayWizard<MatchPosition>("MatchPosition", "Match");
+		MatchPosition p = DisplayWizard<MatchPosition>("MatchPosition", "Match Position", "Match Rotation");
 		p.target = LastTarget;
 		p.targetPosition = LastTargetPosition;
 	}
 
 	void OnWizardCreate()
 	{
+		UpdateTarget();
+		target.position = targetPosition.position;
+	}
+
+	private void OnWizardOtherButton()
+	{
+		UpdateTarget();
+		target.rotation = targetPosition.rotation;
+	}
+
+	private void UpdateTarget()
+	{
 		LastTarget = target;
 		LastTargetPosition = targetPosition;
-		target.position = targetPosition.position;
 	}
 }

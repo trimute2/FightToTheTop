@@ -11,4 +11,13 @@ public static class TransformPrint
 			Debug.Log(Selection.activeGameObject.name + " is at " + Selection.activeGameObject.transform.position);
 		}
 	}
+
+	[MenuItem("Debug/Print Global Rotation")]
+	public static void PrintGlobalRotation()
+	{
+		if (Selection.activeGameObject != null)
+		{
+			Debug.Log(Selection.activeGameObject.name + " rotation is at " + Selection.activeGameObject.transform.rotation.eulerAngles);
+		}
+	}
 }

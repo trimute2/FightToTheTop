@@ -87,6 +87,15 @@ public class EntityControllerComp : MonoBehaviour {
 		}
 	}
 
+	private float gravityModifier;
+	public float GravityModifier
+	{
+		set
+		{
+			gravityModifier = value;
+		}
+	}
+
 
 	// Use this for initialization
 	void Start () {
@@ -96,6 +105,7 @@ public class EntityControllerComp : MonoBehaviour {
 		contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
 		contactFilter.useLayerMask = true;
 		allowEntityCollision = true;
+		gravityModifier = 1;
 	}
 
 	private void FixedUpdate()
@@ -103,7 +113,7 @@ public class EntityControllerComp : MonoBehaviour {
 		//so far there are no situation where i would want to keep an xvelocity but that may change later
 		if (gravityOn)
 		{
-			velocity += Physics2D.gravity * Time.deltaTime;
+			velocity += Physics2D.gravity * Time.deltaTime * gravityModifier;
 		}
 		velocity.x = 0;
 		Vector2 deltaPosition = velocity;
@@ -173,5 +183,10 @@ public class EntityControllerComp : MonoBehaviour {
 			}
 		}
 		return true;
+	}
+
+	public void SetVelocity(Vector2 vel)
+	{
+		velocity = vel;
 	}
 }

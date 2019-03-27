@@ -22,3 +22,11 @@ MonoBehaviour:
     priority: 0
     minTime: 0
     maxTime: 0
+  - conditions:
+    - {fileID: 11400000, guid: e2660fc441da8af4fb0a45f7513a05f8, type: 2}
+    - {fileID: 11400000, guid: 3c798ceeeb4fda64ab70f193f9bcd656, type: 2}
+    - {fileID: 11400000, guid: 59b2976c055cf5940a28ac18fabff500, type: 2}
+    move: {fileID: 11400000, guid: fa5fb509996dc924c9e13d66646a7708, type: 2}
+    priority: 0
+    minTime: 0
+    maxTime: 0

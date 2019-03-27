@@ -22,6 +22,7 @@ public class MoveHandler : MonoBehaviour {
 	private Animator animator;
 	private PlayerInputHandler playerInput;
 	private Targeter targeter;
+	private HealthComponent healthComp;
 	/// <summary>
 	/// The current move
 	/// </summary>
@@ -56,6 +57,11 @@ public class MoveHandler : MonoBehaviour {
 		entityController = GetComponent<EntityControllerComp>();
 		playerInput = GetComponent<PlayerInputHandler>();
 		targeter = GetComponent<Targeter>();
+		healthComp = GetComponent<HealthComponent>();
+		if(healthComp != null)
+		{
+			healthComp.OnDeath += Die;
+		}
 		flagHandler.Flags = new FlagData(defaultFlagValues, ValueFlags.None);
 		moveTime = 0;
 		dodgeCount = 0;
@@ -63,7 +69,13 @@ public class MoveHandler : MonoBehaviour {
 		listenToMoveMotion = true;
 		MoveTime = 0;
 	}
-	
+
+	private void Die()
+	{
+		EnterGenericState();
+		animator.Play("Death");
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (entityController != null)
@@ -354,6 +366,15 @@ public class MoveHandler : MonoBehaviour {
 			flagData.valueFlags = (ValueFlags)currentMove.GetActiveFlags(moveTime, FlagTypes.ValueFlags);
 
 			flagHandler.Flags = flagData;
+			if(entityController != null && flagHandler.ValueFlags != ValueFlags.None)
+			{
+				float gravityMod = 1;
+				if(!GetValue(ValueFlags.GravityModifier, out gravityMod))
+				{
+					gravityMod = 1;
+				}
+				entityController.GravityModifier = gravityMod;
+			}
 			if (listenToMoveMotion && entityController != null && flagHandler.ValueFlags != ValueFlags.None)
 			{
 				Vector2 targetVelocity = entityController.TargetVelocity;
@@ -456,6 +477,24 @@ public class MoveHandler : MonoBehaviour {
 	{
 		bool gravity = (i > 0);
 		SetGravity(gravity);
+	}
+
+	public void SetEntityVelocity(Vector2 vec)
+	{
+		if (entityController != null)
+		{
+			entityController.SetVelocity(vec);
+		}
+	}
+
+	public void WeakenGravity(float modifier)
+	{
+		if (entityController != null)
+		{
+			Vector2 grav = entityController.Velocity - entityController.TargetVelocity;
+			grav.y *= modifier;
+			entityController.SetVelocity(grav);
+		}
 	}
 
 	#endregion EffectFunctions

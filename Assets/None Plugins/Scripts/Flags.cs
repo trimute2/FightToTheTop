@@ -35,6 +35,8 @@ public enum ValueFlags
 	xVelocity = 1 << 0,
 	/**<summary>When the move effects the velocity along the y axis</summary>*/
 	yVelocity = 1 << 1,
+	/**<summary>When the move mdofies the effect of gravity</summary>*/
+	GravityModifier = 1 << 2,
 }
 
 public enum FlagTypes
