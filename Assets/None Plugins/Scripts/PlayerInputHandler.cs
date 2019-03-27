@@ -60,6 +60,10 @@ public class PlayerInputHandler : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if(Time.timeScale == 0)
+		{
+			return;
+		}
 		FlagData flagData = flagHandler.Flags;
 		Vector2 movementInput = Vector2.zero;
 		movementInput.x = Input.GetAxisRaw("Horizontal");

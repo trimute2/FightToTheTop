@@ -67,6 +67,10 @@ public class Targeter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(Time.timeScale == 0)
+		{
+			return;
+		}
 		if(target != null)
 		{
 			//TODO: possible method that does not require entity controller
