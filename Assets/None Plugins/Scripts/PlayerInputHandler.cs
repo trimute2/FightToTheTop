@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerInputHandler : MonoBehaviour {
 
 	public float movementSpeed = 4.5f;
+	public float airMovementSpeed = 6.5f;
 
 	public WeaponData Weapon1;
 
@@ -92,9 +93,14 @@ public class PlayerInputHandler : MonoBehaviour {
 			targetVelocity.x = movementInput.x;
 			if ((flagData.commonFlags & CommonFlags.YMovement) != CommonFlags.None)
 			{
-				targetVelocity.y = movementInput.y;
+				targetVelocity.y = movementInput.y * movementSpeed;
 			}
-			targetVelocity *= movementSpeed;
+			float xSpeedMult = movementSpeed;
+			if (!entityController.Grounded)
+			{
+				xSpeedMult = airMovementSpeed;
+			}
+			targetVelocity.x *= xSpeedMult;
 		}
 		if ((flagData.commonFlags & CommonFlags.MovementCancel) != CommonFlags.None)
 		{

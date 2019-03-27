@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac6fabe097b3944da30529aadd6253a, type: 3}
   m_Name: WeakenGravity0.3
   m_EditorClassIdentifier: 
+  modifier: 0.3
