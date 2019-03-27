@@ -6,11 +6,6 @@ using UnityEngine;
 public class ImpulseForce : EntityEffects {
 	public Vector2 force;
 
-	public override void Effect(EntityController entity)
-	{
-		entity.AddForce(force);
-	}
-
 	public override void Effect(MoveHandler moveHandler)
 	{
 		moveHandler.AddForce(force);

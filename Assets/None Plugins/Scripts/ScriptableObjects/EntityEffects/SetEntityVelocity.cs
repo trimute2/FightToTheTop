@@ -7,11 +7,6 @@ public class SetEntityVelocity : EntityEffects
 {
 	public Vector2 velocity;
 
-	public override void Effect(EntityController entity)
-	{
-		throw new System.NotImplementedException();
-	}
-
 	public override void Effect(MoveHandler moveHandler)
 	{
 		moveHandler.SetEntityVelocity(velocity);

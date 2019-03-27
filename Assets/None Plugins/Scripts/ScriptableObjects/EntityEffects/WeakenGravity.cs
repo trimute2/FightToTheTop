@@ -6,10 +6,6 @@ using UnityEngine;
 public class WeakenGravity : EntityEffects
 {
 	public float modifier;
-	public override void Effect(EntityController entity)
-	{
-		throw new System.NotImplementedException();
-	}
 
 	public override void Effect(MoveHandler moveHandler)
 	{

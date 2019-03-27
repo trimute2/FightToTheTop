@@ -7,10 +7,6 @@ public class TurnOffCommonEntityFlag : EntityEffects
 {
 	[EnumFlags]
 	public CommonFlags flags;
-	public override void Effect(EntityController entity)
-	{
-		entity.TurnCommonFlagsOff(flags);
-	}
 
 	public override void Effect(MoveHandler moveHandler)
 	{

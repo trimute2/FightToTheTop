@@ -6,10 +6,6 @@ using UnityEngine;
 public class SetVelocityEffect : EntityEffects
 {
 	public Vector2 velocity;
-	public override void Effect(EntityController entity)
-	{
-		entity.SetVelocity(velocity);
-	}
 
 	public override void Effect(MoveHandler moveHandler)
 	{

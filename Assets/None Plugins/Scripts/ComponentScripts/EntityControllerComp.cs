@@ -139,8 +139,7 @@ public class EntityControllerComp : MonoBehaviour {
 			//TODO: another way of checking that does not involve tags
 			if (hitBuffer[i].collider.tag == "Entity")
 			{
-				if (!allowEntityCollision ||
-					(hitBuffer[i].collider.GetComponent<EntityController>() != null && hitBuffer[i].collider.GetComponent<EntityController>().Dodgeing)
+				if (!allowEntityCollision
 					||(hitBuffer[i].collider.GetComponent<EntityControllerComp>() != null && !hitBuffer[i].collider.GetComponent<EntityControllerComp>().AllowEntityCollision))
 				{
 					add = false;
