@@ -48,7 +48,7 @@ public class MoveHandler : MonoBehaviour {
 		}
 	}
 
-	private float MoveTime;
+	private float lastMoveTime;
 	// Use this for initialization
 	void Awake () {
 		currentMove = null;
@@ -67,7 +67,7 @@ public class MoveHandler : MonoBehaviour {
 		dodgeCount = 0;
 		overDodge = 0;
 		listenToMoveMotion = true;
-		MoveTime = 0;
+		lastMoveTime = 0;
 	}
 
 	private void Die()
@@ -209,7 +209,7 @@ public class MoveHandler : MonoBehaviour {
 				}
 				return false;
 			case ConditionType.MoveTimeCondition:
-				return (Time.time - MoveTime) > condition.TimeCondition;
+				return (Time.time - lastMoveTime) > condition.TimeCondition;
 			default:
 				return false;
 		}
@@ -277,7 +277,7 @@ public class MoveHandler : MonoBehaviour {
 		}
 		overDodge = 0;
 		dodgeCount = 0;
-		MoveTime = Time.time;
+		lastMoveTime = Time.time;
 		if (currentMove != null)
 		{
 			foreach (EntityEffects e in currentMove.EffectsOnExit)

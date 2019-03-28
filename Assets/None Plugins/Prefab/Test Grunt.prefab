@@ -932,6 +932,7 @@ MonoBehaviour:
     conditions:
     - {fileID: 11400000, guid: 79d6d085e16760a459f80198f885f5df, type: 2}
     - {fileID: 11400000, guid: 33f5f62286554f74a98b335bc781c974, type: 2}
+    - {fileID: 11400000, guid: e2660fc441da8af4fb0a45f7513a05f8, type: 2}
     - {fileID: 11400000, guid: c4a2545fd435529489b05ad3ac828f10, type: 2}
     - {fileID: 11400000, guid: 545e0790c99d98c44aafa745c491c030, type: 2}
     move: {fileID: 11400000, guid: 56ba3f17653cd25409a239c4309d0dff, type: 2}
@@ -943,6 +944,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 79d6d085e16760a459f80198f885f5df, type: 2}
     - {fileID: 11400000, guid: abefc026f2eb83f4a8967606d7c0902b, type: 2}
     - {fileID: 11400000, guid: e2660fc441da8af4fb0a45f7513a05f8, type: 2}
+    - {fileID: 11400000, guid: c4a2545fd435529489b05ad3ac828f10, type: 2}
+    - {fileID: 11400000, guid: 545e0790c99d98c44aafa745c491c030, type: 2}
     move: {fileID: 11400000, guid: 5bb1e1cedf3ddc94bab69eb01544b924, type: 2}
     priority: 0
     minTime: 0
@@ -991,7 +994,7 @@ MonoBehaviour:
   aimingPoints:
   - {fileID: 4891008014773366}
   currentAim: 0
-  maxAimSpeed: 15
+  maxAimSpeed: 30
 --- !u!114 &4171210825735483754
 MonoBehaviour:
   m_ObjectHideFlags: 0
