@@ -774,6 +774,7 @@ GameObject:
   - component: {fileID: 114860737978388488}
   - component: {fileID: 114969409219229006}
   - component: {fileID: 114444505356257044}
+  - component: {fileID: 4171210825735483754}
   m_Layer: 14
   m_Name: Test Grunt
   m_TagString: Entity
@@ -958,7 +959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d4711aa3eda7045be663a9a87f70b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 575
 --- !u!114 &114969409219229006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -991,6 +992,18 @@ MonoBehaviour:
   - {fileID: 4891008014773366}
   currentAim: 0
   maxAimSpeed: 15
+--- !u!114 &4171210825735483754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263044702732114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d6a4c61e711a542b3ee82def2ff5da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1265411841546654
 GameObject:
   m_ObjectHideFlags: 0

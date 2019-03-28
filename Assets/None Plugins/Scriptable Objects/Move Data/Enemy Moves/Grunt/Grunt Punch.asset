@@ -107,15 +107,15 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   animationStateName: GruntPunch
-  length: 0.6166667
+  length: 0.7
   frameRate: 0.016666668
   playBackSpeed: 1
-  damage: 1
+  damage: 450
   hitStun: 0
   hitStunFrame: 0
   knockBack: {x: 0, y: 0}
   holdTime: 0
-  endTime: 0.6166667
+  endTime: 0.7
   data:
     commonFlags: 9
     valueFlags: 0

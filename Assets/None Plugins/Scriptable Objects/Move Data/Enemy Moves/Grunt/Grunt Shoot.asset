@@ -164,7 +164,7 @@ MonoBehaviour:
   length: 1.05
   frameRate: 0.016666668
   playBackSpeed: 1
-  damage: 0
+  damage: 200
   hitStun: 0
   hitStunFrame: 0
   knockBack: {x: 0, y: 0}

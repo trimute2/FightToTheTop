@@ -9,12 +9,16 @@ public class UIManager : MonoBehaviour
 	public HealthComponent player;
 	public RectTransform GameUIPanel;
 	public RectTransform PausePanel;
+	public RectTransform DeathPanel;
+	bool canPause;
 	// Start is called before the first frame update
 	void Start()
     {
 		healthSlider.maxValue = player.maxHealth;
 		healthSlider.value = player.maxHealth;
 		player.HealthUpdateEvent += UpdateHealthSlider;
+		player.OnDeath += OnPlayerDeath;
+		canPause = true;
 	}
 
 	private void Update()
@@ -32,9 +36,12 @@ public class UIManager : MonoBehaviour
 
 	public void Pause()
 	{
-		Time.timeScale = 0;
-		GameUIPanel.gameObject.SetActive(false);
-		PausePanel.gameObject.SetActive(true);
+		if (canPause)
+		{
+			Time.timeScale = 0;
+			GameUIPanel.gameObject.SetActive(false);
+			PausePanel.gameObject.SetActive(true);
+		}
 	}
 
 	public void Unpause()
@@ -42,5 +49,12 @@ public class UIManager : MonoBehaviour
 		Time.timeScale = 1;
 		GameUIPanel.gameObject.SetActive(true);
 		PausePanel.gameObject.SetActive(false);
+	}
+
+	public void OnPlayerDeath()
+	{
+		GameUIPanel.gameObject.SetActive(false);
+		DeathPanel.gameObject.SetActive(true);
+		canPause = false;
 	}
 }
