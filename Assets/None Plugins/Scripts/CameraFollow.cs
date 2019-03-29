@@ -15,6 +15,9 @@ public class CameraFollow : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		//Vector3 pos = Target.position;
+		//pos.z = transform.position.z;
+		//transform.position = pos;
 		smoothPos = Target.position;
 		smoothPos.z = transform.position.z;
 		_currentVelocity = Vector3.zero;
@@ -45,8 +48,9 @@ public class CameraFollow : MonoBehaviour {
 
 		Vector3 current = transform.position;
 		current.x = smoothPos.x;
-
-		transform.position = Vector3.SmoothDamp(current, smoothPos, ref _currentVelocity, 0.1f);
+		current.y = smoothPos.y;
+		transform.position = smoothPos;
+		//transform.position = Vector3.SmoothDamp(current, smoothPos, ref _currentVelocity, 0.1f);
 	}
 
 }
