@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(HealthComponent))]
 [RequireComponent(typeof(FlagHandler))]
 [RequireComponent(typeof(MoveHandler))]
 [RequireComponent(typeof(EntityControllerComp))]
@@ -38,6 +39,7 @@ public class PlayerInputHandler : MonoBehaviour {
 	private FlagHandler flagHandler;
 	private MoveHandler moveHandler;
 	private EntityControllerComp entityController;
+	private HealthComponent healthComp;
 
 	// Use this for initialization
 	/*void Start () {
@@ -54,8 +56,10 @@ public class PlayerInputHandler : MonoBehaviour {
 		flagHandler = GetComponent<FlagHandler>();
 		moveHandler = GetComponent<MoveHandler>();
 		entityController = GetComponent<EntityControllerComp>();
+		healthComp = GetComponent<HealthComponent>();
 		CurrentMoves = new List<MoveLink>();
 		GenerateMoveList();
+		GameManager.Instance.PlayerHealth = healthComp;
 	}
 
 	// Update is called once per frame

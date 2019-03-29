@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
-
+	public delegate void OnGameObjectLoaded();
+	public event OnGameObjectLoaded PlayerLoaded;
 	private static GameManager _instance = null;
 	private HealthComponent playerHealth;
 	public HealthComponent PlayerHealth
@@ -16,6 +17,10 @@ public class GameManager : MonoBehaviour {
 		set
 		{
 			playerHealth = value;
+			if (PlayerLoaded != null)
+			{
+				PlayerLoaded();
+			}
 		}
 	}
 
