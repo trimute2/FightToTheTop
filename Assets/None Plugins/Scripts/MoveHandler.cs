@@ -56,6 +56,30 @@ public class MoveHandler : MonoBehaviour {
 		}
 	}
 
+	public Vector2 TargetVelocity
+	{
+		get
+		{
+			if(entityController != null)
+			{
+				return entityController.TargetVelocity;
+			}
+			return Vector2.zero;
+		}
+	}
+
+	public Vector2 Velocity
+	{
+		get
+		{
+			if (entityController != null)
+			{
+				return entityController.Velocity;
+			}
+			return Vector2.zero;
+		}
+	}
+
 	private float lastMoveTime;
 	// Use this for initialization
 	void Awake () {
@@ -313,7 +337,11 @@ public class MoveHandler : MonoBehaviour {
 		flagHandler.ValueFlags = ValueFlags.None;
 		flagHandler.CommonFlags = defaultFlagValues;
 		animator.speed = 1;
-		SetGravity(true);
+		if(entityController != null)
+		{
+			entityController.gravityOn = true;
+			entityController.AllowXVelocity = false;
+		}
 
 		currentMove = null;
 		for (int i = 0; i < HitBoxes.Count; i++)
@@ -502,6 +530,14 @@ public class MoveHandler : MonoBehaviour {
 			Vector2 grav = entityController.Velocity - entityController.TargetVelocity;
 			grav.y *= modifier;
 			entityController.SetVelocity(grav);
+		}
+	}
+
+	public void AllowXVelocity()
+	{
+		if(entityController != null)
+		{
+			entityController.AllowXVelocity = true;
 		}
 	}
 

@@ -33,6 +33,15 @@ public class EntityControllerComp : MonoBehaviour {
 		}
 	}
 
+	private bool allowXVelocity = false;
+	public bool AllowXVelocity
+	{
+		set
+		{
+			allowXVelocity = value;
+		}
+	}
+
 	public bool allowEntityCollision;
 	public bool AllowEntityCollision
 	{
@@ -54,8 +63,8 @@ public class EntityControllerComp : MonoBehaviour {
 	private RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
 	private List<RaycastHit2D> hitBufferList = new List<RaycastHit2D>(16);
 
-	protected Vector2 velocity;
-	protected Vector2 targetVelocity;
+	private Vector2 velocity;
+	private Vector2 targetVelocity;
 
 	public Vector2 Velocity
 	{
@@ -115,7 +124,10 @@ public class EntityControllerComp : MonoBehaviour {
 		{
 			velocity += Physics2D.gravity * Time.deltaTime * gravityModifier;
 		}
-		velocity.x = 0;
+		if (!allowXVelocity)
+		{
+			velocity.x = 0;
+		}
 		Vector2 deltaPosition = velocity;
 		deltaPosition += targetVelocity;
 		deltaPosition *= Time.deltaTime;
