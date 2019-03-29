@@ -1,13 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
 	private static GameManager _instance = null;
-	//TODO: Track Entities through dictionary
-	private List<int> freeIds;
-	private int highestID;
+	private HealthComponent playerHealth;
+	public HealthComponent PlayerHealth
+	{
+		get
+		{
+			return playerHealth;
+		}
+		set
+		{
+			playerHealth = value;
+		}
+	}
+
 	public static GameManager Instance
 	{
 		get
@@ -23,37 +34,24 @@ public class GameManager : MonoBehaviour {
 
 	void Awake()
 	{
-		if(_instance != null && _instance != this)
+		if (_instance != null && _instance != this)
 		{
-			Destroy(this);
+			Destroy(gameObject);
 			return;
-		}
-		_instance = this;
-		freeIds = new List<int>();
-		highestID = 0;
-	}
-
-	public int GetNewId()
-	{
-		if(freeIds.Count != 0)
-		{
-			int id = freeIds[freeIds.Count - 1];
-			freeIds.RemoveAt(freeIds.Count - 1);
-			return id;
-		}
-		highestID++;
-		return highestID - 1;
-	}
-
-	public void ReleaseId(int id)
-	{
-		if(id == highestID - 1)
-		{
-			highestID--;
 		}
 		else
 		{
-			freeIds.Add(id);
+			_instance = this;
+			DontDestroyOnLoad(this);
+			SceneManager.sceneLoaded += OnSceneLoaded;
+		}
+	}
+
+	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+	{
+		if(mode == LoadSceneMode.Single)
+		{
+			Time.timeScale = 1;
 		}
 	}
 }
