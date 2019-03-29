@@ -25,6 +25,7 @@ public class StunComponent : MonoBehaviour {
 
 	private MoveHandler moveHandler;
 	private FlagHandler flagHandler;
+	private Animator animator;
 
 	private EntityControllerComp entityController;
 	private bool hasEntityController;
@@ -34,6 +35,7 @@ public class StunComponent : MonoBehaviour {
 	{
 		moveHandler = GetComponent<MoveHandler>();
 		flagHandler = GetComponent<FlagHandler>();
+		animator = GetComponent<Animator>();
 
 		entityController = GetComponent<EntityControllerComp>();
 		hasEntityController = (entityController != null);
@@ -85,16 +87,46 @@ public class StunComponent : MonoBehaviour {
 
 	public void Stun(Vector2 knockBack, float stunDuration, int stunPoints)
 	{
-		stunned = true;
 		hitTime = Time.time;
-		this.stunDuration = stunDuration;
-		this.knockBack = knockBack;
-		string toPlay = "Damage";
-		if(this.knockBack != Vector2.zero)
+		if (!stunned)
 		{
-			toPlay = "Knock Back";
+			stunned = true;
+			this.stunDuration = stunDuration;
+			this.knockBack = knockBack;
+			string toPlay = "Damage";
+			if (this.knockBack != Vector2.zero)
+			{
+				toPlay = "Knock Back";
+			}
+			moveHandler.EnterGenericState(toPlay, 0.001111111f);
+			flagHandler.CommonFlags = CommonFlags.None;
 		}
-		moveHandler.EnterGenericState(toPlay, 0.001111111f);
-		flagHandler.CommonFlags = CommonFlags.None;
+		else
+		{
+			bool playAnimation = false;
+			string toPlay = "Damage";
+			if (this.knockBack == Vector2.zero) {
+				if (stunDuration > this.stunDuration)
+				{
+					this.stunDuration = stunDuration;
+					playAnimation = true;
+				}
+			}
+			else
+			{
+				toPlay = "Knock Back";
+				playAnimation = true;
+			}
+			if (knockBack != Vector2.zero)
+			{
+				toPlay = "Knock Back";
+				this.knockBack = knockBack;
+				playAnimation = true;
+			}
+			if (playAnimation)
+			{
+				animator.Play(toPlay, -1 , 0);
+			}
+		}
 	}
 }
