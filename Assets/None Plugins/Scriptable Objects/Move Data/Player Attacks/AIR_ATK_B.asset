@@ -241,6 +241,7 @@ MonoBehaviour:
   HitTargetEffects: []
   HitUserEffects: []
   EffectsOnEnter:
+  - {fileID: 11400000, guid: 121b5934ef3d5504ba560613b7056012, type: 2}
   - {fileID: 11400000, guid: 131b43d3ff5579f4a921c56d7d376089, type: 2}
   EffectsOnExit: []
   HitVisualEffect: {fileID: 0}
