@@ -135,6 +135,12 @@ public class Target : MonoBehaviour {
 		}
 	}
 
+	public void RemoveFromAllRanges(Targeter targeter)
+	{
+		LongRangeTargeters.Remove(targeter);
+		MidRangeTargeters.Remove(targeter);
+		CloseRangeTargeters.Remove(targeter);
+	}
 
 	private List<Targeter> GetRangeTargeterList(int Range)
 	{

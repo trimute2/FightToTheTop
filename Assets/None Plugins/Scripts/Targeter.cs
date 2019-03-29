@@ -129,4 +129,12 @@ public class Targeter : MonoBehaviour {
 		}
 		return targetVelocity;
 	}
+
+	private void OnDestroy()
+	{
+		if(target != null)
+		{
+			target.RemoveFromAllRanges(this);
+		}
+	}
 }
