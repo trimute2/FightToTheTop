@@ -116,15 +116,15 @@ BlendTree:
   m_Name: Damage
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 6097711a731ea4d4f8606a268f3959ab, type: 2}
-    m_Threshold: 0
+    m_Motion: {fileID: 7400000, guid: 6de54f86e24887e4eb3a6940ec25c486, type: 2}
+    m_Threshold: -1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 6de54f86e24887e4eb3a6940ec25c486, type: 2}
+    m_Motion: {fileID: 7400000, guid: 6097711a731ea4d4f8606a268f3959ab, type: 2}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -133,9 +133,9 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: HitDirectionX
   m_BlendParameterY: VelocityX
-  m_MinThreshold: 0
+  m_MinThreshold: -1
   m_MaxThreshold: 1
-  m_UseAutomaticThresholds: 1
+  m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
 --- !u!206 &206826222224193250
@@ -779,32 +779,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &1102695175826756378
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: GruntShoot
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 0
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 474eabf095bfc9743902a55b7936abe3, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &1102713894969257218
 AnimatorState:
   serializedVersion: 5
@@ -826,32 +800,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: d650014064e5c5d4b8a8d7483cc5d890, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &1102725121052498300
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: GruntPunch
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 30fcc1d1475760445bd4b85b5c168ebc, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1011,9 +959,6 @@ AnimatorStateMachine:
     m_State: {fileID: 1102054725901369964}
     m_Position: {x: -228, y: 144, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1102725121052498300}
-    m_Position: {x: -228, y: 36, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 1102525486981771926}
     m_Position: {x: -432, y: 144, z: 0}
   - serializedVersion: 1
@@ -1023,9 +968,6 @@ AnimatorStateMachine:
     m_State: {fileID: 1102312110541786332}
     m_Position: {x: -432, y: 240, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1102695175826756378}
-    m_Position: {x: -228, y: 84, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 1102494265004642290}
     m_Position: {x: -636, y: 240, z: 0}
   - serializedVersion: 1
@@ -1033,10 +975,10 @@ AnimatorStateMachine:
     m_Position: {x: 228, y: -24, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102114882369859124}
-    m_Position: {x: -432, y: 36, z: 0}
+    m_Position: {x: -432, y: 48, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102074823204814286}
-    m_Position: {x: -397, y: 101, z: 0}
+    m_Position: {x: -432, y: 96, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

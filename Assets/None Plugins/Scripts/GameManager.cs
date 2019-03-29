@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
 		{
 			if(_instance == null)
 			{
-				GameObject gameObject = new GameObject();
+				GameObject gameObject = new GameObject("Game Manager");
 				gameObject.AddComponent<GameManager>();
 			}
 			return _instance;

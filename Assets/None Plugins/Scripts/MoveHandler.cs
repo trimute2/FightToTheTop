@@ -48,6 +48,14 @@ public class MoveHandler : MonoBehaviour {
 		}
 	}
 
+	public float HitDirection
+	{
+		set
+		{
+			animator.SetFloat("HitDirectionX", value * Mathf.Sign(transform.localScale.x));
+		}
+	}
+
 	private float lastMoveTime;
 	// Use this for initialization
 	void Awake () {

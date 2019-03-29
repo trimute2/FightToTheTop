@@ -28,8 +28,6 @@ public class HitBoxScript : MonoBehaviour {
 		if(target != null && !hasHit.Contains(target))
 		{
 			//todo: re write this so that the oponent does not tnee a move handler and so that its all inside the damage check
-			MoveHandler enemyHandler = target.GetComponent<MoveHandler>();
-			moveHandler.HitEnemy(enemyHandler);
 			int direction = 1;
 			if (knockBack != Vector2.zero)
 			{
@@ -38,9 +36,16 @@ public class HitBoxScript : MonoBehaviour {
 			Vector2 kb = knockBack;
 			kb.x *= direction;
 			float hitStun = moveHandler.GetHitStun();
+
 			if(target.Damage(damage, kb, hitStun))
 			{
 				hasHit.Add(target);
+				MoveHandler enemyHandler = target.GetComponent<MoveHandler>();
+				moveHandler.HitEnemy(enemyHandler);
+				if(enemyHandler != null)
+				{
+					enemyHandler.HitDirection = direction;
+				}
 			}
 		}
 		/*EntityController target = collision.transform.root.GetComponent<EntityController>();
