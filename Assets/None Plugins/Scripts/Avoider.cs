@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Avoider : MonoBehaviour {
-	//TODO: avoid multiple objects at the same time
 	private string avoiderType;
 	public string AvoiderType
 	{

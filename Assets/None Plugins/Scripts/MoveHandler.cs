@@ -198,7 +198,6 @@ public class MoveHandler : MonoBehaviour {
 				}
 				return true;
 			case ConditionType.weaponCondition:
-				//TODO: make equipment class and change this
 				if (playerInput != null)
 				{
 					if (playerInput.Weapon1.Name == condition.weapon)

@@ -17,5 +17,6 @@ public class DebugVelocity : MonoBehaviour
     void Update()
     {
 		text.text = (ec.Velocity - ec.TargetVelocity).ToString();
-    }
+		text.text += '\n' + ec.Velocity.ToString();
+	}
 }
