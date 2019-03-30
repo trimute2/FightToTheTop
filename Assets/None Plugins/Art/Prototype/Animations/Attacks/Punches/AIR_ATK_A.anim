@@ -340,15 +340,6 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.16666667
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -360,7 +351,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Emitting
-    path: Bones/Hip/Body Hit Box
+    path: Bones/Hip/Body Hit Box/Body Trail
     classID: 96
     script: {fileID: 0}
   m_PPtrCurves: []
@@ -442,7 +433,7 @@ AnimationClip:
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2242571731
+      path: 3337665467
       attribute: 1228858774
       script: {fileID: 0}
       typeID: 96
@@ -1551,15 +1542,6 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.16666667
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -1571,7 +1553,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Emitting
-    path: Bones/Hip/Body Hit Box
+    path: Bones/Hip/Body Hit Box/Body Trail
     classID: 96
     script: {fileID: 0}
   m_EulerEditorCurves:
