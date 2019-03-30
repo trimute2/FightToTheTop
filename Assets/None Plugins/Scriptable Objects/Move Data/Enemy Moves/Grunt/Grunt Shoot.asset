@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c7f4883e0032e14b80e90187fc79499, type: 3}
   m_Name: Grunt Shoot
   m_EditorClassIdentifier: 
-  controller: {fileID: 9100000, guid: eb4e8d6f248662e4f8ffcdab3ed5c2ed, type: 2}
+  controller: {fileID: 9100000, guid: 2aa532525e0ae5e45af1533d26318270, type: 2}
   valid: 1
   commonFlagsCurves:
   - serializedVersion: 2
@@ -184,7 +184,7 @@ MonoBehaviour:
   playBackSpeed: 1
   damage: 200
   hitStun: 0
-  hitStunFrame: 0
+  hitStunFrame: NaN
   knockBack: {x: 0, y: 0}
   holdTime: 0
   endTime: 1.05

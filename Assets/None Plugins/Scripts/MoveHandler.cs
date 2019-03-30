@@ -332,6 +332,7 @@ public class MoveHandler : MonoBehaviour {
 				toPlay = "GoingUp";
 			}
 		}
+		Debug.Log(transform.position.y);
 		animator.CrossFade(toPlay, transitionTime);
 		flagHandler.ValueFlags = ValueFlags.None;
 		flagHandler.CommonFlags = defaultFlagValues;

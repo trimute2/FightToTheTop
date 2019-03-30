@@ -68,7 +68,7 @@ MonoBehaviour:
   damage: 45
   hitStun: 1
   hitStunFrame: 0.25
-  knockBack: {x: 3, y: 15}
+  knockBack: {x: 3, y: 20}
   holdTime: 0
   endTime: 0.53333336
   data:
