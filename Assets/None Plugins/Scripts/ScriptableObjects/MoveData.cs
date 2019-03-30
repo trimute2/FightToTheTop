@@ -59,6 +59,8 @@ public class MoveData : ScriptableObject {
 	public List<EntityEffects> EffectsOnEnter = new List<EntityEffects>();
 	public List<EntityEffects> EffectsOnExit = new List<EntityEffects>();
 
+	public List<LinkCondition> ExitConditions = new List<LinkCondition>();
+
 	public GameObject HitVisualEffect;
 
 	[SerializeField]

@@ -10,7 +10,7 @@ public class EnemyDeathHandler : MonoBehaviour
 	private Animator anim;
 	private FlagHandler flagHandler;
 	private bool isDead;
-	private bool inDeathAnimation;
+	//private bool inDeathAnimation;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +19,7 @@ public class EnemyDeathHandler : MonoBehaviour
 		flagHandler = GetComponent<FlagHandler>();
 		anim = GetComponent<Animator>();
 		isDead = false;
-		inDeathAnimation = false;
+		//inDeathAnimation = false;
 		healthComponent.OnDeath += AtZeroHP;
     }
 

@@ -332,7 +332,6 @@ public class MoveHandler : MonoBehaviour {
 				toPlay = "GoingUp";
 			}
 		}
-		Debug.Log(transform.position.y);
 		animator.CrossFade(toPlay, transitionTime);
 		flagHandler.ValueFlags = ValueFlags.None;
 		flagHandler.CommonFlags = defaultFlagValues;
@@ -428,7 +427,19 @@ public class MoveHandler : MonoBehaviour {
 			}
 			if (currentMove.EndMove(moveTime))
 			{
-				EnterGenericState();
+				bool exitConditions = true;
+				foreach(LinkCondition c in currentMove.ExitConditions)
+				{
+					if (!CheckCondition(c))
+					{
+						exitConditions = false;
+						break;
+					}
+				}
+				if (exitConditions)
+				{
+					EnterGenericState();
+				}
 			}
 		}
 		if (entityController != null)
