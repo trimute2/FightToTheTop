@@ -61,6 +61,8 @@ public class MoveData : ScriptableObject {
 
 	public List<LinkCondition> ExitConditions = new List<LinkCondition>();
 
+	public MoveData ExitMove;
+
 	public GameObject HitVisualEffect;
 
 	[SerializeField]

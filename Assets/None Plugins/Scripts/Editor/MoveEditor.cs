@@ -28,6 +28,7 @@ public class MoveEditor : Editor {
 	SerializedProperty EffectsOnEnter;
 	SerializedProperty EffectsOnExit;
 	SerializedProperty ExitConditions;
+	SerializedProperty ExitMove;
 	List<AnimatorState> stateList;
 	ReorderableList links;
 	SerializedProperty HitTargetEffects;
@@ -66,6 +67,7 @@ public class MoveEditor : Editor {
 		EffectsOnEnter = serializedObject.FindProperty("EffectsOnEnter");
 		EffectsOnExit = serializedObject.FindProperty("EffectsOnExit");
 		ExitConditions = serializedObject.FindProperty("ExitConditions");
+		ExitMove = serializedObject.FindProperty("ExitMove");
 		links = new ReorderableList(serializedObject, serializedObject.FindProperty("links"), true, true, true, true);
 		links.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
 		{
@@ -178,6 +180,7 @@ public class MoveEditor : Editor {
 		EditorGUILayout.PropertyField(EffectsOnEnter, true);
 		EditorGUILayout.PropertyField(EffectsOnExit, true);
 		EditorGUILayout.PropertyField(ExitConditions, true);
+		EditorGUILayout.PropertyField(ExitMove, true);
 		EditorGUILayout.PropertyField(hitVisualEffect, new GUIContent("Visual Effect"));
 		serializedObject.ApplyModifiedProperties();
 		if (GUILayout.Button("Validate"))

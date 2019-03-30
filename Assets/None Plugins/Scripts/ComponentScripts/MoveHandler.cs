@@ -438,7 +438,8 @@ public class MoveHandler : MonoBehaviour {
 				}
 				if (exitConditions)
 				{
-					EnterGenericState();
+					StartMove(currentMove.ExitMove);
+					//EnterGenericState();
 				}
 			}
 		}
