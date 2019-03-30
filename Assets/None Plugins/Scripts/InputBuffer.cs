@@ -5,7 +5,7 @@ using UnityEngine.Experimental.Input;
 
 public class InputBuffer {
 	//public static int bufferLength = 23;
-	public static int bufferLength = 15;
+	public static int bufferLength = 25;
 	private InputItem[] bufferList;
 	private string button;
 	private bool press = false;

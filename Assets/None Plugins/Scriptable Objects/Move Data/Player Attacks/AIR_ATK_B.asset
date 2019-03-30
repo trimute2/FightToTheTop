@@ -243,7 +243,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 59b2976c055cf5940a28ac18fabff500, type: 2}
     move: {fileID: 11400000, guid: 63029dc0a8f4c5240b6803aba76df656, type: 2}
     priority: 2
-    minTime: 0.26666668
+    minTime: 0.25
     maxTime: 0.5833333
   HitTargetEffects: []
   HitUserEffects: []
