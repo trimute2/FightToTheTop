@@ -7,13 +7,19 @@ public class EnemyDeathHandler : MonoBehaviour
 {
 	private HealthComponent healthComponent;
 	private EntityControllerComp entityController;
+	private Animator anim;
+	private FlagHandler flagHandler;
 	private bool isDead;
+	private bool inDeathAnimation;
     // Start is called before the first frame update
     void Start()
     {
 		healthComponent = GetComponent<HealthComponent>();
 		entityController = GetComponent<EntityControllerComp>();
+		flagHandler = GetComponent<FlagHandler>();
+		anim = GetComponent<Animator>();
 		isDead = false;
+		inDeathAnimation = false;
 		healthComponent.OnDeath += AtZeroHP;
     }
 
@@ -32,7 +38,8 @@ public class EnemyDeathHandler : MonoBehaviour
 			{
 				if (entityController.Grounded)
 				{
-					Destroy(gameObject);
+					anim.Play("Death");
+					flagHandler.CommonFlags = CommonFlags.None;
 				}
 			}
 			else
@@ -41,4 +48,9 @@ public class EnemyDeathHandler : MonoBehaviour
 			}
 		}
     }
+
+	public void Kill()
+	{
+		Destroy(gameObject);
+	}
 }
