@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4114334288867510}
   - component: {fileID: 114168206601638528}
   - component: {fileID: 137712193484514966}
+  - component: {fileID: 8635406192887030809}
   m_Layer: 0
   m_Name: B_PrototypeUpperArm
   m_TagString: Untagged
@@ -49,7 +50,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: -6
+  m_SortingOrder: 0
   m_BoneTransforms:
   - {fileID: 4889934104419936}
 --- !u!137 &137712193484514966
@@ -88,7 +89,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -6
+  m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -103,6 +104,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.36646718, y: -0.013879299, z: 0}
     m_Extent: {x: 0.3850004, y: 0.09500023, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &8635406192887030809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014039901097498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 0
 --- !u!1 &1035160594458466
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +272,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081382377161836}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.04817933, y: 1.1497543, z: 0}
+  m_LocalPosition: {x: -0.04817933, y: 1.1467543, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4522598586342300}
@@ -288,6 +302,7 @@ GameObject:
   - component: {fileID: 4204098165295402}
   - component: {fileID: 114806368831854534}
   - component: {fileID: 137001972462222922}
+  - component: {fileID: 1496982702606120064}
   m_Layer: 0
   m_Name: B_PrototypeForeArm
   m_TagString: Untagged
@@ -326,7 +341,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: -5
+  m_SortingOrder: 1
   m_BoneTransforms:
   - {fileID: 4664572188960310}
 --- !u!137 &137001972462222922
@@ -365,7 +380,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -5
+  m_SortingOrder: 1
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -379,6 +394,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.31346762, y: -0.013879187, z: 0}
     m_Extent: {x: 0.3400004, y: 0.095000274, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &1496982702606120064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153126351193924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 1
 --- !u!1 &1167736328359376
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,6 +418,7 @@ GameObject:
   - component: {fileID: 4981062560478158}
   - component: {fileID: 114383759947248700}
   - component: {fileID: 137550478312025616}
+  - component: {fileID: 2365254768558320959}
   m_Layer: 0
   m_Name: PrototypeTorso
   m_TagString: Untagged
@@ -428,7 +457,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 8
   m_BoneTransforms:
   - {fileID: 4603556763472124}
   - {fileID: 4520163994758008}
@@ -468,7 +497,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 8
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -483,6 +512,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.63651717, y: -0.00000023841858, z: 0}
     m_Extent: {x: 0.5275172, y: 0.2900003, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &2365254768558320959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167736328359376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 8
 --- !u!1 &1168543821435896
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,6 +601,7 @@ GameObject:
   - component: {fileID: 4533204309979440}
   - component: {fileID: 114880511473680904}
   - component: {fileID: 137999953963093026}
+  - component: {fileID: 60524156566763441}
   m_Layer: 0
   m_Name: F_PrototypeForeArm
   m_TagString: Untagged
@@ -597,7 +640,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 14
   m_BoneTransforms:
   - {fileID: 4340557838389718}
 --- !u!137 &137999953963093026
@@ -636,7 +679,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 14
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -650,6 +693,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.3134674, y: -0.013879783, z: 0}
     m_Extent: {x: 0.3400003, y: 0.09500025, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &60524156566763441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224346327344404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 14
 --- !u!1 &1236825874190168
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,6 +717,7 @@ GameObject:
   - component: {fileID: 4177840620478928}
   - component: {fileID: 114264381495294716}
   - component: {fileID: 137386915492837068}
+  - component: {fileID: 4615707696968481991}
   m_Layer: 0
   m_Name: F_PrototypeUpperLeg
   m_TagString: Untagged
@@ -699,7 +756,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 10
   m_BoneTransforms:
   - {fileID: 4773279961326606}
   - {fileID: 4791469369944238}
@@ -739,7 +796,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 10
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -754,6 +811,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.45096266, y: 0.0045723915, z: 0}
     m_Extent: {x: 0.49500024, y: 0.14000022, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &4615707696968481991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236825874190168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 10
 --- !u!1 &1263044702732114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,6 +1088,7 @@ GameObject:
   - component: {fileID: 4841499428778046}
   - component: {fileID: 114025732258319674}
   - component: {fileID: 137417652530030262}
+  - component: {fileID: 5313199173862571340}
   m_Layer: 0
   m_Name: F_PrototypeUpperArm
   m_TagString: Untagged
@@ -1056,7 +1127,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 7
+  m_SortingOrder: 13
   m_BoneTransforms:
   - {fileID: 4759300528573084}
 --- !u!137 &137417652530030262
@@ -1095,7 +1166,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 7
+  m_SortingOrder: 13
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -1109,6 +1180,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.366467, y: -0.0138791725, z: 0}
     m_Extent: {x: 0.3850003, y: 0.095000274, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &5313199173862571340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265411841546654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 13
 --- !u!1 &1281540129381484
 GameObject:
   m_ObjectHideFlags: 0
@@ -1164,6 +1248,7 @@ GameObject:
   - component: {fileID: 4376929030205994}
   - component: {fileID: 114058911581930662}
   - component: {fileID: 137201638647207614}
+  - component: {fileID: 8650906921986560746}
   m_Layer: 0
   m_Name: B_PrototypeLowerLeg
   m_TagString: Untagged
@@ -1202,7 +1287,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 5
   m_BoneTransforms:
   - {fileID: 4830365633187872}
 --- !u!137 &137201638647207614
@@ -1241,7 +1326,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 5
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -1255,6 +1340,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.45396298, y: 0.004572168, z: 0}
     m_Extent: {x: 0.4650002, y: 0.14000021, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &8650906921986560746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292933438850256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 5
 --- !u!1 &1299333025001386
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,6 +1514,7 @@ GameObject:
   - component: {fileID: 4573074495063288}
   - component: {fileID: 114988931116244060}
   - component: {fileID: 137697925706825174}
+  - component: {fileID: 2211966416098206809}
   m_Layer: 0
   m_Name: B_PrototypeHand
   m_TagString: Untagged
@@ -1454,7 +1553,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: -4
+  m_SortingOrder: 2
   m_BoneTransforms:
   - {fileID: 4891008014773366}
 --- !u!137 &137697925706825174
@@ -1493,7 +1592,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -4
+  m_SortingOrder: 2
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -1507,6 +1606,19 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0015321076, y: -0.013878807, z: 0}
     m_Extent: {x: 0.13500014, y: 0.14000015, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &2211966416098206809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417552155764394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 2
 --- !u!1 &1424839926423674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1518,6 +1630,7 @@ GameObject:
   - component: {fileID: 4947080679672916}
   - component: {fileID: 114796199440132370}
   - component: {fileID: 137099187854997428}
+  - component: {fileID: 392668931136305003}
   m_Layer: 0
   m_Name: PrototypeNeck
   m_TagString: Untagged
@@ -1556,7 +1669,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 6
   m_BoneTransforms:
   - {fileID: 4520163994758008}
   - {fileID: 4686259170654984}
@@ -1596,7 +1709,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 6
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -1611,6 +1724,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.67184466, y: -0.002331823, z: 0}
     m_Extent: {x: 0.12438601, y: 0.13357683, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &392668931136305003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424839926423674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 6
 --- !u!1 &1436905375155380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1751,6 +1877,7 @@ GameObject:
   - component: {fileID: 4775186360726734}
   - component: {fileID: 114520407657645348}
   - component: {fileID: 137973506549697898}
+  - component: {fileID: 5079207468120727697}
   m_Layer: 0
   m_Name: B_PrototypeUpperLeg
   m_TagString: Untagged
@@ -1789,7 +1916,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: -3
+  m_SortingOrder: 3
   m_BoneTransforms:
   - {fileID: 4441799051482910}
   - {fileID: 4830365633187872}
@@ -1829,7 +1956,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -3
+  m_SortingOrder: 3
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -1844,6 +1971,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.45096266, y: 0.004572451, z: 0}
     m_Extent: {x: 0.49500024, y: 0.14000022, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &5079207468120727697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458626111509152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 3
 --- !u!1 &1467966106702506
 GameObject:
   m_ObjectHideFlags: 0
@@ -2014,6 +2154,7 @@ GameObject:
   - component: {fileID: 4933472987942560}
   - component: {fileID: 114383752781143554}
   - component: {fileID: 137987314998994080}
+  - component: {fileID: 6675795728547814927}
   m_Layer: 0
   m_Name: F_PrototypeFoot
   m_TagString: Untagged
@@ -2052,7 +2193,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 12
   m_BoneTransforms:
   - {fileID: 4247382086650790}
 --- !u!137 &137987314998994080
@@ -2091,7 +2232,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 12
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -2105,6 +2246,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.2005721, y: 0.000037297606, z: 0}
     m_Extent: {x: 0.3350003, y: 0.12500025, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &6675795728547814927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573487563842222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 12
 --- !u!1 &1594700270099246
 GameObject:
   m_ObjectHideFlags: 0
@@ -2354,6 +2508,7 @@ GameObject:
   - component: {fileID: 4272288332270680}
   - component: {fileID: 114386731416689772}
   - component: {fileID: 137103017813512490}
+  - component: {fileID: 4812110432481320898}
   m_Layer: 0
   m_Name: PrototypeHead
   m_TagString: Untagged
@@ -2392,7 +2547,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 9
   m_BoneTransforms:
   - {fileID: 4686259170654984}
 --- !u!137 &137103017813512490
@@ -2431,7 +2586,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 9
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -2445,6 +2600,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.35924628, y: 0.0018205345, z: 0}
     m_Extent: {x: 0.3600001, y: 0.36500013, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &4812110432481320898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712086190538364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 9
 --- !u!1 &1717416207361074
 GameObject:
   m_ObjectHideFlags: 0
@@ -2456,6 +2624,7 @@ GameObject:
   - component: {fileID: 4687695828732150}
   - component: {fileID: 114425596120487196}
   - component: {fileID: 137004119975810466}
+  - component: {fileID: 987775933707757433}
   m_Layer: 0
   m_Name: F_PrototypeLowerLeg
   m_TagString: Untagged
@@ -2494,7 +2663,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 12
   m_BoneTransforms:
   - {fileID: 4791469369944238}
 --- !u!137 &137004119975810466
@@ -2533,7 +2702,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 12
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -2547,6 +2716,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.45396298, y: 0.0045721084, z: 0}
     m_Extent: {x: 0.4650002, y: 0.14000021, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &987775933707757433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717416207361074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 12
 --- !u!1 &1728148954754890
 GameObject:
   m_ObjectHideFlags: 0
@@ -2666,6 +2848,7 @@ GameObject:
   - component: {fileID: 4133815952953506}
   - component: {fileID: 114575937619213106}
   - component: {fileID: 137721637052798470}
+  - component: {fileID: 8387125983927575760}
   m_Layer: 0
   m_Name: B_PrototypeFoot
   m_TagString: Untagged
@@ -2704,7 +2887,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: -2
+  m_SortingOrder: 4
   m_BoneTransforms:
   - {fileID: 4153915800371146}
 --- !u!137 &137721637052798470
@@ -2743,7 +2926,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: 4
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -2757,6 +2940,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.20057216, y: 0.000037059188, z: 0}
     m_Extent: {x: 0.3350003, y: 0.12500025, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &8387125983927575760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751874157617516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 4
 --- !u!1 &1789565565714282
 GameObject:
   m_ObjectHideFlags: 0
@@ -2815,6 +3011,7 @@ GameObject:
   - component: {fileID: 4879481800648546}
   - component: {fileID: 114068717138281308}
   - component: {fileID: 137479614001272566}
+  - component: {fileID: 9212619909100113429}
   m_Layer: 0
   m_Name: F_PrototypeHand
   m_TagString: Untagged
@@ -2853,7 +3050,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 9
+  m_SortingOrder: 15
   m_BoneTransforms:
   - {fileID: 4706624079265324}
 --- !u!137 &137479614001272566
@@ -2892,7 +3089,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 9
+  m_SortingOrder: 15
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -2906,6 +3103,19 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.001532346, y: -0.0138794035, z: 0}
     m_Extent: {x: 0.13500011, y: 0.1400001, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &9212619909100113429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836214356115170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 15
 --- !u!1 &1889827488845826
 GameObject:
   m_ObjectHideFlags: 0
@@ -3059,6 +3269,7 @@ GameObject:
   - component: {fileID: 4877313184657006}
   - component: {fileID: 114669748006430256}
   - component: {fileID: 137111489611974800}
+  - component: {fileID: 5741026154551603085}
   m_Layer: 0
   m_Name: PrototypeHips
   m_TagString: Untagged
@@ -3097,7 +3308,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 7
   m_BoneTransforms:
   - {fileID: 4603556763472124}
   - {fileID: 4441799051482910}
@@ -3138,7 +3349,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 7
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -3154,6 +3365,19 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.000000029802322, y: -0.0027136207, z: 0}
     m_Extent: {x: 0.14000018, y: 0.29271376, z: 0}
   m_DirtyAABB: 0
+--- !u!114 &5741026154551603085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953394192245400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4174b1a894ec94e9e5ce43d0c01978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 7
 --- !u!1 &3171324685529939729
 GameObject:
   m_ObjectHideFlags: 0
