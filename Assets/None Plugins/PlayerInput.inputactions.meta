@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 8e032d86d549b0345bd58f629cb0936c
+ScriptedImporter:
+  fileIDToRecycleName:
+    11400000: <root>
+    11400002: gameplay/Movement
+    11400004: gameplay/Weapon1
+    11400006: gameplay/Weapon2
+    11400008: gameplay/Jump
+    11400010: gameplay/Dodge
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: e2fdc6edf8744b38b702a2a5ee3541b2, type: 3}
+  generateWrapperCode: 1
+  wrapperCodePath: 
+  wrapperClassName: 
+  wrapperCodeNamespace: 
+  generateActionEvents: 0
+  generateInterfaces: 1
+  actionGuids: []
+  actionMapGuids: []

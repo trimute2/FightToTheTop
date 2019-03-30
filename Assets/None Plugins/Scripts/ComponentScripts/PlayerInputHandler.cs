@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Input;
 
 [RequireComponent(typeof(HealthComponent))]
 [RequireComponent(typeof(FlagHandler))]
 [RequireComponent(typeof(MoveHandler))]
 [RequireComponent(typeof(EntityControllerComp))]
 public class PlayerInputHandler : MonoBehaviour {
+
+	public PlayerInput p;
 
 	public float movementSpeed = 4.5f;
 	public float airMovementSpeed = 6.5f;
@@ -36,6 +39,8 @@ public class PlayerInputHandler : MonoBehaviour {
 
 	private bool doubleJump;
 
+	private Vector2 directionalInput;
+
 	private FlagHandler flagHandler;
 	private MoveHandler moveHandler;
 	private EntityControllerComp entityController;
@@ -48,11 +53,19 @@ public class PlayerInputHandler : MonoBehaviour {
 
 	private void Awake()
 	{
+		directionalInput = Vector2.zero;
 		inputBuffers = new InputBuffer[inputNames.Length];
 		for (int i = 0; i < inputBuffers.Length; i++)
 		{
 			inputBuffers[i] = new InputBuffer(inputNames[i]);
 		}
+		SetUpBuffer(inputBuffers[0], p.gameplay.Weapon1);
+		SetUpBuffer(inputBuffers[1], p.gameplay.Weapon2);
+		SetUpBuffer(inputBuffers[2], p.gameplay.Jump);
+		SetUpBuffer(inputBuffers[3], p.gameplay.Dodge);
+		p.gameplay.Movement.performed += UpdateMoveInput;
+		p.gameplay.Movement.cancelled += UpdateMoveInput;
+		p.gameplay.Movement.Enable();
 		flagHandler = GetComponent<FlagHandler>();
 		moveHandler = GetComponent<MoveHandler>();
 		entityController = GetComponent<EntityControllerComp>();
@@ -60,6 +73,19 @@ public class PlayerInputHandler : MonoBehaviour {
 		CurrentMoves = new List<MoveLink>();
 		GenerateMoveList();
 		GameManager.Instance.PlayerHealth = healthComp;
+	}
+
+	private void SetUpBuffer(InputBuffer buffer, InputAction inputAction)
+	{
+		inputAction.performed += buffer.ReadInput;
+		inputAction.cancelled += buffer.ReadInput;
+		inputAction.Enable();
+	}
+
+	private void UpdateMoveInput(InputAction.CallbackContext ctx)
+	{
+		directionalInput = ctx.ReadValue<Vector2>();
+
 	}
 
 	// Update is called once per frame
@@ -70,8 +96,10 @@ public class PlayerInputHandler : MonoBehaviour {
 		}
 		FlagData flagData = flagHandler.Flags;
 		Vector2 movementInput = Vector2.zero;
-		movementInput.x = Input.GetAxisRaw("Horizontal");
-		movementInput.y = Input.GetAxisRaw("Vertical");
+		movementInput.x = directionalInput.x;
+		movementInput.y = directionalInput.y;
+		//movementInput.x = Input.GetAxisRaw("Horizontal");
+		//movementInput.y = Input.GetAxisRaw("Vertical");
 		Vector2 previousTarget = entityController.TargetVelocity;
 		Vector2 targetVelocity = Vector2.zero;
 		foreach (InputBuffer b in inputBuffers)

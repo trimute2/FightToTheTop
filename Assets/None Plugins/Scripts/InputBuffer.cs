@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Input;
 
 public class InputBuffer {
 	//public static int bufferLength = 23;
 	public static int bufferLength = 15;
 	private InputItem[] bufferList;
 	private string button;
+	private bool press = false;
 
 	public string Button
 	{
@@ -32,7 +34,8 @@ public class InputBuffer {
 		{
 			bufferList[i] = bufferList[i - 1];
 		}
-		bufferList[0].Input(Input.GetButton(button));
+		bufferList[0].Input(press);
+		//bufferList[0].Input(Input.GetButton(button));
 	}
 
 	public bool CanUse()
@@ -63,4 +66,10 @@ public class InputBuffer {
 	{
 		return bufferList[0].Hold;
 	}
+
+	public void ReadInput(InputAction.CallbackContext ctx)
+	{
+		press = ctx.ReadValue<float>() > 0;
+	}
+	
 }
