@@ -25,6 +25,7 @@ public class PlayerInput : InputActionAssetReference
         m_gameplay_Weapon2 = m_gameplay.GetAction("Weapon2");
         m_gameplay_Jump = m_gameplay.GetAction("Jump");
         m_gameplay_Dodge = m_gameplay.GetAction("Dodge");
+        m_gameplay_Pause = m_gameplay.GetAction("Pause");
         // Menu Navigation
         m_MenuNavigation = asset.GetActionMap("Menu Navigation");
         m_MenuNavigation_PointAction = m_MenuNavigation.GetAction("Point Action");
@@ -49,6 +50,7 @@ public class PlayerInput : InputActionAssetReference
         m_gameplay_Weapon2 = null;
         m_gameplay_Jump = null;
         m_gameplay_Dodge = null;
+        m_gameplay_Pause = null;
         if (m_MenuNavigationActionsCallbackInterface != null)
         {
             MenuNavigation.SetCallbacks(null);
@@ -86,6 +88,7 @@ public class PlayerInput : InputActionAssetReference
     private InputAction m_gameplay_Weapon2;
     private InputAction m_gameplay_Jump;
     private InputAction m_gameplay_Dodge;
+    private InputAction m_gameplay_Pause;
     public struct GameplayActions
     {
         private PlayerInput m_Wrapper;
@@ -95,6 +98,7 @@ public class PlayerInput : InputActionAssetReference
         public InputAction @Weapon2 { get { return m_Wrapper.m_gameplay_Weapon2; } }
         public InputAction @Jump { get { return m_Wrapper.m_gameplay_Jump; } }
         public InputAction @Dodge { get { return m_Wrapper.m_gameplay_Dodge; } }
+        public InputAction @Pause { get { return m_Wrapper.m_gameplay_Pause; } }
         public InputActionMap Get() { return m_Wrapper.m_gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -120,6 +124,9 @@ public class PlayerInput : InputActionAssetReference
                 Dodge.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDodge;
                 Dodge.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDodge;
                 Dodge.cancelled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDodge;
+                Pause.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                Pause.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                Pause.cancelled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -139,6 +146,9 @@ public class PlayerInput : InputActionAssetReference
                 Dodge.started += instance.OnDodge;
                 Dodge.performed += instance.OnDodge;
                 Dodge.cancelled += instance.OnDodge;
+                Pause.started += instance.OnPause;
+                Pause.performed += instance.OnPause;
+                Pause.cancelled += instance.OnPause;
             }
         }
     }
@@ -274,6 +284,7 @@ public interface IGameplayActions
     void OnWeapon2(InputAction.CallbackContext context);
     void OnJump(InputAction.CallbackContext context);
     void OnDodge(InputAction.CallbackContext context);
+    void OnPause(InputAction.CallbackContext context);
 }
 public interface IMenuNavigationActions
 {

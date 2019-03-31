@@ -96,6 +96,7 @@ public class DefaultMenuSelectedMenu : MonoBehaviour
 		if (!m_ActionsHooked) {
 			return;
 		}
+		m_ActionsHooked = false;
 
 		var moveAction = m_MoveAction.action;
 		if (moveAction != null)
@@ -108,12 +109,20 @@ public class DefaultMenuSelectedMenu : MonoBehaviour
 	public void EnableAllActions()
 	{
 		var moveAction = m_MoveAction.action;
-		moveAction?.Enable();
+		if (moveAction != null)
+		{
+			moveAction.Enable();
+		}
+
+		Debug.Log("action " + moveAction.enabled);
 	}
 
 	public void DisableAllActions()
 	{
 		var moveAction = m_MoveAction.action;
-		moveAction?.Disable();
+		if (moveAction != null)
+		{
+			moveAction.Disable();
+		}
 	}
 }

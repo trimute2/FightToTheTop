@@ -57,6 +57,8 @@ public class PlayerInputHandler : MonoBehaviour {
 	private EntityControllerComp entityController;
 	private HealthComponent healthComp;
 
+	private bool actionsHooked;
+
 	// Use this for initialization
 	/*void Start () {
 		moveHandler.GenericStateEvent += EnterGenericState;
@@ -70,13 +72,7 @@ public class PlayerInputHandler : MonoBehaviour {
 		{
 			inputBuffers[i] = new InputBuffer(inputNames[i]);
 		}
-		SetUpBuffer(inputBuffers[0], p.gameplay.Weapon1);
-		SetUpBuffer(inputBuffers[1], p.gameplay.Weapon2);
-		SetUpBuffer(inputBuffers[2], p.gameplay.Jump);
-		SetUpBuffer(inputBuffers[3], p.gameplay.Dodge);
-		p.gameplay.Movement.performed += UpdateMoveInput;
-		p.gameplay.Movement.cancelled += UpdateMoveInput;
-		p.gameplay.Movement.Enable();
+		HookInputActions();
 		flagHandler = GetComponent<FlagHandler>();
 		moveHandler = GetComponent<MoveHandler>();
 		entityController = GetComponent<EntityControllerComp>();
@@ -85,6 +81,42 @@ public class PlayerInputHandler : MonoBehaviour {
 		GenerateMoveList();
 		entityController.LandingEvent += OnLandingEvent;
 		GameManager.Instance.PlayerHealth = healthComp;
+	}
+
+	private void OnEnable()
+	{
+		HookInputActions();
+	}
+
+	private void HookInputActions()
+	{
+		if (actionsHooked)
+		{
+			return;
+		}
+		actionsHooked = true;
+		SetUpBuffer(inputBuffers[0], p.gameplay.Weapon1);
+		SetUpBuffer(inputBuffers[1], p.gameplay.Weapon2);
+		SetUpBuffer(inputBuffers[2], p.gameplay.Jump);
+		SetUpBuffer(inputBuffers[3], p.gameplay.Dodge);
+		p.gameplay.Movement.performed += UpdateMoveInput;
+		p.gameplay.Movement.cancelled += UpdateMoveInput;
+		p.gameplay.Movement.Enable();
+	}
+
+	private void UnHookInputActions()
+	{
+		if (!actionsHooked)
+		{
+			return;
+		}
+		actionsHooked = false;
+		ReleaseInputBuffer(inputBuffers[0], p.gameplay.Weapon1);
+		ReleaseInputBuffer(inputBuffers[1], p.gameplay.Weapon2);
+		ReleaseInputBuffer(inputBuffers[2], p.gameplay.Jump);
+		ReleaseInputBuffer(inputBuffers[3], p.gameplay.Dodge);
+		p.gameplay.Movement.performed -= UpdateMoveInput;
+		p.gameplay.Movement.cancelled -= UpdateMoveInput;
 	}
 
 	private void OnLandingEvent()
@@ -97,6 +129,12 @@ public class PlayerInputHandler : MonoBehaviour {
 		inputAction.performed += buffer.ReadInput;
 		inputAction.cancelled += buffer.ReadInput;
 		inputAction.Enable();
+	}
+
+	private void ReleaseInputBuffer(InputBuffer buffer, InputAction inputAction)
+	{
+		inputAction.performed -= buffer.ReadInput;
+		inputAction.cancelled -= buffer.ReadInput;
 	}
 
 	private void UpdateMoveInput(InputAction.CallbackContext ctx)
@@ -209,5 +247,15 @@ public class PlayerInputHandler : MonoBehaviour {
 		{
 			CurrentMoves.AddRange(Weapon2.Moves);
 		}
+	}
+
+	private void OnDestroy()
+	{
+		UnHookInputActions();
+	}
+
+	private void OnDisable()
+	{
+		UnHookInputActions();
 	}
 }

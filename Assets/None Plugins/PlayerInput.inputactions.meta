@@ -15,6 +15,7 @@ ScriptedImporter:
     11400020: Menu Navigation/Cancel Action
     11400022: Menu Navigation/Point Action
     11400024: Menu Navigation/Right Click Action
+    11400026: gameplay/Pause
     11400028: Menu Navigation/Scroll Wheel Action
   externalObjects: {}
   userData: 

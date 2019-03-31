@@ -10,7 +10,9 @@ public class UIManager : MonoBehaviour
 	public RectTransform GameUIPanel;
 	public RectTransform PausePanel;
 	public RectTransform DeathPanel;
+	public GameObject EventSystem;
 	bool canPause;
+	public PlayerInput p;
 	// Start is called before the first frame update
 	void Start()
     {
@@ -19,15 +21,23 @@ public class UIManager : MonoBehaviour
 		player.HealthUpdateEvent += UpdateHealthSlider;
 		player.OnDeath += OnPlayerDeath;
 		canPause = true;
+		p.gameplay.Pause.performed += Pause_performed;
+		p.gameplay.Pause.Enable();
 	}
 
+	private void Pause_performed(UnityEngine.Experimental.Input.InputAction.CallbackContext obj)
+	{
+		Pause();
+	}
+
+	/*
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			Pause();
 		}
-	}
+	}*/
 
 	void UpdateHealthSlider()
 	{
@@ -41,6 +51,7 @@ public class UIManager : MonoBehaviour
 			Time.timeScale = 0;
 			GameUIPanel.gameObject.SetActive(false);
 			PausePanel.gameObject.SetActive(true);
+			EventSystem.SetActive(true);
 		}
 	}
 
@@ -49,6 +60,7 @@ public class UIManager : MonoBehaviour
 		Time.timeScale = 1;
 		GameUIPanel.gameObject.SetActive(true);
 		PausePanel.gameObject.SetActive(false);
+		EventSystem.SetActive(false);
 	}
 
 	public void OnPlayerDeath()
@@ -56,5 +68,6 @@ public class UIManager : MonoBehaviour
 		GameUIPanel.gameObject.SetActive(false);
 		DeathPanel.gameObject.SetActive(true);
 		canPause = false;
+		EventSystem.SetActive(true);
 	}
 }
