@@ -25,6 +25,16 @@ public class PlayerInput : InputActionAssetReference
         m_gameplay_Weapon2 = m_gameplay.GetAction("Weapon2");
         m_gameplay_Jump = m_gameplay.GetAction("Jump");
         m_gameplay_Dodge = m_gameplay.GetAction("Dodge");
+        // Menu Navigation
+        m_MenuNavigation = asset.GetActionMap("Menu Navigation");
+        m_MenuNavigation_PointAction = m_MenuNavigation.GetAction("Point Action");
+        m_MenuNavigation_MoveAction = m_MenuNavigation.GetAction("Move Action");
+        m_MenuNavigation_SubmitAction = m_MenuNavigation.GetAction("Submit Action");
+        m_MenuNavigation_CancelAction = m_MenuNavigation.GetAction("Cancel Action");
+        m_MenuNavigation_LeftClickAction = m_MenuNavigation.GetAction("Left Click Action");
+        m_MenuNavigation_MiddleClickAction = m_MenuNavigation.GetAction("Middle Click Action");
+        m_MenuNavigation_RightClickAction = m_MenuNavigation.GetAction("Right Click Action");
+        m_MenuNavigation_ScrollWheelAction = m_MenuNavigation.GetAction("Scroll Wheel Action");
         m_Initialized = true;
     }
     private void Uninitialize()
@@ -39,15 +49,30 @@ public class PlayerInput : InputActionAssetReference
         m_gameplay_Weapon2 = null;
         m_gameplay_Jump = null;
         m_gameplay_Dodge = null;
+        if (m_MenuNavigationActionsCallbackInterface != null)
+        {
+            MenuNavigation.SetCallbacks(null);
+        }
+        m_MenuNavigation = null;
+        m_MenuNavigation_PointAction = null;
+        m_MenuNavigation_MoveAction = null;
+        m_MenuNavigation_SubmitAction = null;
+        m_MenuNavigation_CancelAction = null;
+        m_MenuNavigation_LeftClickAction = null;
+        m_MenuNavigation_MiddleClickAction = null;
+        m_MenuNavigation_RightClickAction = null;
+        m_MenuNavigation_ScrollWheelAction = null;
         m_Initialized = false;
     }
     public void SetAsset(InputActionAsset newAsset)
     {
         if (newAsset == asset) return;
         var gameplayCallbacks = m_GameplayActionsCallbackInterface;
+        var MenuNavigationCallbacks = m_MenuNavigationActionsCallbackInterface;
         if (m_Initialized) Uninitialize();
         asset = newAsset;
         gameplay.SetCallbacks(gameplayCallbacks);
+        MenuNavigation.SetCallbacks(MenuNavigationCallbacks);
     }
     public override void MakePrivateCopyOfActions()
     {
@@ -125,6 +150,102 @@ public class PlayerInput : InputActionAssetReference
             return new GameplayActions(this);
         }
     }
+    // Menu Navigation
+    private InputActionMap m_MenuNavigation;
+    private IMenuNavigationActions m_MenuNavigationActionsCallbackInterface;
+    private InputAction m_MenuNavigation_PointAction;
+    private InputAction m_MenuNavigation_MoveAction;
+    private InputAction m_MenuNavigation_SubmitAction;
+    private InputAction m_MenuNavigation_CancelAction;
+    private InputAction m_MenuNavigation_LeftClickAction;
+    private InputAction m_MenuNavigation_MiddleClickAction;
+    private InputAction m_MenuNavigation_RightClickAction;
+    private InputAction m_MenuNavigation_ScrollWheelAction;
+    public struct MenuNavigationActions
+    {
+        private PlayerInput m_Wrapper;
+        public MenuNavigationActions(PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PointAction { get { return m_Wrapper.m_MenuNavigation_PointAction; } }
+        public InputAction @MoveAction { get { return m_Wrapper.m_MenuNavigation_MoveAction; } }
+        public InputAction @SubmitAction { get { return m_Wrapper.m_MenuNavigation_SubmitAction; } }
+        public InputAction @CancelAction { get { return m_Wrapper.m_MenuNavigation_CancelAction; } }
+        public InputAction @LeftClickAction { get { return m_Wrapper.m_MenuNavigation_LeftClickAction; } }
+        public InputAction @MiddleClickAction { get { return m_Wrapper.m_MenuNavigation_MiddleClickAction; } }
+        public InputAction @RightClickAction { get { return m_Wrapper.m_MenuNavigation_RightClickAction; } }
+        public InputAction @ScrollWheelAction { get { return m_Wrapper.m_MenuNavigation_ScrollWheelAction; } }
+        public InputActionMap Get() { return m_Wrapper.m_MenuNavigation; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled { get { return Get().enabled; } }
+        public InputActionMap Clone() { return Get().Clone(); }
+        public static implicit operator InputActionMap(MenuNavigationActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuNavigationActions instance)
+        {
+            if (m_Wrapper.m_MenuNavigationActionsCallbackInterface != null)
+            {
+                PointAction.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnPointAction;
+                PointAction.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnPointAction;
+                PointAction.cancelled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnPointAction;
+                MoveAction.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnMoveAction;
+                MoveAction.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnMoveAction;
+                MoveAction.cancelled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnMoveAction;
+                SubmitAction.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnSubmitAction;
+                SubmitAction.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnSubmitAction;
+                SubmitAction.cancelled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnSubmitAction;
+                CancelAction.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnCancelAction;
+                CancelAction.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnCancelAction;
+                CancelAction.cancelled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnCancelAction;
+                LeftClickAction.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnLeftClickAction;
+                LeftClickAction.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnLeftClickAction;
+                LeftClickAction.cancelled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnLeftClickAction;
+                MiddleClickAction.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnMiddleClickAction;
+                MiddleClickAction.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnMiddleClickAction;
+                MiddleClickAction.cancelled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnMiddleClickAction;
+                RightClickAction.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnRightClickAction;
+                RightClickAction.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnRightClickAction;
+                RightClickAction.cancelled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnRightClickAction;
+                ScrollWheelAction.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnScrollWheelAction;
+                ScrollWheelAction.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnScrollWheelAction;
+                ScrollWheelAction.cancelled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnScrollWheelAction;
+            }
+            m_Wrapper.m_MenuNavigationActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                PointAction.started += instance.OnPointAction;
+                PointAction.performed += instance.OnPointAction;
+                PointAction.cancelled += instance.OnPointAction;
+                MoveAction.started += instance.OnMoveAction;
+                MoveAction.performed += instance.OnMoveAction;
+                MoveAction.cancelled += instance.OnMoveAction;
+                SubmitAction.started += instance.OnSubmitAction;
+                SubmitAction.performed += instance.OnSubmitAction;
+                SubmitAction.cancelled += instance.OnSubmitAction;
+                CancelAction.started += instance.OnCancelAction;
+                CancelAction.performed += instance.OnCancelAction;
+                CancelAction.cancelled += instance.OnCancelAction;
+                LeftClickAction.started += instance.OnLeftClickAction;
+                LeftClickAction.performed += instance.OnLeftClickAction;
+                LeftClickAction.cancelled += instance.OnLeftClickAction;
+                MiddleClickAction.started += instance.OnMiddleClickAction;
+                MiddleClickAction.performed += instance.OnMiddleClickAction;
+                MiddleClickAction.cancelled += instance.OnMiddleClickAction;
+                RightClickAction.started += instance.OnRightClickAction;
+                RightClickAction.performed += instance.OnRightClickAction;
+                RightClickAction.cancelled += instance.OnRightClickAction;
+                ScrollWheelAction.started += instance.OnScrollWheelAction;
+                ScrollWheelAction.performed += instance.OnScrollWheelAction;
+                ScrollWheelAction.cancelled += instance.OnScrollWheelAction;
+            }
+        }
+    }
+    public MenuNavigationActions @MenuNavigation
+    {
+        get
+        {
+            if (!m_Initialized) Initialize();
+            return new MenuNavigationActions(this);
+        }
+    }
     private int m_KeyboardAndMouseSchemeIndex = -1;
     public InputControlScheme KeyboardAndMouseScheme
     {
@@ -153,4 +274,15 @@ public interface IGameplayActions
     void OnWeapon2(InputAction.CallbackContext context);
     void OnJump(InputAction.CallbackContext context);
     void OnDodge(InputAction.CallbackContext context);
+}
+public interface IMenuNavigationActions
+{
+    void OnPointAction(InputAction.CallbackContext context);
+    void OnMoveAction(InputAction.CallbackContext context);
+    void OnSubmitAction(InputAction.CallbackContext context);
+    void OnCancelAction(InputAction.CallbackContext context);
+    void OnLeftClickAction(InputAction.CallbackContext context);
+    void OnMiddleClickAction(InputAction.CallbackContext context);
+    void OnRightClickAction(InputAction.CallbackContext context);
+    void OnScrollWheelAction(InputAction.CallbackContext context);
 }

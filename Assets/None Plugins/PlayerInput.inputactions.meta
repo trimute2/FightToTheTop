@@ -8,6 +8,14 @@ ScriptedImporter:
     11400006: gameplay/Weapon2
     11400008: gameplay/Jump
     11400010: gameplay/Dodge
+    11400012: Menu Navigation/Submit Action
+    11400014: Menu Navigation/Middle Click Action
+    11400016: Menu Navigation/Left Click Action
+    11400018: Menu Navigation/Move Action
+    11400020: Menu Navigation/Cancel Action
+    11400022: Menu Navigation/Point Action
+    11400024: Menu Navigation/Right Click Action
+    11400028: Menu Navigation/Scroll Wheel Action
   externalObjects: {}
   userData: 
   assetBundleName: 
