@@ -223,6 +223,12 @@ public class MoveHandler : MonoBehaviour {
 					}
 				}
 				return false;
+			case ConditionType.AirJumpCondition:
+				if(playerInput != null)
+				{
+					return playerInput.DoubleJump;
+				}
+				return false;
 			case ConditionType.AttackFlagCondition:
 				return ((flagHandler.CommonFlags & CommonFlags.CanAttack) != CommonFlags.None) == condition.boolSetting;
 			case ConditionType.CanDodge:
@@ -272,6 +278,12 @@ public class MoveHandler : MonoBehaviour {
 						ind = PlayerInputHandler.WEAPON2INDEX;
 					}
 					playerInput[ind].Execute();
+				}
+				break;
+			case ConditionType.AirJumpCondition:
+				if(playerInput != null)
+				{
+					playerInput.DoubleJump = false;
 				}
 				break;
 			case ConditionType.CanDodge:

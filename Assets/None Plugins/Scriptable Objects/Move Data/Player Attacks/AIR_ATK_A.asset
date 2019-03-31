@@ -157,6 +157,7 @@ MonoBehaviour:
   EffectsOnExit: []
   ExitConditions:
   - {fileID: 11400000, guid: 79d6d085e16760a459f80198f885f5df, type: 2}
+  ExitMove: {fileID: 11400000, guid: acca2fbaf0791ce4b91c849b9c48914d, type: 2}
   HitVisualEffect: {fileID: 0}
   combinedFlagCurves:
   - serializedVersion: 2

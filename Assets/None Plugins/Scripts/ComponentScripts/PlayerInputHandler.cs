@@ -38,6 +38,17 @@ public class PlayerInputHandler : MonoBehaviour {
 	public const int WEAPON2INDEX = 1;
 
 	private bool doubleJump;
+	public bool DoubleJump
+	{
+		get
+		{
+			return doubleJump;
+		}
+		set
+		{
+			doubleJump = value;
+		}
+	}
 
 	private Vector2 directionalInput;
 
@@ -72,7 +83,13 @@ public class PlayerInputHandler : MonoBehaviour {
 		healthComp = GetComponent<HealthComponent>();
 		CurrentMoves = new List<MoveLink>();
 		GenerateMoveList();
+		entityController.LandingEvent += OnLandingEvent;
 		GameManager.Instance.PlayerHealth = healthComp;
+	}
+
+	private void OnLandingEvent()
+	{
+		doubleJump = true;
 	}
 
 	private void SetUpBuffer(InputBuffer buffer, InputAction inputAction)

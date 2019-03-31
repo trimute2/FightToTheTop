@@ -16,6 +16,7 @@ public enum ConditionType
 	RangeCondition,
 	AttackTimeCondition,
 	MoveTimeCondition,
+	AirJumpCondition,
 }
 
 [System.Serializable]

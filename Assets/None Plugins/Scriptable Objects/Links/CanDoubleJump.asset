@@ -9,7 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ac6fabe097b3944da30529aadd6253a, type: 3}
-  m_Name: WeakenGravity0.3
+  m_Script: {fileID: 11500000, guid: dff483b18578dbe408c1bbabe100bb69, type: 3}
+  m_Name: CanDoubleJump
   m_EditorClassIdentifier: 
-  modifier: 0.3
+  conditionType: 12
+  button: 
+  weapon: 
+  boolSetting: 0
+  holdNumber: 0
+  buttonIndex: 0
+  TimeCondition: 0

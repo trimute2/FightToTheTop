@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class EntityControllerComp : MonoBehaviour {
+	public delegate void landingListner();
+	public event landingListner LandingEvent;
 	private int facing = 1;
 	public int Facing
 	{
@@ -119,6 +121,7 @@ public class EntityControllerComp : MonoBehaviour {
 
 	private void FixedUpdate()
 	{
+		bool landing = !grounded;
 		//so far there are no situation where i would want to keep an xvelocity but that may change later
 		if (gravityOn)
 		{
@@ -134,6 +137,10 @@ public class EntityControllerComp : MonoBehaviour {
 		grounded = false;
 		Movement(deltaPosition * Vector2.right);
 		Movement(deltaPosition * Vector2.up);
+		if(landing && grounded && LandingEvent != null)
+		{
+			LandingEvent();
+		}
 	}
 
 	void Movement(Vector2 move)
