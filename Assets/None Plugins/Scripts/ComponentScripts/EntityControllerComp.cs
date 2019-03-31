@@ -173,9 +173,24 @@ public class EntityControllerComp : MonoBehaviour {
 		for (int i = 0; i < hitBufferList.Count; i++)
 		{
 			Vector2 currentNormal = hitBufferList[i].normal;
-			if (currentNormal.y > 0.65f)
+			if (currentNormal.y > 0.75f)
 			{
-				grounded = true;
+				EntityControllerComp ec = hitBufferList[i].transform.gameObject.GetComponent<EntityControllerComp>();
+				if (ec != null)
+				{
+					float displacement = hitBufferList[i].transform.position.x - transform.position.x;
+					if(displacement == 0)
+					{
+						displacement = 1;
+					}
+					Vector2 ep = ec.rb2d.position;
+					ep.x += displacement;
+					ec.rb2d.position = ep;
+					Debug.Log("Is it working");
+				}
+				else if(currentNormal.y > 0.65f) {
+					grounded = true;
+				}
 			}
 			float projection = Vector2.Dot(velocity, currentNormal);
 			if (projection < 0)
