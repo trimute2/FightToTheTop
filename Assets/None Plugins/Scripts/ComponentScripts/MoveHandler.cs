@@ -579,6 +579,11 @@ public class MoveHandler : MonoBehaviour {
 		HitBoxes[HitboxIndex].DisableHitBox();
 	}
 
+	public void ResetHitBox(int HitBoxIndex)
+	{
+		HitBoxes[HitBoxIndex].ResetHitBox();
+	}
+
 	public void FireRay(int RayCastIndex)
 	{
 		if (currentMove != null)

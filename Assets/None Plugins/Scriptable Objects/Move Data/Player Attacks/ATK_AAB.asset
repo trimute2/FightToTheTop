@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dff1f7831641c584b8c543bbab9ada6b, type: 3}
-  m_Name: ATK_AA
+  m_Name: ATK_AAB
   m_EditorClassIdentifier: 
   controller: {fileID: 9100000, guid: eb4e8d6f248662e4f8ffcdab3ed5c2ed, type: 2}
   valid: 1
@@ -27,8 +27,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5833334
-      value: 0
+      time: 0.5
+      value: 1
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6666667
+      value: 1
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
@@ -50,7 +59,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.4166667
+      time: 0.5
       value: 1
       inSlope: Infinity
       outSlope: Infinity
@@ -59,7 +68,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5833334
+      time: 0.6666667
       value: 1
       inSlope: Infinity
       outSlope: Infinity
@@ -76,7 +85,34 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   - serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.083333336
+      value: 0
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6666667
+      value: 0
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -85,27 +121,18 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.33333334
-      value: 1
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.5833334
-      value: 1
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
+      time: 0.6666667
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0
@@ -124,43 +151,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   valueFlagCurves:
   - serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.116666675
-      value: 1
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.28333336
-      value: 0
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.5833334
-      value: 0
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -169,50 +160,28 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  animationStateName: ATK_AA
-  length: 0.5833333
+  - serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  animationStateName: ATK_AAB
+  length: 0.6666667
   frameRate: 0.016666668
   playBackSpeed: 1
-  damage: 53
-  hitStun: 0
-  hitStunFrame: 0.25
+  damage: 0
+  hitStun: 2
+  hitStunFrame: 0.5
   knockBack: {x: 0, y: 0}
   holdTime: 0
-  endTime: 0.5833333
+  endTime: 0.6666667
   data:
-    commonFlags: 19
-    valueFlags: 1
+    commonFlags: 27
+    valueFlags: 0
   commonFlagsEffected: 0
   valueCurves:
   - serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 5
-      inSlope: -2.0787182
-      outSlope: -2.0787182
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.28333336
-      value: 4.41103
-      inSlope: -4.0000005
-      outSlope: -4.0000005
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: -4.759577
-      outSlope: -4.759577
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -221,23 +190,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  links:
-  - conditions:
-    - {fileID: 11400000, guid: e2660fc441da8af4fb0a45f7513a05f8, type: 2}
-    - {fileID: 11400000, guid: e9713185cc46f974b8efce7e64b4bc5d, type: 2}
-    - {fileID: 11400000, guid: 79d6d085e16760a459f80198f885f5df, type: 2}
-    move: {fileID: 11400000, guid: 66c6d7bb009f3de4ba189c8c2f94132d, type: 2}
-    priority: 3
-    minTime: 0.25000006
-    maxTime: 0.5833334
-  - conditions:
-    - {fileID: 11400000, guid: e2660fc441da8af4fb0a45f7513a05f8, type: 2}
-    - {fileID: 11400000, guid: 59b2976c055cf5940a28ac18fabff500, type: 2}
-    - {fileID: 11400000, guid: 79d6d085e16760a459f80198f885f5df, type: 2}
-    move: {fileID: 11400000, guid: eda96c0bf35fb7949afc7b639b493f96, type: 2}
-    priority: 3
-    minTime: 0.25000006
-    maxTime: 0.5833334
+  - serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  links: []
   HitTargetEffects: []
   HitUserEffects: []
   EffectsOnEnter: []
@@ -250,7 +208,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 8
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
@@ -258,8 +216,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.33333334
-      value: 16
+      time: 0.083333336
+      value: 8
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
@@ -267,8 +225,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.4166667
-      value: 18
+      time: 0.5
+      value: 11
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
@@ -276,8 +234,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.5833334
-      value: 18
+      time: 0.6666667
+      value: 3
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
@@ -288,43 +246,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   - serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.116666675
-      value: 1
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.28333336
-      value: 0
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.5833334
-      value: 0
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

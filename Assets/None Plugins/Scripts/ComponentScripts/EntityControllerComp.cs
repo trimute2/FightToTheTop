@@ -67,6 +67,7 @@ public class EntityControllerComp : MonoBehaviour {
 
 	private Vector2 velocity;
 	private Vector2 targetVelocity;
+	private Vector2 corrections;
 
 	public Vector2 Velocity
 	{
@@ -117,7 +118,16 @@ public class EntityControllerComp : MonoBehaviour {
 		contactFilter.useLayerMask = true;
 		allowEntityCollision = true;
 		gravityModifier = 1;
+		corrections = Vector2.zero;
 	}
+
+	/*private void Update()
+	{
+		if (!allowXVelocity)
+		{
+			velocity.x = 0;
+		}
+	}*/
 
 	private void FixedUpdate()
 	{
@@ -131,9 +141,12 @@ public class EntityControllerComp : MonoBehaviour {
 		{
 			velocity.x = 0;
 		}
-		Vector2 deltaPosition = velocity;
+		//Vector2 deltaPosition = velocity;
+
+		Vector2 deltaPosition = velocity + corrections;
 		deltaPosition += targetVelocity;
 		deltaPosition *= Time.deltaTime;
+		//corrections = Vector2.zero;
 		grounded = false;
 		Movement(deltaPosition * Vector2.right);
 		Movement(deltaPosition * Vector2.up);
@@ -173,22 +186,10 @@ public class EntityControllerComp : MonoBehaviour {
 		for (int i = 0; i < hitBufferList.Count; i++)
 		{
 			Vector2 currentNormal = hitBufferList[i].normal;
-			if (currentNormal.y > 0.75f)
-			{
-				EntityControllerComp ec = hitBufferList[i].transform.gameObject.GetComponent<EntityControllerComp>();
-				if (ec != null)
+			if (currentNormal.y > 0.65f)
+			{ EntityControllerComp ec = hitBufferList[i].transform.gameObject.GetComponent<EntityControllerComp>();
+				if (ec == null)
 				{
-					float displacement = hitBufferList[i].transform.position.x - transform.position.x;
-					if(displacement == 0)
-					{
-						displacement = 1;
-					}
-					Vector2 ep = ec.rb2d.position;
-					ep.x += displacement;
-					ec.rb2d.position = ep;
-					Debug.Log("Is it working");
-				}
-				else if(currentNormal.y > 0.65f) {
 					grounded = true;
 				}
 			}
@@ -196,6 +197,8 @@ public class EntityControllerComp : MonoBehaviour {
 			if (projection < 0)
 			{
 				velocity -= projection * currentNormal;
+				//corrections.x = velocity.x;
+				corrections.x = -(projection * currentNormal.x);
 			}
 
 			float modifiedDistance = hitBufferList[i].distance - 0.01f;
