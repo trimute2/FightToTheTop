@@ -88,7 +88,7 @@ public class PlayerInputHandler : MonoBehaviour {
 		HookInputActions();
 	}
 
-	private void HookInputActions()
+	public void HookInputActions()
 	{
 		if (actionsHooked)
 		{
@@ -104,7 +104,7 @@ public class PlayerInputHandler : MonoBehaviour {
 		p.gameplay.Movement.Enable();
 	}
 
-	private void UnHookInputActions()
+	public void UnHookInputActions()
 	{
 		if (!actionsHooked)
 		{

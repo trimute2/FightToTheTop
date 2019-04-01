@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
 	public Slider healthSlider;
 	public HealthComponent player;
+	public PlayerInputHandler pi;
 	public RectTransform GameUIPanel;
 	public RectTransform PausePanel;
 	public RectTransform DeathPanel;
-	public GameObject EventSystem;
+	public Button PauseButton;
+	public Button DeathButton;
+	public EventSystem eventSystem;
 	bool canPause;
 	public PlayerInput p;
 	// Start is called before the first frame update
@@ -51,7 +55,11 @@ public class UIManager : MonoBehaviour
 			Time.timeScale = 0;
 			GameUIPanel.gameObject.SetActive(false);
 			PausePanel.gameObject.SetActive(true);
-			EventSystem.SetActive(true);
+			eventSystem.gameObject.SetActive(true);
+			eventSystem.UpdateModules();
+			//PauseButton.Select();
+			pi.UnHookInputActions();
+			Debug.Log(eventSystem.isFocused);
 		}
 	}
 
@@ -60,7 +68,8 @@ public class UIManager : MonoBehaviour
 		Time.timeScale = 1;
 		GameUIPanel.gameObject.SetActive(true);
 		PausePanel.gameObject.SetActive(false);
-		EventSystem.SetActive(false);
+		eventSystem.gameObject.SetActive(false);
+		pi.HookInputActions();
 	}
 
 	public void OnPlayerDeath()
@@ -68,6 +77,14 @@ public class UIManager : MonoBehaviour
 		GameUIPanel.gameObject.SetActive(false);
 		DeathPanel.gameObject.SetActive(true);
 		canPause = false;
-		EventSystem.SetActive(true);
+		eventSystem.gameObject.SetActive(true);
+		eventSystem.UpdateModules();
+		DeathButton.Select();
+	}
+
+	private void OnDestroy()
+	{
+		p.gameplay.Pause.performed -= Pause_performed;
+		p.Disable();
 	}
 }

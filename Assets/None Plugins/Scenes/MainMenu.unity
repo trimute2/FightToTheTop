@@ -787,6 +787,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 60835152}
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &582931258
@@ -1026,15 +1037,15 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Basic Controls:
 
-    Jump: space
+    Jump: (Key board & mouse) space, (Gamepad) bottom face button
 
-    Punch: Left mouse button or Z
+    Punch: (Key board & mouse) Left mouse button or Z, (Gamepad) top face button
 
-    Sword: Right mouse button or X
+    Sword: (Key board & mouse) Right mouse button or X, (Gamepad) right face button
 
-    Dodge: Left Shift
+    Dodge: (Key board & mouse) Left Shift, (Gamepad) left Trigger
 
-    Pause: esc
+    Pause: (Key board & mouse) esc, (Gamepad) start
 
 '
 --- !u!222 &814304739
@@ -1588,7 +1599,8 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Key:\nP = Punch;\tS = Sword; - = Pause;\nBasic Combos:\nKapow: PPP\nUppercut:
-    P-P\nFencing lunge: SSS\nCheap Attack: SP\nAir Swipe: (in air) SS"
+    P-P\nFencing lunge: SSS\nCheap Attack: SP\nSwitch Up: PPS\nAir Swipe: (in air)
+    SS\nDive Bomb: (in air) P"
 --- !u!222 &1287158620
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2264,6 +2276,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 60835152}
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1770692563
@@ -2886,7 +2909,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Test Build: 02.15'
+  m_Text: 'Test Build: 02.30'
 --- !u!222 &1925485533
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2988,6 +3011,17 @@ MonoBehaviour:
       - m_Target: {fileID: 1890377076}
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 582931257}
+        m_MethodName: Select
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3136,7 +3170,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 229490513}
+      - m_Target: {fileID: 1770692562}
         m_MethodName: Select
         m_Mode: 1
         m_Arguments:

@@ -40,6 +40,7 @@ public class DefaultMenuSelectedMenu : MonoBehaviour
 
 	void OnAction(InputAction.CallbackContext context)
 	{
+		Debug.Log("On ACtion called");
 		var action = context.action;
 		if (action == m_MoveAction && eventSystem.currentSelectedGameObject == null)
 		{

@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1045011829}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &208003213
@@ -1015,7 +1015,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!224 &316727240
 RectTransform:
@@ -1055,10 +1055,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 1878848733}
   player: {fileID: 1656683008}
+  pi: {fileID: 511548147}
   GameUIPanel: {fileID: 1091035400}
   PausePanel: {fileID: 1922840374}
   DeathPanel: {fileID: 1245478373}
-  EventSystem: {fileID: 208003210}
+  PauseButton: {fileID: 1045011831}
+  DeathButton: {fileID: 1835086396}
+  eventSystem: {fileID: 208003212}
   p:
     m_Asset: {fileID: 11400000, guid: 8e032d86d549b0345bd58f629cb0936c, type: 3}
 --- !u!114 &316727242
@@ -1164,6 +1167,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411694698}
   m_CullTransparentMesh: 0
+--- !u!114 &511548147 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114804358207522352, guid: 7b915a9acf1cb1147befba56e79754d5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1302737439}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 016fe132f8009db45bd1792e1c97107e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,7 +1452,7 @@ GameObject:
   - component: {fileID: 655264781}
   - component: {fileID: 655264780}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Menu Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1735,7 +1750,7 @@ GameObject:
   - component: {fileID: 1045011832}
   - component: {fileID: 1045011831}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Resume Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2495,6 +2510,119 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4369686175287442, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.030518405
+      objectReference: {fileID: 0}
+    - target: {fileID: 4369686175287442, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99953425
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962984743818218, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962984743818218, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.000015811123
+      objectReference: {fileID: 0}
+    - target: {fileID: 4995203723085916, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.99999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 4995203723085916, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.00039558014
+      objectReference: {fileID: 0}
+    - target: {fileID: 137283685033920086, guid: 7b915a9acf1cb1147befba56e79754d5,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486427362787174, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.03336725
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486427362787174, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99944323
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486427362787174, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -3.8240001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301084010273362, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.67828697
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301084010273362, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7347971
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144859886328352, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7341754
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144859886328352, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.67895997
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792365198263438, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792365198263438, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768642902803118, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.00079110614
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768642902803118, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9999997
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850603956194382, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850603956194382, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360265698013904, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0019743177
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360265698013904, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9999981
+      objectReference: {fileID: 0}
+    - target: {fileID: 4874093834303258, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.70738643
+      objectReference: {fileID: 0}
+    - target: {fileID: 4874093834303258, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7068271
+      objectReference: {fileID: 0}
+    - target: {fileID: 4874093834303258, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90.045006
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330488328065244, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7070957
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330488328065244, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.707118
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330488328065244, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 89.998
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b915a9acf1cb1147befba56e79754d5, type: 3}
 --- !u!1 &1375713307
@@ -2638,10 +2766,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -2763,7 +2891,7 @@ GameObject:
   - component: {fileID: 1835086397}
   - component: {fileID: 1835086396}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Death Menu Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3186,7 +3314,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Test Build: 02.15'
+  m_Text: 'Test Build: 02.30'
 --- !u!222 &2033869281
 CanvasRenderer:
   m_ObjectHideFlags: 0
