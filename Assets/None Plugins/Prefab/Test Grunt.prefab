@@ -845,6 +845,7 @@ GameObject:
   - component: {fileID: 114969409219229006}
   - component: {fileID: 114444505356257044}
   - component: {fileID: 4171210825735483754}
+  - component: {fileID: 494396323379462794}
   m_Layer: 14
   m_Name: Test Grunt
   m_TagString: Entity
@@ -1075,6 +1076,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60d6a4c61e711a542b3ee82def2ff5da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &494396323379462794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263044702732114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac471dcc18a55184391afbcff0f0d2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1265411841546654
@@ -2382,7 +2395,7 @@ GameObject:
   - component: {fileID: 4097759897573170}
   - component: {fileID: 114867986296786686}
   - component: {fileID: 70530373642717544}
-  m_Layer: 15
+  m_Layer: 16
   m_Name: Avoider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

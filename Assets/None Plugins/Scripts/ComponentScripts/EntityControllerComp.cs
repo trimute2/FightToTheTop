@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 [RequireComponent(typeof(Rigidbody2D))]
 public class EntityControllerComp : MonoBehaviour {
 	public delegate void landingListner();
@@ -142,6 +143,7 @@ public class EntityControllerComp : MonoBehaviour {
 			velocity.x = 0;
 		}
 		//Vector2 deltaPosition = velocity;
+		corrections.x = Mathf.Clamp(Mathf.Abs(corrections.x), 2.5f, 3) * Math.Sign(corrections.x);
 
 		Vector2 deltaPosition = velocity + corrections;
 		deltaPosition += targetVelocity;

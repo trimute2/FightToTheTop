@@ -22,7 +22,7 @@ TagManager:
   - EntityCollision
   - EnemyCollision
   - FightTrigger
-  - 
+  - Avoiders
   - 
   - 
   - 

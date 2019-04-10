@@ -3,14 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-[RequireComponent(typeof(SkinnedMeshRenderer))]
+[RequireComponent(typeof(Renderer))]
 public class RenderOrderComp : MonoBehaviour
 {
 	public int orderInLayer;
-	private SkinnedMeshRenderer smr;
+
+	private Renderer smr;
+	public Renderer CachedRenderer
+	{
+		get
+		{
+			if (!smr)
+			{
+				smr = GetComponent<Renderer>();
+			}
+			return smr;
+		}
+	}
 
 	private Anima2D.SpriteMeshInstance smi;
-	private bool hasSMI;
+	public Anima2D.SpriteMeshInstance CachedSpriteMeshInstance
+	{
+		get
+		{
+			if (!smi)
+			{
+				smi = GetComponent<Anima2D.SpriteMeshInstance>();
+			}
+			return smi;
+		}
+	}
+	public bool HasSpriteMesh
+	{
+		get
+		{
+			return (CachedSpriteMeshInstance != null);
+		}
+	}
 	private int characterDrawOrder = 0;
 	public int CharacterDrawOrder
 	{
@@ -24,30 +53,27 @@ public class RenderOrderComp : MonoBehaviour
 		}
 	}
 
-    // Start is called before the first frame update
-    void Start()
-    {
-		smr = GetComponent<SkinnedMeshRenderer>();
-		smi = GetComponent<Anima2D.SpriteMeshInstance>();
-		hasSMI = (smi != null);
-    }
+    
 
     // Update is called once per frame
     void OnWillRenderObject()
     {
-		smr.sortingOrder = orderInLayer;
-		if (hasSMI)
+		if (CachedRenderer != null)
 		{
-			smi.sortingOrder = orderInLayer;
+			CachedRenderer.sortingOrder = orderInLayer;
+		}
+		if (HasSpriteMesh)
+		{
+			CachedSpriteMeshInstance.sortingOrder = orderInLayer;
 		}
     }
 
 	private void Update()
 	{
-		smr.sortingOrder = orderInLayer;
-		if (hasSMI)
+		CachedRenderer.sortingOrder = orderInLayer;
+		if (HasSpriteMesh)
 		{
-			smi.sortingOrder = orderInLayer;
+			CachedSpriteMeshInstance.sortingOrder = orderInLayer;
 		}
 	}
 }

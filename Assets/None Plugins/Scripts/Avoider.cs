@@ -28,7 +28,7 @@ public class Avoider : MonoBehaviour {
 			thingsToAvoid = value;
 		}
 	}
-	private List<Transform> avoidList;
+	private List<Avoider> avoidList;
 	[HideInInspector]
 	public Transform avoidTransform;
 	private Vector3 avoidVector;
@@ -39,6 +39,8 @@ public class Avoider : MonoBehaviour {
 			return avoidVector;
 		}
 	}
+
+	public bool Ignore { get; set; }
 	//bassed off of https://github.com/tutsplus/battle-circle-ai/blob/master/src/Assets/Scripts/AI/Avoider.cs
 
 	private void OnTriggerEnter2D(Collider2D other)
@@ -46,8 +48,7 @@ public class Avoider : MonoBehaviour {
 		Avoider av = other.GetComponent<Avoider>();
 		if(av != null && thingsToAvoid.Contains(av.AvoiderType))
 		{
-			//avoidTransform = other.transform;
-			avoidList.Add(other.transform);
+			avoidList.Add(av);
 			//UpdateAvoiderTarget();
 		}
 	}
@@ -57,8 +58,7 @@ public class Avoider : MonoBehaviour {
 		Avoider av = other.GetComponent<Avoider>();
 		if (av != null && thingsToAvoid.Contains(av.AvoiderType))
 		{
-			//avoidTransform = null;
-			avoidList.Remove(other.transform);
+			avoidList.Remove(av);
 			if(other.transform == avoidTransform)
 			{
 				avoidTransform = null;
@@ -73,7 +73,7 @@ public class Avoider : MonoBehaviour {
 		{
 			if(avoidList.Count != 0)
 			{
-				avoidTransform = avoidList[0];
+				avoidTransform = avoidList[0].transform;
 			}
 		}
 	}
@@ -84,20 +84,46 @@ public class Avoider : MonoBehaviour {
 		Vector3 currentPos = transform.parent.position;
 		if(avoidList.Count != 0)
 		{
-			foreach(Transform t in avoidList)
+			int count = 0;
+			foreach(Avoider a in avoidList)
 			{
-				Vector3 diff = currentPos - t.position;
-				diff.Normalize();
-				avoidVector += diff;
+				if (!a.Ignore)
+				{
+					Vector3 diff = currentPos - a.transform.position;
+					diff.Normalize();
+					avoidVector += diff;
+					count++;
+				}
 			}
-			avoidVector /= avoidList.Count;
+			if (count != 0)
+			{
+				avoidVector /= count;
+			}
 		}
 	}
 
 	private void Awake()
 	{
 		thingsToAvoid = new List<string>();
-		avoidList = new List<Transform>();
+		avoidList = new List<Avoider>();
 		avoidVector = Vector3.zero;
 	}
+
+	public void OnEnterGenericState()
+	{
+		Ignore = false;
+	}
+
+#if UNITY_EDITOR
+	public static void AvoiderValidationCheck(GameObject obj)
+	{
+		Avoider av = obj.GetComponentInChildren<Avoider>();
+		if(av == null)
+		{
+			System.Type[] Components = { typeof(CapsuleCollider2D), typeof(Avoider) };
+			GameObject gameObject = new GameObject("Avoider", Components);
+			gameObject.transform.SetParent(obj.transform, false);
+		}
+	}
+#endif
 }

@@ -6,7 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Targeter))]
 [RequireComponent(typeof(EntityControllerComp))]
 public class GruntComp : MonoBehaviour {
-	public float movementSpeed = 4.5f;
+	public float walkSpeed = 4.5f;
+	public float runSpeed = 9.0f;
 	private MoveHandler moveHandler;
 	private Targeter targeter;
 	private EntityControllerComp entityController;
@@ -23,6 +24,7 @@ public class GruntComp : MonoBehaviour {
 		avoider = GetComponentInChildren<Avoider>();
 		avoider.AvoiderType = "Grunt";
 		avoider.ThingsToAvoid.Add("Grunt");
+		moveHandler.GenericStateEvent += avoider.OnEnterGenericState;
 #if UNITY_EDITOR
 		if (avoider == null)
 		{
@@ -37,6 +39,7 @@ public class GruntComp : MonoBehaviour {
 		if (target != null)
 		{
 			bool moveToRange = true;
+			bool tryToAttack = true;
 			Vector2 targetVelocity = Vector2.zero;
 			switch (targeter.CurrentRange)
 			{
@@ -97,22 +100,36 @@ public class GruntComp : MonoBehaviour {
 				if (moveToRange)
 				{
 					targetVelocity = targeter.TargetDirection();
-					targetVelocity.x *= entityController.Facing * movementSpeed;
-				}else if(avoider.AvoidVector != Vector3.zero)
-				{
-					targetVelocity.x = avoider.AvoidVector.x;
-				}
-				else
-				{
-					if (moveHandler.CheckMove(Shoot))
+					float speed = walkSpeed;
+					if(targeter.CurrentRange == Target.OUT_RANGE)
 					{
-						moveHandler.ExecuteConditions(Shoot);
-						moveHandler.StartMove(Shoot.move);
+						speed = runSpeed;
+					}
+					targetVelocity.x *= entityController.Facing * speed;
+					tryToAttack = false;
+				}
+				if (avoider.AvoidVector != Vector3.zero)
+				{
+					if (!(Mathf.Sign(targetVelocity.x) == Mathf.Sign(avoider.AvoidVector.x) &&
+						Mathf.Abs(targetVelocity.x) > Mathf.Abs(avoider.AvoidVector.x)))
+					{
+						targetVelocity.x = avoider.AvoidVector.x;
+						tryToAttack = false;
 					}
 				}
+			}
+			if (tryToAttack && moveHandler.CheckMove(Shoot))
+			{
+				moveHandler.ExecuteConditions(Shoot);
+				moveHandler.StartMove(Shoot.move);
 			}
 
 			entityController.TargetVelocity = targetVelocity;
 		}
+	}
+
+	private void OnValidate()
+	{
+		Avoider.AvoiderValidationCheck(gameObject);
 	}
 }
