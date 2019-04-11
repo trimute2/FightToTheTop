@@ -5,18 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(MoveHandler))]
 [RequireComponent(typeof(Targeter))]
 [RequireComponent(typeof(EntityControllerComp))]
-public class GruntComp : MonoBehaviour {
-	public float walkSpeed = 4.5f;
+public class GruntComp : Enemy {
+	/*public float walkSpeed = 4.5f;
 	public float runSpeed = 9.0f;
 	private MoveHandler moveHandler;
 	private Targeter targeter;
 	private EntityControllerComp entityController;
 	private FlagHandler flagHandler;
-	private Avoider avoider;
+	private Avoider avoider;*/
 	public MoveLink Punch;
 	public MoveLink Shoot;
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
+		base.Start();
 		moveHandler = GetComponent<MoveHandler>();
 		targeter = GetComponent<Targeter>();
 		entityController = GetComponent<EntityControllerComp>();
@@ -25,6 +26,8 @@ public class GruntComp : MonoBehaviour {
 		avoider.AvoiderType = "Grunt";
 		avoider.ThingsToAvoid.Add("Grunt");
 		moveHandler.GenericStateEvent += avoider.OnEnterGenericState;
+		linksToAttempt.Add(Punch);
+		linksToAttempt.Add(Shoot);
 #if UNITY_EDITOR
 		if (avoider == null)
 		{
@@ -32,9 +35,9 @@ public class GruntComp : MonoBehaviour {
 		}
 #endif
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
+	/*void Update () {
 		Target target = targeter.target;
 		if (target != null)
 		{
@@ -125,6 +128,60 @@ public class GruntComp : MonoBehaviour {
 			}
 
 			entityController.TargetVelocity = targetVelocity;
+		}
+	}*/
+
+	protected override void LongRangeDecision()
+	{
+		Target target = targeter.target;
+		if (target.RequestTargeterCount(Target.CLOSE_RANGE) < 1)
+		{
+			targeter.TargetRange = Target.CLOSE_RANGE;
+		}
+		else if (target.RequestTargeterCount(Target.MID_RANGE, targeter.Direction) < 2)
+		{
+			targeter.TargetRange = Target.MID_RANGE;
+		}
+		else
+		{
+			targeter.TargetRange = Target.LONG_RANGE;
+			moveToRange = false;
+			//shouldAvoid = true;
+
+			//any long range attack decisions go here
+		}
+	}
+
+	protected override void MidRangeDecision()
+	{
+		Target target = targeter.target;
+		if (target.RequestTargeterCount(Target.CLOSE_RANGE) < 1)
+		{
+			targeter.TargetRange = Target.CLOSE_RANGE;
+		}
+		else if (target.RequestTargeterCount(Target.MID_RANGE, targeter.Direction) > 2)
+		{
+			targeter.TargetRange = Target.LONG_RANGE;
+		}
+		else
+		{
+			targeter.TargetRange = Target.MID_RANGE;
+			moveToRange = false;
+			//shouldAvoid = true;
+		}
+	}
+
+	protected override void CloseRangeDecision()
+	{
+		Target target = targeter.target;
+		if (target.RequestTargeterRemaining(Target.CLOSE_RANGE) > 1)
+		{
+			targeter.TargetRange = Target.MID_RANGE;
+		}
+		else
+		{
+			targeter.TargetRange = Target.CLOSE_RANGE;
+			moveToRange = false;
 		}
 	}
 
