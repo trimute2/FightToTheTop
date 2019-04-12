@@ -2127,6 +2127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 4.5
   runSpeed: 9
+  thinkPeriod: 0.2
 --- !u!114 &6238818602200134105
 MonoBehaviour:
   m_ObjectHideFlags: 0

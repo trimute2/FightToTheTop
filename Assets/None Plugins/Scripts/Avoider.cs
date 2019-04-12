@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Avoider : MonoBehaviour {
+	public delegate void AvoiderChangeDelegate();
+	public event AvoiderChangeDelegate ChangedAvoiding;
 	private string avoiderType;
 	public string AvoiderType
 	{
@@ -31,6 +33,26 @@ public class Avoider : MonoBehaviour {
 	private List<Avoider> avoidList;
 	[HideInInspector]
 	public Transform avoidTransform;
+	private Avoider currentlyAvoiding;
+	private Avoider CurrentlyAvoiding
+	{
+		set
+		{
+			currentlyAvoiding = value;
+			if (currentlyAvoiding == null)
+			{
+				avoidTransform = null;
+			}
+			else
+			{
+				avoidTransform = currentlyAvoiding.transform.root;
+			}
+		}
+		get
+		{
+			return currentlyAvoiding;
+		}
+	}
 	private Vector3 avoidVector;
 	public Vector3 AvoidVector
 	{
@@ -39,6 +61,9 @@ public class Avoider : MonoBehaviour {
 			return avoidVector;
 		}
 	}
+
+	private Targeter targeter;
+	private bool hasTargeter;
 
 	public bool Ignore { get; set; }
 	//bassed off of https://github.com/tutsplus/battle-circle-ai/blob/master/src/Assets/Scripts/AI/Avoider.cs
@@ -49,7 +74,7 @@ public class Avoider : MonoBehaviour {
 		if(av != null && thingsToAvoid.Contains(av.AvoiderType))
 		{
 			avoidList.Add(av);
-			//UpdateAvoiderTarget();
+			UpdateAvoiderTarget();
 		}
 	}
 
@@ -59,35 +84,54 @@ public class Avoider : MonoBehaviour {
 		if (av != null && thingsToAvoid.Contains(av.AvoiderType))
 		{
 			avoidList.Remove(av);
-			if(other.transform == avoidTransform)
+			if(av == CurrentlyAvoiding)
 			{
-				avoidTransform = null;
-				//UpdateAvoiderTarget();
+				CurrentlyAvoiding = null;
+				UpdateAvoiderTarget();
 			}
 		}
 	}
 
 	private void UpdateAvoiderTarget()
 	{
-		if(avoidTransform == null)
+		if(CurrentlyAvoiding == null)
 		{
-			if(avoidList.Count != 0)
+			for(int i = 0; i< avoidList.Count; i++)
 			{
-				avoidTransform = avoidList[0].transform;
+				if (ShouldAvoid(avoidList[i]))
+				{
+					CurrentlyAvoiding = avoidList[i];
+					ChangedAvoiding();
+					break;
+				}
 			}
 		}
 	}
 
+	//change this so that it is not updated each frame
 	private void Update()
 	{
 		avoidVector = Vector3.zero;
-		Vector3 currentPos = transform.parent.position;
+		if (currentlyAvoiding != null && !ShouldAvoid(currentlyAvoiding))
+		{
+			CurrentlyAvoiding = null;
+		}
+		UpdateAvoiderTarget();
+		/*Vector3 currentPos = transform.parent.position;
 		if(avoidList.Count != 0)
 		{
 			int count = 0;
 			foreach(Avoider a in avoidList)
 			{
-				if (!a.Ignore)
+				//first check if i can just ignore 
+				if (!a.Ignore &&
+					//if either avoider doesnot have a targeter it can be added to the list without further checks
+					(!hasTargeter || !a.hasTargeter ||
+					//if both avoiders have the same target add them to the list
+					(targeter.TargetRange == a.targeter.TargetRange) ||
+					//if the other avoider isnt moving and the current ranges are not the same add it to the list
+					(!a.targeter.Moving && targeter.CurrentRange != a.targeter.CurrentRange)
+					))
 				{
 					Vector3 diff = currentPos - a.transform.position;
 					diff.Normalize();
@@ -99,7 +143,18 @@ public class Avoider : MonoBehaviour {
 			{
 				avoidVector /= count;
 			}
-		}
+		}*/
+	}
+
+	private bool ShouldAvoid(Avoider a)
+	{
+		return !a.Ignore &&
+			//if either avoider doesnot have a targeter it can be added to the list without further checks
+			(!hasTargeter || !a.hasTargeter ||
+			//if both avoiders have the same target add them to the list
+			(targeter.TargetRange == a.targeter.TargetRange) ||
+			//if the other avoider isnt moving and the current ranges are not the same add it to the list
+			(!a.targeter.Moving && targeter.CurrentRange != a.targeter.CurrentRange));
 	}
 
 	private void Awake()
@@ -107,6 +162,8 @@ public class Avoider : MonoBehaviour {
 		thingsToAvoid = new List<string>();
 		avoidList = new List<Avoider>();
 		avoidVector = Vector3.zero;
+		targeter = transform.root.GetComponent<Targeter>();
+		hasTargeter = targeter != null;
 	}
 
 	public void OnEnterGenericState()
@@ -126,4 +183,22 @@ public class Avoider : MonoBehaviour {
 		}
 	}
 #endif
+
+	private void OnDrawGizmosSelected()
+	{
+		Debug.DrawRay(transform.position, avoidVector);
+		/*if (avoidList != null)
+		{
+			foreach (Avoider a in avoidList)
+			{
+				Gizmos.color = Color.green;
+				Gizmos.DrawWireSphere(a.transform.position, 1);
+			}
+		}*/
+		if(CurrentlyAvoiding != null)
+		{
+			Gizmos.color = Color.green;
+			Gizmos.DrawWireSphere(CurrentlyAvoiding.transform.position, 1);
+		}
+	}
 }

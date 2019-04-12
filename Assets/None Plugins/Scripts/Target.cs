@@ -108,6 +108,23 @@ public class Target : MonoBehaviour {
 		return target.Count;
 	}
 
+	public int RequestPriorityTargeterRemaining(int Range, int priority)
+	{
+		List<Targeter> target = new List<Targeter>();
+		switch (Range)
+		{
+			case MID_RANGE:
+				target.AddRange(MidRangeTargeters);
+				break;
+			case CLOSE_RANGE:
+				target.AddRange(CloseRangeTargeters);
+				break;
+			default:
+				return 0;
+		}
+		target.RemoveAll(item => (item.TargetRange != Range || item.PlacementPriority < priority));
+		return target.Count;
+	}
 
 	public void AddToRange(int Range, Targeter targeter)
 	{

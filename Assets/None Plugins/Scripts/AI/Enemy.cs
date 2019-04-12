@@ -26,6 +26,8 @@ public abstract class Enemy : MonoBehaviour
 
 	protected Vector2 targetVelocity;
 
+	private Vector3 AvoidVector = Vector3.zero;
+
 	public int PlacementPriority
 	{
 		get
@@ -36,6 +38,10 @@ public abstract class Enemy : MonoBehaviour
 
 	public float walkSpeed = 4.5f;
 	public float runSpeed = 9.0f;
+
+	public float thinkPeriod = 0.4f;
+
+	private float lastThought = 0.0f;
 
 	protected virtual void Start()
 	{
@@ -56,6 +62,15 @@ public abstract class Enemy : MonoBehaviour
 			avoider.AvoiderType = avoiderType;
 			avoider.ThingsToAvoid.AddRange(thingsToAvoid);
 			moveHandler.GenericStateEvent += avoider.OnEnterGenericState;
+			avoider.ChangedAvoiding += ChangedAvoiderTarget;
+		}
+	}
+
+	private void ChangedAvoiderTarget()
+	{
+		if(avoider.avoidTransform != null)
+		{
+			UpdateAvoidVec();
 		}
 	}
 
@@ -63,7 +78,9 @@ public abstract class Enemy : MonoBehaviour
     {
         if(targeter.target != null)
 		{
+
 			targetVelocity = Vector2.zero;
+			
 			moveToRange = true;
 			tryToAttack = true;
 			//todo allow for optional wait times so that more complex if conditions dont happen every frame
@@ -79,7 +96,11 @@ public abstract class Enemy : MonoBehaviour
 					CloseRangeDecision(targeter.target);
 					break;
 			}
-
+			if ((Time.time - lastThought) > thinkPeriod)
+			{
+				lastThought = Time.time;
+				UpdateAvoidVec();
+			}
 			if (hasEntityController)
 			{
 				if ((flagHandler.CommonFlags & CommonFlags.MoveWithInput) != CommonFlags.None)
@@ -91,6 +112,16 @@ public abstract class Enemy : MonoBehaviour
 						targetVelocity.x *= entityController.Facing * speed;
 						tryToAttack = false;
 					}
+					if(hasAvoider && AvoidVector != Vector3.zero)
+					{
+						if (!(Mathf.Sign(targetVelocity.x) == Mathf.Sign(AvoidVector.x) &&
+							Mathf.Abs(targetVelocity.x) > Mathf.Abs(AvoidVector.x)))
+						{
+							targetVelocity.x = AvoidVector.x;
+							tryToAttack = false;
+						}
+					}
+					/*
 					if (hasAvoider && avoider.AvoidVector != Vector3.zero)
 					{
 						if (!(Mathf.Sign(targetVelocity.x) == Mathf.Sign(avoider.AvoidVector.x) &&
@@ -99,7 +130,7 @@ public abstract class Enemy : MonoBehaviour
 							targetVelocity.x = avoider.AvoidVector.x;
 							tryToAttack = false;
 						}
-					}
+					}*/
 				}
 				entityController.TargetVelocity = targetVelocity;
 			}
@@ -121,9 +152,32 @@ public abstract class Enemy : MonoBehaviour
 		return speed;
 	}
 
+	protected void UpdateAvoidVec()
+	{
+		if(avoider == null || avoider.avoidTransform == null)
+		{
+			AvoidVector = Vector3.zero;
+		}
+		else
+		{
+			AvoidVector = transform.position - avoider.avoidTransform.position;
+			AvoidVector = Vector3.ClampMagnitude(AvoidVector, runSpeed);
+			if(AvoidVector.sqrMagnitude < walkSpeed*walkSpeed)
+			{
+				
+				AvoidVector = AvoidVector.normalized * walkSpeed;
+			}
+		}
+	}
+
 	protected abstract void LongRangeDecision(Target target);
 
 	protected abstract void MidRangeDecision(Target target);
 
 	protected abstract void CloseRangeDecision(Target target);
+
+	public void Gizmo()
+	{
+		Debug.DrawRay(transform.position,AvoidVector);
+	}
 }

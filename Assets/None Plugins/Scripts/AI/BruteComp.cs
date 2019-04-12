@@ -54,7 +54,7 @@ public class BruteComp : Enemy
 
 	protected override void CloseRangeDecision(Target target)
 	{
-		if (target.RequestTargeterRemaining(Target.CLOSE_RANGE) > 1)
+		if (target.RequestPriorityTargeterRemaining(Target.CLOSE_RANGE, PlacementPriority) > 1)
 		{
 			targeter.TargetRange = Target.MID_RANGE;
 		}

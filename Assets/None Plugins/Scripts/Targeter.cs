@@ -57,6 +57,13 @@ public class Targeter : MonoBehaviour {
 			return (int)Mathf.Sign(xdistance);
 		}
 	}
+	public bool Moving
+	{
+		get
+		{
+			return targetRange != CurrentRange;
+		}
+	}
 
 	private EntityControllerComp entityController;
 	private FlagHandler flagHandler;
@@ -141,14 +148,34 @@ public class Targeter : MonoBehaviour {
 		}
 	}
 
+#if UNITY_EDITOR
 	private void OnDrawGizmosSelected()
 	{
 		if(target != null)
 		{
 			Vector3 p = target.transform.position;
+			GizmosRangeStuff(Target.LONG_RANGE);
 			Gizmos.DrawWireSphere(p, longRange);
+			GizmosRangeStuff(Target.MID_RANGE);
 			Gizmos.DrawWireSphere(p, midRange);
+			GizmosRangeStuff(Target.CLOSE_RANGE);
 			Gizmos.DrawWireSphere(p, closeRange);
 		}
 	}
+
+	private void GizmosRangeStuff(int range)
+	{
+		if(range == currentRange)
+		{
+			Gizmos.color = Color.green;
+		}else if(range == targetRange)
+		{
+			Gizmos.color = Color.yellow;
+		}
+		else
+		{
+			Gizmos.color = Color.white;
+		}
+	}
+#endif
 }
