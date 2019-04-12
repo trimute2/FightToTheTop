@@ -968,6 +968,7 @@ MonoBehaviour:
   longRange: 14
   midRange: 7.5
   closeRange: 1.5
+  PlacementPriority: 1
   target: {fileID: 0}
 --- !u!114 &114663556945526588
 MonoBehaviour:
@@ -1047,6 +1048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1f8858a543f6a740a1d8712ebfecece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseStunGauge: 0
 --- !u!114 &114444505356257044
 MonoBehaviour:
   m_ObjectHideFlags: 0

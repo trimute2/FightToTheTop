@@ -6,22 +6,33 @@ using UnityEngine;
 [RequireComponent(typeof(Targeter))]
 public abstract class Enemy : MonoBehaviour
 {
+	//Required components
 	protected Targeter targeter;
 	protected MoveHandler moveHandler;
 	protected FlagHandler flagHandler;
 
+	//optional components
 	protected EntityControllerComp entityController;
 	protected bool hasEntityController;
 
 	protected Avoider avoider;
 	protected bool hasAvoider;
 
+	//bools to control desicion making
 	protected bool moveToRange;
 	protected bool tryToAttack;
 
 	protected List<MoveLink> linksToAttempt;
 
 	protected Vector2 targetVelocity;
+
+	public int PlacementPriority
+	{
+		get
+		{
+			return targeter.PlacementPriority;
+		}
+	}
 
 	public float walkSpeed = 4.5f;
 	public float runSpeed = 9.0f;
@@ -38,7 +49,7 @@ public abstract class Enemy : MonoBehaviour
 		linksToAttempt = new List<MoveLink>();
 	}
 
-	protected void AvoiderSetup(string avoiderType, string[] thingsToAvoid)
+	protected void AvoiderSetup(string avoiderType, IEnumerable<string> thingsToAvoid)
 	{
 		if (hasAvoider)
 		{
@@ -55,16 +66,17 @@ public abstract class Enemy : MonoBehaviour
 			targetVelocity = Vector2.zero;
 			moveToRange = true;
 			tryToAttack = true;
+			//todo allow for optional wait times so that more complex if conditions dont happen every frame
 			switch (targeter.CurrentRange)
 			{
 				case Target.LONG_RANGE:
-					LongRangeDecision();
+					LongRangeDecision(targeter.target);
 					break;
 				case Target.MID_RANGE:
-					MidRangeDecision();
+					MidRangeDecision(targeter.target);
 					break;
 				case Target.CLOSE_RANGE:
-					CloseRangeDecision();
+					CloseRangeDecision(targeter.target);
 					break;
 			}
 
@@ -75,11 +87,7 @@ public abstract class Enemy : MonoBehaviour
 					if (moveToRange)
 					{
 						targetVelocity = targeter.TargetDirection();
-						float speed = walkSpeed;
-						if (targeter.CurrentRange == Target.OUT_RANGE)
-						{
-							speed = runSpeed;
-						}
+						float speed = SpeedDecision();
 						targetVelocity.x *= entityController.Facing * speed;
 						tryToAttack = false;
 					}
@@ -103,9 +111,19 @@ public abstract class Enemy : MonoBehaviour
 		}
     }
 
-	protected abstract void LongRangeDecision();
+	protected virtual float SpeedDecision()
+	{
+		float speed = walkSpeed;
+		if (targeter.CurrentRange == Target.OUT_RANGE)
+		{
+			speed = runSpeed;
+		}
+		return speed;
+	}
 
-	protected abstract void MidRangeDecision();
+	protected abstract void LongRangeDecision(Target target);
 
-	protected abstract void CloseRangeDecision();
+	protected abstract void MidRangeDecision(Target target);
+
+	protected abstract void CloseRangeDecision(Target target);
 }

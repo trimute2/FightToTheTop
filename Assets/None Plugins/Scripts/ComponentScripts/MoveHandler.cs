@@ -415,10 +415,10 @@ public class MoveHandler : MonoBehaviour {
 			flagHandler.Flags = flagData;
 			if(entityController != null && flagHandler.ValueFlags != ValueFlags.None)
 			{
-				float gravityMod = 1;
+				float gravityMod = 1.0f;
 				if(!GetValue(ValueFlags.GravityModifier, out gravityMod))
 				{
-					gravityMod = 1;
+					gravityMod = 1.0f;
 				}
 				entityController.GravityModifier = gravityMod;
 			}

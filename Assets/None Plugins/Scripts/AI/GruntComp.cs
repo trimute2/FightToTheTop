@@ -18,9 +18,11 @@ public class GruntComp : Enemy {
 	// Use this for initialization
 	protected override void Start () {
 		base.Start();
-		avoider.AvoiderType = "Grunt";
+		string[] thingsToAvoid = new string[] {"Grunt", "Brute"};
+		AvoiderSetup("Grunt", thingsToAvoid);
+		/*avoider.AvoiderType = "Grunt";
 		avoider.ThingsToAvoid.Add("Grunt");
-		moveHandler.GenericStateEvent += avoider.OnEnterGenericState;
+		moveHandler.GenericStateEvent += avoider.OnEnterGenericState;*/
 		linksToAttempt.Add(Punch);
 		linksToAttempt.Add(Shoot);
 #if UNITY_EDITOR
@@ -126,9 +128,8 @@ public class GruntComp : Enemy {
 		}
 	}*/
 
-	protected override void LongRangeDecision()
+	protected override void LongRangeDecision(Target target)
 	{
-		Target target = targeter.target;
 		if (target.RequestTargeterCount(Target.CLOSE_RANGE) < 1)
 		{
 			targeter.TargetRange = Target.CLOSE_RANGE;
@@ -147,9 +148,8 @@ public class GruntComp : Enemy {
 		}
 	}
 
-	protected override void MidRangeDecision()
+	protected override void MidRangeDecision(Target target)
 	{
-		Target target = targeter.target;
 		if (target.RequestTargeterCount(Target.CLOSE_RANGE) < 1)
 		{
 			targeter.TargetRange = Target.CLOSE_RANGE;
@@ -166,9 +166,8 @@ public class GruntComp : Enemy {
 		}
 	}
 
-	protected override void CloseRangeDecision()
+	protected override void CloseRangeDecision(Target target)
 	{
-		Target target = targeter.target;
 		if (target.RequestTargeterRemaining(Target.CLOSE_RANGE) > 1)
 		{
 			targeter.TargetRange = Target.MID_RANGE;

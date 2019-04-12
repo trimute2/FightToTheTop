@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Target : MonoBehaviour {
 	//this was somewhat stupid, this should have been an array of three lists
+	//TODO: Optimize some of this so that certain functions dont have to do as much calculating each frame
 	//TODO: clean up by making array of lists
 	private float longRangeTension = 0;
 	private List<Targeter> LongRangeTargeters;
@@ -36,9 +37,6 @@ public class Target : MonoBehaviour {
 			LatestAttack[i] = 0;
 		}
 	}
-
-
-	//TODO: way of figuring out who is leaving a range
 	
 	public float RequestTension(int Range)
 	{
@@ -64,6 +62,31 @@ public class Target : MonoBehaviour {
 	{
 		List<Targeter> target = GetRangeTargeterList(Range);
 		target.RemoveAll(item => sign != Mathf.Sign(item.XDistance));
+		return target.Count;
+	}
+
+	public int RequestRangeTotalPriority(int Range)
+	{
+		int priorityTotal = 0;
+		List<Targeter> target = GetRangeTargeterList(Range);
+		foreach(Targeter t in target)
+		{
+			priorityTotal += t.PlacementPriority;
+		}
+		return priorityTotal;
+	}
+
+	public int RequestPriorityTargeterCount(int Range, int priority)
+	{
+		List<Targeter> target = GetRangeTargeterList(Range);
+		target.RemoveAll(item => item.PlacementPriority < priority);
+		return target.Count;
+	}
+
+	public int RequestPriorityTargeterCount(int Range, int priority , int sign)
+	{
+		List<Targeter> target = GetRangeTargeterList(Range);
+		target.RemoveAll(item => (sign != Mathf.Sign(item.XDistance) || item.PlacementPriority < priority));
 		return target.Count;
 	}
 

@@ -4,30 +4,65 @@ using UnityEngine;
 
 public class BruteComp : Enemy
 {
-	protected override void CloseRangeDecision()
+
+	//private bool ChargeState;
+
+	protected override void Start()
 	{
-		throw new System.NotImplementedException();
+		base.Start();
+		string[] thingsToAvoid = new string[] {"Brute"};
+		AvoiderSetup("Brute", thingsToAvoid);
+
 	}
 
-	protected override void LongRangeDecision()
+	protected override void LongRangeDecision(Target target)
 	{
-		throw new System.NotImplementedException();
+		//try to move into range ingoring lower priority targets
+		if (target.RequestPriorityTargeterCount(Target.CLOSE_RANGE, PlacementPriority) < 1)
+		{
+			targeter.TargetRange = Target.CLOSE_RANGE;
+		}
+		else if (target.RequestRangeTotalPriority(Target.MID_RANGE)<2)
+		{
+			targeter.TargetRange = Target.MID_RANGE;
+		}
+		else
+		{
+			targeter.TargetRange = Target.LONG_RANGE;
+			moveToRange = false;
+			//shouldAvoid = true;
+		}
 	}
 
-	protected override void MidRangeDecision()
+	protected override void MidRangeDecision(Target target)
 	{
-		throw new System.NotImplementedException();
+		if (target.RequestPriorityTargeterCount(Target.CLOSE_RANGE, PlacementPriority) < 1)
+		{
+			targeter.TargetRange = Target.CLOSE_RANGE;
+		}
+		else if (target.RequestTargeterCount(Target.MID_RANGE, targeter.Direction) > 2)
+		{
+			targeter.TargetRange = Target.LONG_RANGE;
+		}
+		else
+		{
+			targeter.TargetRange = Target.MID_RANGE;
+			moveToRange = false;
+			//shouldAvoid = true;
+		}
 	}
 
-	// Start is called before the first frame update
-	void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	protected override void CloseRangeDecision(Target target)
+	{
+		if (target.RequestTargeterRemaining(Target.CLOSE_RANGE) > 1)
+		{
+			targeter.TargetRange = Target.MID_RANGE;
+		}
+		else
+		{
+			targeter.TargetRange = Target.CLOSE_RANGE;
+			moveToRange = false;
+		}
+	}
+	
 }

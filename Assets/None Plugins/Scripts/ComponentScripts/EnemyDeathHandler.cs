@@ -33,7 +33,6 @@ public class EnemyDeathHandler : MonoBehaviour
     {
 		if (isDead)
 		{
-			//todo: ensure that the death animation has finished
 			if(entityController != null)
 			{
 				if (entityController.Grounded)

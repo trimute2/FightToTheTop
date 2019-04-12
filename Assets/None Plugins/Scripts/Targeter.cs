@@ -6,6 +6,9 @@ public class Targeter : MonoBehaviour {
 	public float longRange;
 	public float midRange;
 	public float closeRange;
+
+	public int PlacementPriority = 0;
+
 	private int targetRange = Target.LONG_RANGE;
 	public int TargetRange
 	{
@@ -135,6 +138,17 @@ public class Targeter : MonoBehaviour {
 		if(target != null)
 		{
 			target.RemoveFromAllRanges(this);
+		}
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		if(target != null)
+		{
+			Vector3 p = target.transform.position;
+			Gizmos.DrawWireSphere(p, longRange);
+			Gizmos.DrawWireSphere(p, midRange);
+			Gizmos.DrawWireSphere(p, closeRange);
 		}
 	}
 }

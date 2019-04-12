@@ -887,7 +887,7 @@ GameObject:
   - component: {fileID: 7934566784692237405}
   - component: {fileID: 9138224332394630742}
   - component: {fileID: 1274381721442037531}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: Avoider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2096,6 +2096,7 @@ MonoBehaviour:
   longRange: 14
   midRange: 7.5
   closeRange: 1.5
+  PlacementPriority: 2
   target: {fileID: 0}
 --- !u!114 &1404514803449219158
 MonoBehaviour:

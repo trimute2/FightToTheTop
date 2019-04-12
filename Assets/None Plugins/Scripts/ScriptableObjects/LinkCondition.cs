@@ -27,7 +27,6 @@ public class LinkCondition : ScriptableObject {
 	public string weapon;
 	public bool boolSetting;
 	public int holdNumber;
-	//TODO: figure out how to properly set this
 	public int buttonIndex;
 
 	public float TimeCondition;
