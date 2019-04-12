@@ -8,6 +8,7 @@ public class HitBoxScript : MonoBehaviour {
 	private MoveHandler moveHandler;
 	private Collider2D damageCollider;
 	private int damage;
+	private int stunPoints;
 	private Vector2 knockBack;
 	private List<int> entitiesHit;
 	private List<HealthComponent> hasHit;
@@ -19,6 +20,7 @@ public class HitBoxScript : MonoBehaviour {
 		entitiesHit = new List<int>();
 		hasHit = new List<HealthComponent>();
 		damage = 0;
+		stunPoints = 0;
 		knockBack = Vector2.zero;
 	}
 
@@ -71,11 +73,12 @@ public class HitBoxScript : MonoBehaviour {
 		hasHit.Clear();
 	}
 
-	public void EnableHitBox(int damage, Vector2 knockBack)
+	public void EnableHitBox(int damage, Vector2 knockBack, int stunPoints = 0)
 	{
 		ResetHitBox();
 		this.damage = damage;
 		this.knockBack = knockBack;
+		this.stunPoints = stunPoints;
 		damageCollider.enabled = true;
 	}
 
