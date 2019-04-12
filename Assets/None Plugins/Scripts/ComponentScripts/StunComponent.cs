@@ -30,12 +30,17 @@ public class StunComponent : MonoBehaviour {
 	private EntityControllerComp entityController;
 	private bool hasEntityController;
 
+	public int baseStunGauge;
+	private int stunGauge;
+	
+
 
 	private void Start()
 	{
 		moveHandler = GetComponent<MoveHandler>();
 		flagHandler = GetComponent<FlagHandler>();
 		animator = GetComponent<Animator>();
+		stunGauge = baseStunGauge;
 
 		entityController = GetComponent<EntityControllerComp>();
 		hasEntityController = (entityController != null);
@@ -87,6 +92,11 @@ public class StunComponent : MonoBehaviour {
 
 	public void Stun(Vector2 knockBack, float stunDuration, int stunPoints)
 	{
+		stunGauge -= stunPoints;
+		if(stunGauge <= 0)
+		{
+			//TODO: stun gauge stuff
+		}
 		hitTime = Time.time;
 		if (!stunned)
 		{

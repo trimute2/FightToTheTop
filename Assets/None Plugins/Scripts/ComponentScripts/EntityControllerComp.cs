@@ -171,10 +171,11 @@ public class EntityControllerComp : MonoBehaviour {
 		{
 			bool add = true;
 			//TODO: another way of checking that does not involve tags
-			if (hitBuffer[i].collider.tag == "Entity")
+			if (hitBuffer[i].collider.tag == "Entity" || hitBuffer[i].collider.tag == "Player")
 			{
 				if (!allowEntityCollision
-					||(hitBuffer[i].collider.GetComponent<EntityControllerComp>() != null && !hitBuffer[i].collider.GetComponent<EntityControllerComp>().AllowEntityCollision))
+					||(hitBuffer[i].collider.GetComponent<EntityControllerComp>() != null &&
+					!hitBuffer[i].collider.GetComponent<EntityControllerComp>().AllowEntityCollision))
 				{
 					add = false;
 				}
@@ -226,5 +227,16 @@ public class EntityControllerComp : MonoBehaviour {
 	public void SetVelocity(Vector2 vel)
 	{
 		velocity = vel;
+	}
+
+	private void OnValidate()
+	{
+		Rigidbody2D vrb = GetComponent<Rigidbody2D>();
+		if (!vrb.isKinematic)
+		{
+			vrb.bodyType = RigidbodyType2D.Kinematic;
+			vrb.simulated = true;
+			vrb.useFullKinematicContacts = true;
+		}
 	}
 }

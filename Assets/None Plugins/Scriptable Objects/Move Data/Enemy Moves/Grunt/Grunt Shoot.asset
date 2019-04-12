@@ -226,6 +226,8 @@ MonoBehaviour:
   HitUserEffects: []
   EffectsOnEnter: []
   EffectsOnExit: []
+  ExitConditions: []
+  ExitMove: {fileID: 0}
   HitVisualEffect: {fileID: 0}
   combinedFlagCurves:
   - serializedVersion: 2

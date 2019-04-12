@@ -18,11 +18,6 @@ public class GruntComp : Enemy {
 	// Use this for initialization
 	protected override void Start () {
 		base.Start();
-		moveHandler = GetComponent<MoveHandler>();
-		targeter = GetComponent<Targeter>();
-		entityController = GetComponent<EntityControllerComp>();
-		flagHandler = GetComponent<FlagHandler>();
-		avoider = GetComponentInChildren<Avoider>();
 		avoider.AvoiderType = "Grunt";
 		avoider.ThingsToAvoid.Add("Grunt");
 		moveHandler.GenericStateEvent += avoider.OnEnterGenericState;

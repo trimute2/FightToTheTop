@@ -993,7 +993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 0, g: 0, b: 1, a: 1}
-  m_Length: 0.7200006
+  m_Length: 0.72000086
   m_ChildTransform: {fileID: 4229938916191468}
   m_AttachedIK: {fileID: 0}
 --- !u!70 &70951366128480804
@@ -3048,14 +3048,14 @@ Rigidbody2D:
   m_GameObject: {fileID: 1787573783927462}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -3639,7 +3639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 0, g: 1, b: 1, a: 1}
-  m_Length: 0.7300003
+  m_Length: 0.73000044
   m_ChildTransform: {fileID: 4850603956194382}
   m_AttachedIK: {fileID: 0}
 --- !u!70 &70601287477712204
@@ -3799,7 +3799,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893379987870974}
-  m_LocalRotation: {x: 0, y: 0, z: 0.67828697, w: 0.7347971}
+  m_LocalRotation: {x: 0, y: 0, z: 0.6784664, w: 0.73463154}
   m_LocalPosition: {x: 0.49004412, y: 0.22404814, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3820,7 +3820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 0, g: 1, b: 1, a: 1}
-  m_Length: 0.7300001
+  m_Length: 0.7300005
   m_ChildTransform: {fileID: 4360265698013904}
   m_AttachedIK: {fileID: 0}
 --- !u!70 &70439583021737658
@@ -3864,7 +3864,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939069509220322}
-  m_LocalRotation: {x: 0, y: 0, z: 0.0019743177, w: 0.9999981}
+  m_LocalRotation: {x: 0, y: 0, z: 0.000991704, w: 0.9999995}
   m_LocalPosition: {x: 0.73, y: -0.0000001192093, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

@@ -38,6 +38,16 @@ public abstract class Enemy : MonoBehaviour
 		linksToAttempt = new List<MoveLink>();
 	}
 
+	protected void AvoiderSetup(string avoiderType, string[] thingsToAvoid)
+	{
+		if (hasAvoider)
+		{
+			avoider.AvoiderType = avoiderType;
+			avoider.ThingsToAvoid.AddRange(thingsToAvoid);
+			moveHandler.GenericStateEvent += avoider.OnEnterGenericState;
+		}
+	}
+
 	void Update()
     {
         if(targeter.target != null)
@@ -58,26 +68,29 @@ public abstract class Enemy : MonoBehaviour
 					break;
 			}
 
-			if (hasEntityController && ((flagHandler.CommonFlags & CommonFlags.MoveWithInput) != CommonFlags.None))
+			if (hasEntityController)
 			{
-				if (moveToRange)
+				if ((flagHandler.CommonFlags & CommonFlags.MoveWithInput) != CommonFlags.None)
 				{
-					targetVelocity = targeter.TargetDirection();
-					float speed = walkSpeed;
-					if (targeter.CurrentRange == Target.OUT_RANGE)
+					if (moveToRange)
 					{
-						speed = runSpeed;
-					}
-					targetVelocity.x *= entityController.Facing * speed;
-					tryToAttack = false;
-				}
-				if (hasAvoider && avoider.AvoidVector != Vector3.zero)
-				{
-					if (!(Mathf.Sign(targetVelocity.x) == Mathf.Sign(avoider.AvoidVector.x) &&
-						Mathf.Abs(targetVelocity.x) > Mathf.Abs(avoider.AvoidVector.x)))
-					{
-						targetVelocity.x = avoider.AvoidVector.x;
+						targetVelocity = targeter.TargetDirection();
+						float speed = walkSpeed;
+						if (targeter.CurrentRange == Target.OUT_RANGE)
+						{
+							speed = runSpeed;
+						}
+						targetVelocity.x *= entityController.Facing * speed;
 						tryToAttack = false;
+					}
+					if (hasAvoider && avoider.AvoidVector != Vector3.zero)
+					{
+						if (!(Mathf.Sign(targetVelocity.x) == Mathf.Sign(avoider.AvoidVector.x) &&
+							Mathf.Abs(targetVelocity.x) > Mathf.Abs(avoider.AvoidVector.x)))
+						{
+							targetVelocity.x = avoider.AvoidVector.x;
+							tryToAttack = false;
+						}
 					}
 				}
 				entityController.TargetVelocity = targetVelocity;

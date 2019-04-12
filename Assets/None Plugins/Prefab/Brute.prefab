@@ -1971,12 +1971,12 @@ GameObject:
   - component: {fileID: 9221255432145175371}
   - component: {fileID: 6099045819938082694}
   - component: {fileID: 1404514803449219158}
-  - component: {fileID: 8148998995644633190}
-  - component: {fileID: 6238818602200134105}
   - component: {fileID: 298455722602724398}
+  - component: {fileID: 6238818602200134105}
+  - component: {fileID: 8148998995644633190}
   m_Layer: 14
   m_Name: Brute
-  m_TagString: Untagged
+  m_TagString: Entity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2028,7 +2028,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 4527751708310812810}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
@@ -2112,7 +2112,7 @@ MonoBehaviour:
   maxDodge: 0
   HitBoxes: []
   RayCasters: []
---- !u!114 &8148998995644633190
+--- !u!114 &298455722602724398
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2121,9 +2121,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4527751708310812810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac471dcc18a55184391afbcff0f0d2ab, type: 3}
+  m_Script: {fileID: 11500000, guid: a60dcd4d1f9a8a24582ae91ababb6842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 4.5
+  runSpeed: 9
 --- !u!114 &6238818602200134105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2137,7 +2139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1320
---- !u!114 &298455722602724398
+--- !u!114 &8148998995644633190
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2146,7 +2148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4527751708310812810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a60dcd4d1f9a8a24582ae91ababb6842, type: 3}
+  m_Script: {fileID: 11500000, guid: ac471dcc18a55184391afbcff0f0d2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4595645456650060179
