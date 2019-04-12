@@ -68,7 +68,6 @@ public class AnimationAimComponent : MonoBehaviour {
 			float xPos = Mathf.Cos(currentAim) * aimDist;
 			float yPos = Mathf.Sin(currentAim) * aimDist;
 			Vector3 test = new Vector3(p.x + xPos, p.y + yPos, 0);
-			Debug.DrawLine(p, animationTarget.position);
 			animationTargeter.position = test;
 		}
 		if (attatchedEffects.Count > 0)
