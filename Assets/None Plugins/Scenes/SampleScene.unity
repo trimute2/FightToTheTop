@@ -2317,11 +2317,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brute
       objectReference: {fileID: 0}
-    - target: {fileID: 4527751708310812810, guid: d93990e7070090a4690504138a7b1573,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3585508308648609033, guid: d93990e7070090a4690504138a7b1573,
         type: 3}
       propertyPath: m_Mesh

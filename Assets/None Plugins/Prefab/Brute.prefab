@@ -948,7 +948,7 @@ GameObject:
   - component: {fileID: 5262199935145855944}
   - component: {fileID: 6921848929882034862}
   - component: {fileID: 6010754520162188729}
-  - component: {fileID: 6249584739466852901}
+  - component: {fileID: 7446020262710276887}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -1002,10 +1002,11 @@ MonoBehaviour:
   m_SortingLayerID: 0
   m_SortingOrder: 9
   m_BoneTransforms:
-  - {fileID: 1542950673369785071}
-  - {fileID: 3044139188373571814}
-  - {fileID: 151772853259016940}
---- !u!137 &6249584739466852901
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!137 &7446020262710276887
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1051,11 +1052,12 @@ SkinnedMeshRenderer:
   - {fileID: 1542950673369785071}
   - {fileID: 3044139188373571814}
   - {fileID: 151772853259016940}
+  - {fileID: 4195560593260012378}
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1542950673369785071}
   m_AABB:
-    m_Center: {x: 0.5451115, y: -0.00000014901161, z: 0}
-    m_Extent: {x: 0.27026433, y: 0.53500056, z: 0}
+    m_Center: {x: -0.044812262, y: 0, z: 0}
+    m_Extent: {x: 0.86018807, y: 0.5350004, z: 0}
   m_DirtyAABB: 0
 --- !u!1 &2514746575806420576
 GameObject:
