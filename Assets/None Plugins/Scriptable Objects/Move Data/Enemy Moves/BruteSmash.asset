@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c7f4883e0032e14b80e90187fc79499, type: 3}
-  m_Name: Grunt Punch
+  m_Script: {fileID: 11500000, guid: dff1f7831641c584b8c543bbab9ada6b, type: 3}
+  m_Name: BruteSmash
   m_EditorClassIdentifier: 
-  controller: {fileID: 9100000, guid: 2aa532525e0ae5e45af1533d26318270, type: 2}
+  controller: {fileID: 9100000, guid: 3fbf27177726b9c48a31af3c6caefd0d, type: 2}
   valid: 1
   commonFlagsCurves:
   - serializedVersion: 2
@@ -27,50 +27,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.6166667
-      value: 0
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  - serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  - serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  - serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
+      time: 0.5
       value: 1
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.25
-      value: 0
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.6166667
-      value: 0
+      time: 0.6666667
+      value: 1
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
@@ -92,14 +59,38 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.70000005
-      value: 0
+      time: 0.5
+      value: 1
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 103
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6666667
+      value: 1
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  - serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  - serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  - serializedVersion: 2
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -124,21 +115,31 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  animationStateName: GruntPunch
-  length: 0.7
+  - serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  animationStateName: BruteSmash
+  length: 0.6666667
   frameRate: 0.016666668
   playBackSpeed: 1
-  damage: 450
+  damage: 750
   hitStun: 0
   hitStunFrame: NaN
   knockBack: {x: 0, y: 0}
   holdTime: 0
-  endTime: 0.7
+  endTime: 0.6666667
   data:
-    commonFlags: 25
+    commonFlags: 3
     valueFlags: 0
   commonFlagsEffected: 0
   valueCurves:
+  - serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   - serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
@@ -162,15 +163,6 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 8
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 103
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.25
       value: 0
       inSlope: Infinity
       outSlope: Infinity
@@ -179,8 +171,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.6166667
-      value: 0
+      time: 0.5
+      value: 3
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
@@ -188,8 +180,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.70000005
-      value: 0
+      time: 0.6666667
+      value: 3
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 103
@@ -204,8 +196,3 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  aType: 0
-  range:
-  - 0
-  - 0
-  - 0

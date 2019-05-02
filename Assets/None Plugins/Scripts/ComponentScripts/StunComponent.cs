@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MoveHandler))]
 [RequireComponent(typeof(FlagHandler))]
+[RequireComponent(typeof(Animator))]
 public class StunComponent : MonoBehaviour {
 	
 

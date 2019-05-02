@@ -7,11 +7,14 @@ public class BruteComp : Enemy
 
 	//private bool ChargeState;
 
+	public MoveLink BruteSmash;
+
 	protected override void Start()
 	{
 		base.Start();
 		string[] thingsToAvoid = new string[] {"Brute"};
 		AvoiderSetup("Brute", thingsToAvoid);
+		linksToAttempt.Add(BruteSmash);
 
 	}
 

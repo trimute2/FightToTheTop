@@ -23,6 +23,7 @@ public class HealthComponent : MonoBehaviour {
 	private bool hasStunComponent;
 	private FlagHandler flagHandler;
 	private bool hasFlagHandler;
+	private bool deathCalled;
 
 	private void Start()
 	{
@@ -31,6 +32,7 @@ public class HealthComponent : MonoBehaviour {
 		hasStunComponent = (stunComponent != null);
 		flagHandler = GetComponent<FlagHandler>();
 		hasFlagHandler = (flagHandler != null);
+		deathCalled = false;
 	}
 
 	public bool Damage(int damage, Vector2 knockBack, float stunDuration = 0.3f, int stunPoints = 0)
@@ -50,9 +52,10 @@ public class HealthComponent : MonoBehaviour {
 		{
 			HealthUpdateEvent();
 		}
-		if(health <= 0 && OnDeath != null)
+		if(health <= 0 && !deathCalled)
 		{
 			OnDeath();
+			deathCalled = true;
 		}
 		return true;
 	}

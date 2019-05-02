@@ -12,8 +12,10 @@ public class UIManager : MonoBehaviour
 	public RectTransform GameUIPanel;
 	public RectTransform PausePanel;
 	public RectTransform DeathPanel;
+	public RectTransform WinPanel;
 	public Button PauseButton;
 	public Button DeathButton;
+	public Button WinButton;
 	public EventSystem eventSystem;
 	bool canPause;
 	public PlayerInput p;
@@ -59,7 +61,7 @@ public class UIManager : MonoBehaviour
 			eventSystem.UpdateModules();
 			//PauseButton.Select();
 			pi.UnHookInputActions();
-			Debug.Log(eventSystem.isFocused);
+			//Debug.Log(eventSystem.isFocused);
 		}
 	}
 
@@ -80,6 +82,17 @@ public class UIManager : MonoBehaviour
 		eventSystem.gameObject.SetActive(true);
 		eventSystem.UpdateModules();
 		DeathButton.Select();
+	}
+
+	public void OnWin()
+	{
+		GameUIPanel.gameObject.SetActive(false);
+		WinPanel.gameObject.SetActive(true);
+		canPause = false;
+		pi.UnHookInputActions();
+		eventSystem.gameObject.SetActive(true);
+		eventSystem.UpdateModules();
+		WinButton.Select();
 	}
 
 	private void OnDestroy()
