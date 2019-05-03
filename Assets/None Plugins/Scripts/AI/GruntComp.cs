@@ -179,6 +179,7 @@ public class GruntComp : Enemy {
 		}
 	}
 
+#if UNITY_EDITOR
 	private void OnValidate()
 	{
 		Avoider.AvoiderValidationCheck(gameObject);
@@ -188,4 +189,5 @@ public class GruntComp : Enemy {
 	{
 		base.Gizmo();
 	}
+#endif
 }

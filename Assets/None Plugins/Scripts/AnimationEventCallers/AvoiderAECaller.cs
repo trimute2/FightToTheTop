@@ -17,8 +17,10 @@ public class AvoiderAECaller : MonoBehaviour
 		avoider.Ignore = b;
 	}
 
+#if UNITY_EDITOR
 	private void OnValidate()
 	{
 		Avoider.AvoiderValidationCheck(gameObject);
 	}
+#endif
 }
