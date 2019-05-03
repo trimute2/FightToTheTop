@@ -56,6 +56,11 @@ public class HealthComponent : MonoBehaviour {
 		{
 			OnDeath();
 			deathCalled = true;
+			if (hasStunComponent)
+			{
+				Destroy(stunComponent);
+				hasStunComponent = false;
+			}
 		}
 		return true;
 	}

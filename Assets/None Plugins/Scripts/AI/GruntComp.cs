@@ -24,7 +24,7 @@ public class GruntComp : Enemy {
 		avoider.ThingsToAvoid.Add("Grunt");
 		moveHandler.GenericStateEvent += avoider.OnEnterGenericState;*/
 		linksToAttempt.Add(Punch);
-		//linksToAttempt.Add(Shoot);
+		linksToAttempt.Add(Shoot);
 #if UNITY_EDITOR
 		if (avoider == null)
 		{

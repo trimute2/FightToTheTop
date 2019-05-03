@@ -170,7 +170,7 @@ MonoBehaviour:
   frameRate: 0.016666668
   playBackSpeed: 1
   damage: 0
-  hitStun: 15
+  hitStun: 2.7
   hitStunFrame: 0.25
   knockBack: {x: 0, y: 0}
   holdTime: 0
@@ -201,6 +201,7 @@ MonoBehaviour:
   EffectsOnEnter: []
   EffectsOnExit: []
   ExitConditions: []
+  ExitMove: {fileID: 0}
   HitVisualEffect: {fileID: 0}
   combinedFlagCurves:
   - serializedVersion: 2

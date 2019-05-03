@@ -110,6 +110,7 @@ public class StunComponent : MonoBehaviour {
 				toPlay = "Knock Back";
 			}
 			moveHandler.EnterGenericState(toPlay, 0.001111111f);
+			animator.SetFloat("StunDuration", 1 / stunDuration);
 			flagHandler.CommonFlags = CommonFlags.None;
 		}
 		else
@@ -136,6 +137,7 @@ public class StunComponent : MonoBehaviour {
 			}
 			if (playAnimation)
 			{
+				animator.SetFloat("StunDuration", 1 / stunDuration);
 				animator.Play(toPlay, -1 , 0);
 			}
 		}
